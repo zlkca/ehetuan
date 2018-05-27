@@ -1,0 +1,51 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-light bg-faded fixed-top">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand" href="#">
+        <img class="logo-icon" src="/assets/images/logo.png" />
+        <div class="brand-name">Demo Shop</div>
+    </a>
+    
+    <div class="collapse navbar-collapse" id="navbarContent">
+        <div class="row">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" (click)="toPage('home')">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item" *ngIf="!isLogin">
+                    <a class="nav-link" (click)="toPage('login')" data-toggle="collapse">Login</a>
+                </li>
+                <li class="nav-item" *ngIf="isLogin">
+                    <a class="nav-link" (click)="toPage('home')" data-toggle="collapse">Dashbord</a>
+                </li>
+                <li class="nav-item" *ngIf="isLogin">
+                    <a class="nav-link" (click)="logout()" data-toggle="collapse">Logout</a>
+                </li>
+<!--                 <li class="nav-item">
+                    <a class="nav-link" (click)="toPage('contact')" >{{'CONTACT_US' | translate}}</a>
+                </li> -->
+<!--                 <li class="nav-item search-area">
+                    <div class="input-group search-box">
+                      <input type="text" [(ngModel)]="keyword" placeholder="Search by keyword" aria-describedby="basic-addon2" (keyup)="term$.next($event.target.value)">
+                      <div class="btn btn-search" (click)="search(keyword)"><i class="fa fa-search"></i>Search</div>
+                    </div>
+                </li> -->
+
+            <!--           <li class="nav-item language-menu">
+                <a class="nav-link"  (click)="changeLanguage('en')">English</a>
+              </li>
+              <li class="nav-item language-menu">
+                <a class="nav-link"  (click)="changeLanguage('cn')">中文</a>
+              </li> -->
+            </ul>
+        </div>
+    </div>
+  </nav>
+
+</header>
+
+
+

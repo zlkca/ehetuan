@@ -1,0 +1,50 @@
+$cellphone: "(max-width: 575px)";
+$mobile: "(min-width:576px) and (max-width: 767px)";
+$tablet: "(min-width: 768px) and (max-width: 1199px)";
+$desktop: "(min-width: 1200px)";
+
+.page{
+	.row{
+		margin-left:0px;
+		margin-right:0px;
+	}
+
+	.left-side{
+		display:inline-block;
+		min-height:400px;
+		margin-left:0px;
+		margin-right:0px;
+		padding:10px 15px;
+
+		input.form-control{
+		  outline:none;
+		}
+	}
+
+	.right-side{
+		display:inline-block;
+		margin-left:0px;
+		margin-right:0px;
+		padding-left:0px;
+		padding-right:0px;
+	}
+	@media #{$desktop}{
+
+	}
+
+	@media #{$tablet}{
+
+	 }
+
+	@media #{$mobile}{
+		.left-side{
+			min-height:40px;
+		}
+	}
+	@media #{$cellphone}{
+		.left-side{
+			min-height:40px;
+		}
+	}
+}
+

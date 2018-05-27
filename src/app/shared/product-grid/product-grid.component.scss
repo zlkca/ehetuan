@@ -1,0 +1,30 @@
+$scrollbar-w:30px;
+$padding-w:5px;
+.grid{
+    $n-cols:10;
+
+    .grid-cell{
+        width: calc((100% - #{$scrollbar-w} - #{$n-cols*$padding-w}) / #{$n-cols});
+        img{
+            width:100%;
+        }
+    }
+
+    @media (max-width: 767px) and (orientation: portrait){
+        $n-cols:3;
+
+        .grid-cell{
+            @debug calc(100% - #{$scrollbar-w} - #{$n-cols*$padding-w});
+            width: calc(100% - #{$scrollbar-w} - #{$n-cols*$padding-w});
+        }
+        
+    }
+
+    @media (max-width: 767px) and (orientation: landscape){
+        $n-cols:4;
+        .grid-cell{
+            @debug calc(100% - #{$scrollbar-w} - #{$n-cols*$padding-w});
+            width: calc(100% - #{$scrollbar-w} - #{$n-cols*$padding-w});
+        }
+    }
+}
