@@ -2,6 +2,11 @@
 
 ehetuan is a food delivery website based on angular 5.
 
+## Install
+
+cd to root folder.
+run `npm install`
+
 ## Development server
 
 Run `ng serve -p 5004` for a dev server. 
