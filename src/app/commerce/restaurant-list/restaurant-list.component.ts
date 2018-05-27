@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Restaurant } from '../commerce';
 import { environment } from '../../../environments/environment';
-
+import { Router } from '@angular/router';
+import { CommerceService } from '../commerce.service';
 
 @Component({
   selector: 'app-restaurant-list',
@@ -14,9 +15,14 @@ export class RestaurantListComponent implements OnInit {
 	
 	MEDIA_URL:string = environment.MEDIA_URL;
 
-  constructor() { }
-
   ngOnInit() {
   }
 
+    constructor(private commerceServ:CommerceService, private router:Router) {
+
+    }
+
+    toDetail(p){
+        this.router.navigate(["restaurant/"+p.id]);
+    }
 }

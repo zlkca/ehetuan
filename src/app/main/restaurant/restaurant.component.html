@@ -1,3 +1,14 @@
-<p>
-  restaurant works!
-</p>
+<div class="page">
+	<div class="row">
+	<div class="col-sm-12 col-md-3">
+		<div class="input-group search-box">
+			<input type="text" class="form-control" [(ngModel)]="keyword" placeholder="Search by Keyword" aria-describedby="basic-addon2">
+			<span class="input-group-addon" (click)="search(keyword)"><i class="fa fa-search"></i></span>
+		</div>
+		<!-- <app-product-filter></app-product-filter> -->
+	</div>
+	<div class="col-sm-12 col-md-9">
+		<app-product-list [data]="productList"></app-product-list>
+	</div>
+	</div>
+</div>

@@ -24,6 +24,7 @@ import { LoginComponent } from './account/login/login.component';
 
 import { ProductListComponent } from './commerce/product-list/product-list.component';
 import { ProductComponent } from './main/product/product.component';
+import { RestaurantComponent } from './main/restaurant/restaurant.component';
 
 import { CoreModule }    from './core/core.module';
 
@@ -62,7 +63,7 @@ const appRoutes: Routes = [
   //       { path: 'home', component:HomeComponent }
   //     ]
   // }
-
+        { path: 'restaurant/:id', component:RestaurantComponent },
         { path: 'products', component:ProductListComponent },
         { path: 'product/:id', component:ProductComponent },
         { path: 'login', component:LoginComponent },
