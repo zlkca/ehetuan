@@ -57,7 +57,7 @@ export class CommerceService {
     }
 
     getManufactory(id:number):Observable<Manufactory>{
-        const url = API_URL + 'manufactory/' + id;
+        const url = API_URL + 'manufactories/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.get(url, {'headers': headers}).map((res:any) => {
             return new Manufactory(res.data);
@@ -68,7 +68,7 @@ export class CommerceService {
     }
 
     saveManufactory(d:Manufactory):Observable<Manufactory>{
-        const url = API_URL + 'manufactory';
+        const url = API_URL + 'manufactories';
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         let data = {
           'id': d.id? d.id:'',
@@ -84,7 +84,7 @@ export class CommerceService {
     }
 
     rmManufactory(id:number):Observable<Manufactory[]>{
-        const url = API_URL + 'manufactory/' + id;
+        const url = API_URL + 'manufactories/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.delete(url, {'headers': headers}).map((res:any) => {
             let a:Manufactory[] = [];
@@ -120,7 +120,7 @@ export class CommerceService {
     }
 
     getCategory(id:number):Observable<Category>{
-        const url = this.API_URL + 'category/' + id;
+        const url = this.API_URL + 'categories/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.get(url, {'headers': headers}).map((res:any) => {
             return new Category(res.data);
@@ -131,7 +131,7 @@ export class CommerceService {
     }
 
     saveCategory(d:Category):Observable<Category>{
-        const url = this.API_URL + 'category';
+        const url = this.API_URL + 'categories';
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         let data = {
           'id': d.id? d.id:'',
@@ -150,7 +150,7 @@ export class CommerceService {
     }
 
     rmCategory(id:number):Observable<Category[]>{
-        const url = this.API_URL + 'category/' + id;
+        const url = this.API_URL + 'categories/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.delete(url, {'headers': headers}).map((res:any) => {
             let a:Category[] = [];
@@ -186,7 +186,7 @@ export class CommerceService {
     }
 
     getColor(id:number):Observable<Color>{
-        const url = this.API_URL + 'color/' + id;
+        const url = this.API_URL + 'colors/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.get(url, {'headers': headers}).map((res:any) => {
             return new Color(res.data);
@@ -197,7 +197,7 @@ export class CommerceService {
     }
 
     saveColor(d:Color):Observable<Color>{
-        const url = this.API_URL + 'color';
+        const url = this.API_URL + 'colors';
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         let data = {
           'id': d.id? d.id:'',
@@ -214,7 +214,7 @@ export class CommerceService {
     }
 
     rmColor(id:number):Observable<Color[]>{
-        const url = this.API_URL + 'color/' + id;
+        const url = this.API_URL + 'colors/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.delete(url, {'headers': headers}).map((res:any) => {
             let a:Color[] = [];
