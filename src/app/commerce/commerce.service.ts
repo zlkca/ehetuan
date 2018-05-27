@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { environment } from '../../environments/environment';
-import { Manufactory,Category,Color,Style,PriceRange,Product,Picture,Cart,CartItem,Order,OrderItem,FavoriteProduct } from './commerce';
+import { Restaurant,Category,Color,Style,PriceRange,Product,Picture,Cart,CartItem,Order,OrderItem,FavoriteProduct } from './commerce';
 
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 
@@ -38,15 +38,15 @@ export class CommerceService {
     constructor(private http:HttpClient){ }
 
 
-    getManufactoryList(query?:string):Observable<Manufactory[]>{
-        const url = API_URL + 'manufactories' + (query ? query:'');
+    getRestaurantList(query?:string):Observable<Restaurant[]>{
+        const url = API_URL + 'restaurants' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.get(url, {'headers': headers}).map((res:any) => {
-            let a:Manufactory[] = [];
+            let a:Restaurant[] = [];
             let d = res.data;
             if( d && d.length > 0){
                 for(var i=0; i<d.length; i++){
-                    a.push(new Manufactory(d[i]));
+                    a.push(new Restaurant(d[i]));
                 }
             }
             return a;
@@ -56,19 +56,19 @@ export class CommerceService {
         });
     }
 
-    getManufactory(id:number):Observable<Manufactory>{
-        const url = API_URL + 'manufactories/' + id;
+    getRestaurant(id:number):Observable<Restaurant>{
+        const url = API_URL + 'restaurants/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.get(url, {'headers': headers}).map((res:any) => {
-            return new Manufactory(res.data);
+            return new Restaurant(res.data);
         })
         .catch((err) => {
             return Observable.throw(err.message || err);
         });
     }
 
-    saveManufactory(d:Manufactory):Observable<Manufactory>{
-        const url = API_URL + 'manufactories';
+    saveRestaurant(d:Restaurant):Observable<Restaurant>{
+        const url = API_URL + 'restaurants';
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         let data = {
           'id': d.id? d.id:'',
@@ -76,22 +76,22 @@ export class CommerceService {
           'description': d.description
         }
         return this.http.post(url, data, {'headers': headers}).map((res:any) => {
-            return new Manufactory(res.data);
+            return new Restaurant(res.data);
         })
         .catch((err) => {
             return Observable.throw(err.message || err);
         });
     }
 
-    rmManufactory(id:number):Observable<Manufactory[]>{
-        const url = API_URL + 'manufactories/' + id;
+    rmRestaurant(id:number):Observable<Restaurant[]>{
+        const url = API_URL + 'restaurants/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.delete(url, {'headers': headers}).map((res:any) => {
-            let a:Manufactory[] = [];
+            let a:Restaurant[] = [];
             let d = res.data;
             if( d && d.length > 0){
                 for(var i=0; i<d.length; i++){
-                    a.push(new Manufactory(d[i]));
+                    a.push(new Restaurant(d[i]));
                 }
             }
             return a;
@@ -394,7 +394,7 @@ export class CommerceService {
     //       'title': d.title,
     //       'description': d.description,
     //       'year': d.year,
-    //       'manufactory_id': d.manufactory.id,
+    //       'restaurant_id': d.restaurant.id,
     //       'category_id': d.category.id,
     //       'style_id': d.style.id,
     //       'status': d.status,

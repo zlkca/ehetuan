@@ -2,7 +2,7 @@
 	<div class="product" *ngFor="let p of data; let i = index;">
 		<div class="body" (click)="toDetail(p)">
 			<div class="image-frame">
-          		<img src="{{MEDIA_URL}}{{p.fpath}}" alt="{{p.title}}" />
+          		<img src="{{MEDIA_URL}}{{p.fpath}}" alt="{{p.name}}" />
 			</div>
 			<div class="title-xs">{{p.name}}</div>
 		  	<div class="text-xs">{{p.dimension}}</div>

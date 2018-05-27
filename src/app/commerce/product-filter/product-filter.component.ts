@@ -5,7 +5,7 @@ import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { CommerceService } from '../commerce.service';
 //import { AuthService } from '../../users/shared/auth.service';
 import { SharedService } from '../../shared/shared.service';
-import { Product, Category, Manufactory, Color, Picture } from '../commerce';
+import { Product, Category, Restaurant, Color, Picture } from '../commerce';
 
 
 @Component({
@@ -16,21 +16,21 @@ import { Product, Category, Manufactory, Color, Picture } from '../commerce';
 })
 export class ProductFilterComponent implements OnInit {
 	  categoryList:Category[] = [];
-    manufactoryList:Manufactory[] = [];
+    restaurantList:Restaurant[] = [];
     colorList:Color[] = [];
     
     form:FormGroup = new FormGroup({
         colors: new FormArray([]),
         categories: new FormArray([]),
-        manufactories:new FormArray([])
+        restaurants:new FormArray([])
     });
 
     get categories(){
         return this.form.get('categories') as FormArray;
     }
 
-    get manufactories(){
-      return this.form.get('manufactories') as FormArray;
+    get restaurants(){
+      return this.form.get('restaurants') as FormArray;
     }
 
     get colors(){
@@ -38,8 +38,8 @@ export class ProductFilterComponent implements OnInit {
     }
 
   // priceRange:any = {lower:100, upper:10000};
-  // manufactory:string = '';
-  // manufactories:Manufactory[];
+  // restaurant:string = '';
+  // restaurants:Restaurant[];
   // categories:Category[];
   // bFilter:boolean;
   selected:any;
@@ -62,20 +62,20 @@ export class ProductFilterComponent implements OnInit {
         }
     });
 
-    self.commerceServ.getManufactoryList().subscribe(
-      (mList:Manufactory[])=>{
-        self.manufactoryList = mList;
-        for(let manufactory of mList){
-          self.manufactories.push(new FormControl(false));
-        }
-      });
+    // self.commerceServ.getRestaurantList().subscribe(
+    //   (mList:Restaurant[])=>{
+    //     self.restaurantList = mList;
+    //     for(let restaurant of mList){
+    //       self.restaurants.push(new FormControl(false));
+    //     }
+    //   });
 
-    self.commerceServ.getColorList().subscribe(cList=>{
-        self.colorList = cList;
-        for(let color of cList){
-          self.colors.push(new FormControl(false));      
-        }
-    });
+    // self.commerceServ.getColorList().subscribe(cList=>{
+    //     self.colorList = cList;
+    //     for(let color of cList){
+    //       self.colors.push(new FormControl(false));      
+    //     }
+    // });
 
     // this.commerceServ.getCategoryList().subscribe(
     //   (d:Category[])=>{
@@ -102,10 +102,10 @@ export class ProductFilterComponent implements OnInit {
         ctrl.patchValue(false);
       }
       let catIds = this.getCheckedItems(this.categoryList, this.categories);
-      let mIds = this.getCheckedItems(this.manufactoryList, this.manufactories);
+      let mIds = this.getCheckedItems(this.restaurantList, this.restaurants);
       let colorIds = this.getCheckedItems(this.colorList, this.colors);
 
-      this.sharedServ.emitMsg({name:'OnSearch', query:{'categories':catIds, 'manufactories':mIds, 'colors':colorIds}});
+      this.sharedServ.emitMsg({name:'OnSearch', query:{'categories':catIds, 'restaurants':mIds, 'colors':colorIds}});
     }
 
     getCheckedItems(dataList:any[], controls:FormArray){
@@ -129,9 +129,9 @@ export class ProductFilterComponent implements OnInit {
     this.selected = category;
   }
 
-  searchByManufactory(manufactory:any){
-    this.sharedServ.emitMsg({name:'OnSearch', query:{manufactory_id:manufactory.data.id}});
-    this.selected = manufactory;
+  searchByRestaurant(restaurant:any){
+    this.sharedServ.emitMsg({name:'OnSearch', query:{restaurant_id:restaurant.data.id}});
+    this.selected = restaurant;
   }
 
   initFilter(){

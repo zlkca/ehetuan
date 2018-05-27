@@ -19,11 +19,11 @@
             </div>
         </div>
 
-        <div class="manufactory-filter">
+        <div class="restaurant-filter">
             <div class="label-sm">Manufactoy</div>
-            <div formArrayName="manufactories">
-                <div *ngFor="let m of manufactoryList; let i=index">
-                    <input type="checkbox" formControlName="{{i}}" (change)="onToggleItem(i, manufactories)">
+            <div formArrayName="restaurants">
+                <div *ngFor="let m of restaurantList; let i=index">
+                    <input type="checkbox" formControlName="{{i}}" (change)="onToggleItem(i, restaurants)">
                     {{m.name}}<br>
                 </div>
             </div>
@@ -54,19 +54,19 @@
 		        </div>
 	    	</div>
 	    </div>
-		<div class="manufactory-filter">
+		<div class="restaurant-filter">
 	        <div class="label-sm">Brand:</div>
 			<div class="input-group search-box">
-			  <input type="text" class="form-control" [(ngModel)]="manufactory" placeholder="{{'SEARCH_BY_ARTIST'|translate}}" aria-describedby="basic-addon2">
-			  <span class="input-group-addon" (click)="searchByManufactory(manufactory)"><i class="fa fa-search"></i></span>
+			  <input type="text" class="form-control" [(ngModel)]="restaurant" placeholder="{{'SEARCH_BY_ARTIST'|translate}}" aria-describedby="basic-addon2">
+			  <span class="input-group-addon" (click)="searchByRestaurant(restaurant)"><i class="fa fa-search"></i></span>
 			</div>
 
 	        <div class="item-list">
-			    <div class="row" *ngFor="let au of manufactories; let i=index">
+			    <div class="row" *ngFor="let au of restaurants; let i=index">
 			        <div *ngIf="i<8">
 			        	<div class="row checkbox-group">
-					        <input type="checkbox" checked="au.checked" [(ngModel)]="au.checked" (click)="searchByManufactory(au.data.name)">
-					        <label [ngClass]="{active: selected === au}" (click)="searchByManufactory(au)">{{au.data.name}}</label>
+					        <input type="checkbox" checked="au.checked" [(ngModel)]="au.checked" (click)="searchByRestaurant(au.data.name)">
+					        <label [ngClass]="{active: selected === au}" (click)="searchByRestaurant(au)">{{au.data.name}}</label>
 					        <span class="badge badge-secondary">{{au.data.n_products}}</span>     
 					    </div>
 					</div>

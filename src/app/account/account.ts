@@ -32,57 +32,47 @@ export class Country{
 }
 
 export class Province{
-    public id:string;
-    public name:string;
-    public country:Country;
-    constructor(o?:any){
-        if(o){
-            this.name = o.name;
-            this.id = o.id;
-            this.country = o.country;
-        }else{
-            this.country = new Country();
-        }
+  id:string;
+  name:string;
+  constructor(o?:any){
+    if(o){
+      this.id = o.id;
+      this.name = o.name;
     }
+  }
 }
 
 export class City{
-    public id:string;
-    public name:string;
-    public province:Province;
-    
-    constructor(o?:any){
-        if(o){
-            this.name = o.name;
-            if(o.province){
-              this.province = new Province(o.province);
-            }   
-            this.id = o.id;
-        }else{
-            this.province = new Province();
-        }
+  id:string;
+  name:string;
+  province:Province;
+  constructor(o?:any){
+    if(o){
+      this.id = o.id;
+      this.name = o.name;
+      this.province = o.province;
     }
+  }
 }
 
 export class Address{
-    public id:string;
-    public street:string;
-    public unit:string;
-    public postal_code:string;
-    public city:City;
-    
-    constructor(o:any = null){
-        if(o){
-            this.street = o.street;
-            this.unit = o.unit
-            this.postal_code = o.postal_code;
+  id:string;
+  street:string;
+  postal_code:string;
+  province:Province;
+  city:City;
+  lat:string;
+  lng:string;
 
-            if(o.city){
-              this.city = new City(o.city);
-            }
-            this.id = o.id;
-        }else{
-            this.city = new City();
-        }
+  constructor(o?:any){
+    if(o){
+      this.id = o.id;
+      this.street = o.street;
+      this.postal_code = o.postal_code;
+      this.province = o.province;
+      this.city = o.city;
+      this.lat = o.lat;
+      this.lng = o.lng;
     }
+  }
 }

@@ -1,19 +1,39 @@
+import {Address} from '../account/account';
+
 const MAX_N_PICTURES = 5;
 
-export class Manufactory{
-  public id:string;
-  public name:string;
-  public description:string;
-  public created:string;
-  public updated:string;
-    constructor(o?:any){
-        if(o){
-           this.id = o.id;
-            this.name = o.name;
-            this.description = o.description;
-            this.created = o.created;
-            this.updated = o.updated;
-      }
+export class Restaurant{
+  id:string;
+  name:string;
+  description:string;
+  categories:Category[];
+  address:Address;
+  image:any = { 'data':'', 'file':'' };
+  created:string;
+  updated:string;
+  
+  constructor(o?:any){
+      if(o){
+         this.id = o.id;
+          this.name = o.name;
+          this.description = o.description;
+          this.created = o.created;
+          this.updated = o.updated;
+          this.image = o.image;
+          if(o.address){
+            this.address = o.address; // province_id, city_id
+          }
+          
+          if(o.categories && o.categories.length > 0){
+            let cs = [];
+            for(let c of o.categories){
+              cs.push(new Category(c));
+            }
+            this.categories = cs;
+          }else{
+            this.categories = [];
+          }
+    }
   }
 }
 
@@ -126,7 +146,7 @@ export class Product{
   fpath:string; // default picture
   categories:Category[];
   color:Color;
-  manufactory:Manufactory;
+  restaurant:Restaurant;
   pictures:Picture[];
 
   public created:string;
@@ -171,8 +191,8 @@ export class Product{
                 this.color = new Color(o.color);
             }
 
-            if(o.manufactory){
-                this.manufactory = new Manufactory(o.manufactory);
+            if(o.restaurant){
+                this.restaurant = new Restaurant(o.restaurant);
             }
 
             // if(o.style){

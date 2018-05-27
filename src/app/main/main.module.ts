@@ -12,6 +12,7 @@ import { ContactComponent } from './contact/contact.component';
 import { LayoutComponent } from './layout/layout.component';
 import { CommerceService } from '../commerce/commerce.service';
 import { ProductComponent } from './product/product.component';
+import { RestaurantComponent } from './restaurant/restaurant.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ProductComponent } from './product/product.component';
     HomeComponent,
     ContactComponent,
     LayoutComponent,
-    ProductComponent
+    ProductComponent,
+    RestaurantComponent
   ],
   providers:[CommerceService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

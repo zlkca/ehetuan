@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommerceService } from '../../commerce/commerce.service';
-import { Product } from '../../commerce/commerce';
+import { Restaurant } from '../../commerce/commerce';
 import { SharedService } from '../../shared/shared.service';
 import { AuthService } from '../../account/auth.service';
 import { environment } from '../../../environments/environment';
@@ -16,16 +16,16 @@ export class HomeComponent implements OnInit {
     keyword:string;
     query:any;
     filter:any;
-    productList:Product[];
+    restaurantList:Restaurant[];
 
     ngOnInit() {
         let self = this;
-        this.commerceServ.getProductList().subscribe(
-            (r:Product[]) => {
-                self.productList = r;
+        this.commerceServ.getRestaurantList().subscribe(
+            (r:Restaurant[]) => {
+                self.restaurantList = r;
             },
             (err:any) => {
-                self.productList = [];
+                self.restaurantList = [];
             });
     }
 
@@ -50,25 +50,7 @@ export class HomeComponent implements OnInit {
       let query = {...self.filter, ...self.query};
       self.doSearch(query);
     }
-    // constructor(private authServ:AuthService, private router:Router, private msgServ:MsgService, private productServ:ProductService) {
-    //     let self = this;
-    //     // Event handler
-    //     this.msgServ.getMsg().subscribe(msg => {
-    //         if('OnSearch' === msg.name){
-    //             self.user = authServ.getUserStorage();
-    //             if(msg.query){
-    //                 self.doSearch(msg.query);
-    //             }else{
-    //                 self.doSearch('');
-    //             }
-    //         }
-    //     });
-    // }
-  
-    // search(keyword:string){
-    //   this.query = {keyword:keyword};
-    //   this.msgServ.emit({name:'OnClearFilter'});
-    // }
+
 
     getFilter(query?:any){
       let qs = [];
@@ -78,15 +60,15 @@ export class HomeComponent implements OnInit {
         qs.push('cats=' + s);
       }
 
-      if(query.manufactories && query.manufactories.length>0){
-        let s = query.manufactories.join(',');
-        qs.push('ms=' + s);
-      }
+      // if(query.restaurants && query.restaurants.length>0){
+      //   let s = query.restaurants.join(',');
+      //   qs.push('ms=' + s);
+      // }
 
-      if(query.colors && query.colors.length>0){
-        let s = query.colors.join(',');
-        qs.push('colors=' + s);
-      }
+      // if(query.colors && query.colors.length>0){
+      //   let s = query.colors.join(',');
+      //   qs.push('colors=' + s);
+      // }
       return qs;
     }
 
@@ -108,12 +90,12 @@ export class HomeComponent implements OnInit {
           }
         }
 
-        self.commerceServ.getProductList(query).subscribe(
-            (ps:Product[]) => {
-                self.productList = ps;//self.toProductGrid(data);
+        self.commerceServ.getRestaurantList(query).subscribe(
+            (ps:Restaurant[]) => {
+                self.restaurantList = ps;//self.toProductGrid(data);
             },
             (err:any) => {
-                self.productList = [];
+                self.restaurantList = [];
             }
         );
       }

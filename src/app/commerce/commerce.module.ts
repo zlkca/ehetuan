@@ -23,6 +23,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './commerce.service';
+import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 
 
 
@@ -48,7 +49,7 @@ import { TokenInterceptor } from './commerce.service';
       useClass: TokenInterceptor,
       multi: true
     }],
-   exports:[CategoryListComponent,CategoryFormComponent,ProductListComponent, ProductFilterComponent],
-   declarations:[CategoryListComponent,CategoryFormComponent,ProductListComponent, ProductFilterComponent]
+   exports:[CategoryListComponent,CategoryFormComponent,ProductListComponent,ProductFilterComponent, RestaurantListComponent],
+   declarations:[CategoryListComponent,CategoryFormComponent,ProductListComponent, ProductFilterComponent, RestaurantListComponent]
 })
 export class CommerceModule { }
