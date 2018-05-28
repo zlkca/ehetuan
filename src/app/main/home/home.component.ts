@@ -17,16 +17,33 @@ export class HomeComponent implements OnInit {
     query:any;
     filter:any;
     restaurantList:Restaurant[];
+    places:any[] = [];
+    center:any;
 
     ngOnInit() {
         let self = this;
         this.commerceServ.getRestaurantList().subscribe(
             (r:Restaurant[]) => {
                 self.restaurantList = r;
+
+                let a = [];
+                r.map(restaurant=>{ a.push({lat:parseFloat(restaurant.address.lat), lng:parseFloat(restaurant.address.lng)}) });
+                self.places = a;
             },
             (err:any) => {
                 self.restaurantList = [];
             });
+
+        if(window.navigator.geolocation){
+            window.navigator.geolocation.getCurrentPosition(pos=>{
+              let c = pos.coords;
+              self.center = {lat:c.latitude, lng:c.longitude};
+            }, 
+            err=>{
+              self.center = {lat: 43.7823332, lng: -79.392994};
+            });
+        }
+
     }
 
     constructor(private commerceServ:CommerceService, private sharedServ:SharedService) {

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 declare let google: any;
+declare let MarkerClusterer:any;
 
 @Component({
   selector: 'app-map',
@@ -8,36 +9,48 @@ declare let google: any;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
-	_coords:any;// = new google.maps.LatLng(43.643, -79.391);
-  _zoom:number = 14;
-
 	@Input() 
-	set coords(coords:any){
-		this._coords = coords;
-	}
-
+	center:any;
 
   @Input()
-  set zoom(zoom:any){
-    this._zoom = zoom;
-  }
+  zoom:any;
+
+  @Input()
+  places:any[];
+
   constructor() { }
 
   ngOnInit() {
-  	//this.initMap();
+  	this.initMap();
   }
 	
+  ngOnChanges(){
+    this.initMap();
+  }
+
 	initMap() {
 		let self = this;
-      //   var map = new google.maps.Map(document.getElementById('map'), {
-      //     zoom: self._zoom,
-      //     center: self._coords
-      //   });
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: self.zoom,
+        center: self.center
+      });
         
-      //   var marker = new google.maps.Marker({
-      //     position: self._coords,
-      //     map: map
-      //   });
-      // }
+    var marker = new google.maps.Marker({
+      position: self.center,
+      map: map
+    });
+
+    if(this.places && this.places.length){
+      var markers = this.places.map((location, i)=>{
+        return new google.maps.Marker({
+          position:location,
+          lable: 'Restaurant '+i
+        });
+      });
+
+      var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
     }
+  }
+
 }
