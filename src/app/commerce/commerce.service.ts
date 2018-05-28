@@ -14,18 +14,25 @@ const API_URL = environment.API_URL;
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor() {}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let token = localStorage.getItem('token-' + APP);
-    request = request.clone({
-      setHeaders: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Authorization': 'Bearer ' + btoa(token)
-      }
-    });
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {    
+    let index = request.url.indexOf('maps.google.com/maps/api');
+
+    if(index == -1){
+        let token = localStorage.getItem('token-' + APP);
+        request = request.clone({
+          setHeaders: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Authorization': 'Bearer ' + btoa(token)
+          }
+        });
+    }else{
+        request = request.clone({
+          setHeaders: {}
+        });
+    }
     return next.handle(request);
   }
 }
-
 
 @Injectable()
 export class CommerceService {
@@ -37,6 +44,18 @@ export class CommerceService {
 
     constructor(private http:HttpClient){ }
 
+    getLocation(addr:string):Observable<any>{
+        let url = 'http://maps.google.com/maps/api/geocode/json?address=' + addr + 'CA&sensor=false'
+        return this.http.get(url).map((res:any)=>{
+            if(res.results && res.results.length>0){
+                let r = res.results[0];
+                let postal_code = r.address_components[7].long_name;
+                return {...r.geometry.location, ...{'postal_code':postal_code}};//{lat: 43.7825004, lng: -79.3930389}
+            }else{
+                return null;
+            }
+        });
+    }
 
     getRestaurantList(query?:string):Observable<Restaurant[]>{
         const url = API_URL + 'restaurants' + (query ? query:'');
