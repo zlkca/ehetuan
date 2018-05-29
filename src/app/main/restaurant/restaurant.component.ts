@@ -1,34 +1,46 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/switchMap';
+import { CommerceService } from '../../commerce/commerce.service';
+import { Product } from '../../commerce/commerce';
+import { SharedService } from '../../shared/shared.service';
+import { AuthService } from '../../account/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
+  providers: [AuthService, CommerceService],
   styleUrls: ['./restaurant.component.scss']
 })
 export class RestaurantComponent implements OnInit {
 	productList:any = [];
+  restaurant_id :string;
 	
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private commerceServ:CommerceService, private router:Router, private route: ActivatedRoute) {
+  	let self = this;
   }
 
-}
+  ngOnInit() {
+    let self = this;
+    self.route.paramMap.switchMap((params: ParamMap) => 
+      // self.restaurant_id = params.get('id')
+      self.commerceServ.getProductList("?restaurant_id="+params.get('id')))
+        .subscribe(
+          (ps:Product[]) => {
+              self.productList = ps;
+          },
+          (err:any) => {
+              self.productList = [];
+          }
+        );
+    }
 
-// import { Component, OnInit } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { CommerceService } from '../../commerce/commerce.service';
-// import { Restaurant } from '../../commerce/commerce';
-// import { SharedService } from '../../shared/shared.service';
-// import { AuthService } from '../../account/auth.service';
-// import { environment } from '../../../environments/environment';
+  }
 
-// @Component({
-//   selector: 'app-home',
-//   templateUrl: './home.component.html',
-//   providers: [AuthService],
-//   styleUrls: ['./home.component.scss']
-// })
+
+
 // export class HomeComponent implements OnInit {
 //     keyword:string;
 //     query:any;
