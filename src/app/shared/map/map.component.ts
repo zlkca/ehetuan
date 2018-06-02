@@ -37,14 +37,28 @@ export class MapComponent implements OnInit {
         
     var marker = new google.maps.Marker({
       position: self.center,
-      map: map
+      map: map,
+      label: 'Me'
     });
 
     if(this.places && this.places.length){
+        // var infowindow = new google.maps.InfoWindow({
+        //   content: contentString
+        // });
+
+        // var marker = new google.maps.Marker({
+        //   position: uluru,
+        //   map: map,
+        //   title: 'Uluru (Ayers Rock)'
+        // });
+        // marker.addListener('click', function() {
+        //   infowindow.open(map, marker);
+        // });
+
       var markers = this.places.map((location, i)=>{
         return new google.maps.Marker({
           position:location,
-          lable: 'Restaurant '+i
+          label: self.places[i].name
         });
       });
 

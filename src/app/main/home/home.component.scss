@@ -21,25 +21,16 @@ $desktop: "(min-width: 1200px)";
 	    padding: 0px;
 	}
 
-	.left-side{
-		display:inline-block;
-		min-height:400px;
-		margin-left:0px;
-		margin-right:0px;
-		padding:10px 15px;
-
-		input.form-control{
-		  outline:none;
-		}
+	#userlocationinput{ //input.form-control
+	  outline:none;
+	  width:480px;
+	  float:left;
+	}
+	.btn-search{
+		height:40px;
+		float:left;
 	}
 
-	.right-side{
-		display:inline-block;
-		margin-left:0px;
-		margin-right:0px;
-		padding-left:0px;
-		padding-right:0px;
-	}
 	@media #{$desktop}{
 
 	}

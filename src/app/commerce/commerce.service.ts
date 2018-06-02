@@ -43,14 +43,28 @@ export class CommerceService {
     emptyImage = environment.APP_URL + '/media/empty.png';
 
     constructor(private http:HttpClient){ }
-
+    
     getLocation(addr:string):Observable<any>{
         let url = 'http://maps.google.com/maps/api/geocode/json?address=' + addr + 'CA&sensor=false'
         return this.http.get(url).map((res:any)=>{
             if(res.results && res.results.length>0){
                 let r = res.results[0];
-                let postal_code = r.address_components[7].long_name;
-                return {...r.geometry.location, ...{'postal_code':postal_code}};//{lat: 43.7825004, lng: -79.3930389}
+                let postal_code = '', sub_locality = '', locality = '';
+                for(let addr of r.address_components){
+                    if(addr.types.indexOf('postal_code')!=-1){
+                        postal_code = addr.long_name;
+                    }
+                    if(addr.types.indexOf('sublocality_level_1')!=-1 || addr.types.indexOf('sublocality')!=-1){
+                        sub_locality = addr.long_name;
+                    }
+                    if(addr.types.indexOf('locality')!=-1){
+                        locality = addr.long_name;
+                    }
+                }
+                return {...r.geometry.location, ...{'formatted_addr':r.formatted_address,
+                    'locality':locality,
+                    'sub_locality':sub_locality,
+                    'postal_code':postal_code}};//{lat: 43.7825004, lng: -79.3930389}
             }else{
                 return null;
             }
@@ -86,39 +100,39 @@ export class CommerceService {
         });
     }
 
-    saveRestaurant(d:Restaurant):Observable<Restaurant>{
-        const url = API_URL + 'restaurants';
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        let data = {
-          'id': d.id? d.id:'',
-          'name': d.name,
-          'description': d.description
-        }
-        return this.http.post(url, data, {'headers': headers}).map((res:any) => {
-            return new Restaurant(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
-    }
+    // saveRestaurant(d:Restaurant):Observable<Restaurant>{
+    //     const url = API_URL + 'restaurants';
+    //     let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    //     let data = {
+    //       'id': d.id? d.id:'',
+    //       'name': d.name,
+    //       'description': d.description
+    //     }
+    //     return this.http.post(url, data, {'headers': headers}).map((res:any) => {
+    //         return new Restaurant(res.data);
+    //     })
+    //     .catch((err) => {
+    //         return Observable.throw(err.message || err);
+    //     });
+    // }
 
-    rmRestaurant(id:number):Observable<Restaurant[]>{
-        const url = API_URL + 'restaurants/' + id;
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.delete(url, {'headers': headers}).map((res:any) => {
-            let a:Restaurant[] = [];
-            let d = res.data;
-            if( d && d.length > 0){
-                for(var i=0; i<d.length; i++){
-                    a.push(new Restaurant(d[i]));
-                }
-            }
-            return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
-    }
+    // rmRestaurant(id:number):Observable<Restaurant[]>{
+    //     const url = API_URL + 'restaurants/' + id;
+    //     let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    //     return this.http.delete(url, {'headers': headers}).map((res:any) => {
+    //         let a:Restaurant[] = [];
+    //         let d = res.data;
+    //         if( d && d.length > 0){
+    //             for(var i=0; i<d.length; i++){
+    //                 a.push(new Restaurant(d[i]));
+    //             }
+    //         }
+    //         return a;
+    //     })
+    //     .catch((err) => {
+    //         return Observable.throw(err.message || err);
+    //     });
+    // }
 
     getCategoryList(query?:string):Observable<Category[]>{
         const url = this.API_URL + 'categories' + (query ? query:'');

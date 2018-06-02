@@ -5,6 +5,9 @@ import { AuthService } from './account/auth.service';
 import { SharedService } from './shared/shared.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { environment } from '../environments/environment';
+
+const APP = environment.APP;
 
 @Component({
   providers: [AuthService],
@@ -26,19 +29,25 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     let self = this;
 
-    self.authServ.hasLoggedIn().subscribe(
-      (r:boolean)=>{
-        self.isLogin = r? true : false;
+    let s = localStorage.getItem('location-'+APP);
+    if(s){
+      self.toPage('home');
+    }else{
+      self.toPage('restaurants');
+    }
+    // self.authServ.hasLoggedIn().subscribe(
+    //   (r:boolean)=>{
+    //     self.isLogin = r? true : false;
 
-        if(self.isLogin){
-          self.sharedServ.emitMsg({name:'OnUpdateHeader'});
-          self.toPage("home");
-        }else{
-          self.toPage("login");
-        }
-      },(err:any)=>{
-        self.toPage("login");
-      });
+    //     if(self.isLogin){
+    //       self.sharedServ.emitMsg({name:'OnUpdateHeader'});
+    //       self.toPage("home");
+    //     }else{
+    //       self.toPage("login");
+    //     }
+    //   },(err:any)=>{
+    //     self.toPage("login");
+    //   });
   }
 
   toPage(url:string){

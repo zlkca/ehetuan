@@ -19,22 +19,10 @@ export class RestaurantGridComponent implements OnInit {
     filter:any;
     restaurantList:Restaurant[];
     places:any[] = [];
-    center:any;
+    center:any = {lat:43.761539,lng:-79.411079};
 
     ngOnInit() {
-        let self = this;
-
-        this.commerceServ.getRestaurantList().subscribe(
-            (r:Restaurant[]) => {
-                self.restaurantList = r;
-
-                let a = [];
-                r.map(restaurant=>{ a.push({lat:parseFloat(restaurant.address.lat), lng:parseFloat(restaurant.address.lng)}) });
-                self.places = a;
-            },
-            (err:any) => {
-                self.restaurantList = [];
-            });
+        
 
         // if(window.navigator.geolocation){
         //     window.navigator.geolocation.getCurrentPosition(pos=>{
@@ -45,16 +33,21 @@ export class RestaurantGridComponent implements OnInit {
         //       self.center = {lat: 43.7823332, lng: -79.392994};
         //     });
         // }
-
     }
-
+    ngAfterViewInit(){
+      let self = this;
+      
+    }
     constructor(private commerceServ:CommerceService, private sharedServ:SharedService) {
         let self = this;
 
         //get user's location
         let s:string = localStorage.getItem('location-'+APP);
         let loc = JSON.parse(s);
-        self.center = {lat:loc.lat, lng:loc.lng};
+        
+        if(loc){
+          self.center = {lat:loc.lat, lng:loc.lng};
+        }
 
         // setup event listener
         this.sharedServ.getMsg().subscribe(msg => {
@@ -62,19 +55,21 @@ export class RestaurantGridComponent implements OnInit {
                 if(msg.query){
                   self.filter = msg.query;
                   let query = {...self.filter, ...self.query};
-                  self.doSearch(query);
+                  self.doSearchRestaurants(query);
                 }else{
-                    self.doSearch(self.query.keyword);
+                    self.doSearchRestaurants(self.query.keyword);
                 }
             }
         });
+
+        self.doSearchRestaurants(self.center);
     }
   
-    search(keyword:string){
+    searchByKeyword(keyword:string){
       let self = this;
       this.query = {'keyword': keyword};
       let query = {...self.filter, ...self.query};
-      self.doSearch(query);
+      self.doSearchRestaurants(query);
     }
 
 
@@ -98,27 +93,38 @@ export class RestaurantGridComponent implements OnInit {
       return qs;
     }
 
-    doSearch(query?:any){
-        //query --- eg. {'status':'active','user_id':self.user_id}
+    doSearchRestaurants(query?:any){
+        //query --- eg. {}
         let self = this;
         let qs = self.getFilter(query);
+        let s = '';
+        let conditions = [];
 
         if(qs.length>0){
-          query = '?' + qs.join('&');
-          if(this.query && this.query.keyword){
-            query += '&keyword=' + this.query.keyword;
-          }
-        }else{
-          if(this.query && this.query.keyword){
-            query = '?keyword=' + this.query.keyword;
-          }else{
-            query = null;
-          }
+          conditions.push(qs.join('&'));
+        }
+        if(query && query.keyword){
+          conditions.push('keyword=' + query.keyword);
+        }
+        if(query && query.lat && query.lng){
+          conditions.push('lat=' + query.lat + '&lng=' + query.lng);
         }
 
-        self.commerceServ.getRestaurantList(query).subscribe(
+        if(conditions.length>0){
+          s = '?' + conditions.join('&');
+        }
+
+        self.commerceServ.getRestaurantList(s).subscribe(
             (ps:Restaurant[]) => {
                 self.restaurantList = ps;//self.toProductGrid(data);
+                let a = [];
+                ps.map(restaurant=>{ 
+                  a.push({lat:parseFloat(restaurant.address.lat), 
+                    lng:parseFloat(restaurant.address.lng),
+                    name:restaurant.name
+                  }) 
+                });
+                self.places = a;
             },
             (err:any) => {
                 self.restaurantList = [];

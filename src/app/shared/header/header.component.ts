@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit {
     user:any;
     keyword:string;
     term$ = new Subject<string>();
+    locality = '';
 
     constructor(private router:Router, private authServ:AuthService, private commerceServ:CommerceService, 
         private sharedServ:SharedService) {
@@ -35,20 +36,34 @@ export class HeaderComponent implements OnInit {
         //     .subscribe((keyword:any) => {
         //         self.search(keyword);
         //     });
+
+
+        let s = localStorage.getItem('location-'+APP);
+        let addr = JSON.parse(s);
+        if(addr){
+            self.locality = addr.sub_locality;
+        }
+        
     }
 
     ngOnInit() {
         let self = this;
-        // this.sharedServ.getMsg().subscribe(msg => {
-        //     if('OnUpdateHeader' === msg.name){
-        //         self.authServ.hasLoggedIn().subscribe(
-        //           (r)=>{
-        //             self.isLogin = r;
-        //           },(err)=>{
-        //             self.isLogin = false;
-        //           });
-        //     }
-        // });
+        this.sharedServ.getMsg().subscribe(msg => {
+            if('OnUpdateHeader' === msg.name){
+                if(msg && msg.locality){
+                    self.locality = msg.locality;
+                }else{
+                    self.locality = '';
+                }
+
+                // self.authServ.hasLoggedIn().subscribe(
+                //   (r)=>{
+                //     self.isLogin = r;
+                //   },(err)=>{
+                //     self.isLogin = false;
+                //   });
+            }
+        });
 
         // self.authServ.hasLoggedIn().subscribe(
         //   (r)=>{
@@ -73,6 +88,7 @@ export class HeaderComponent implements OnInit {
     }
 
     changeAddress(){
+        this.closeNavMenu();
         localStorage.removeItem('location-'+APP);
         this.router.navigate(['home']);
     }

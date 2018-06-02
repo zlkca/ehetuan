@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
           this.gAutocomplete = new google.maps.places.Autocomplete(input, {bounds:defaultBounds});
           this.gAutocomplete.addListener('place_changed', ()=>{
             let place = self.gAutocomplete.getPlace();
-            let addr = {street_number:'', route:'', sublocality_level_1:'', locality:'', administrative_area_level_1:'', postal_code:'', lat:'', lng:''};
+            let addr = {street_number:'', street_name:'', sub_locality:'', city:'', province:'', postal_code:'', lat:'', lng:''};
             for(let compo of place.address_components){
               // switch(compo.types[0]){
               //   case 'street_number':addr.streetNum = compo.long_name; break;
@@ -80,19 +80,50 @@ export class HomeComponent implements OnInit {
               //   case 'province': addr.province = compo.long_name; break;
               //   case 'postal_code': addr.postalCode = compo.long_name; break;
               // }
-              let key = compo.types[0];
-              if(key in addr){
-                addr[key] = compo.long_name;
+
+              if(compo.types.indexOf('street_number')!=-1){
+                  addr.street_number = compo.long_name;
+              }
+              if(compo.types.indexOf('route')!=-1){
+                  addr.street_name = compo.long_name;
+              }
+              if(compo.types.indexOf('postal_code')!=-1){
+                  addr.postal_code = compo.long_name;
+              }
+              if(compo.types.indexOf('sublocality_level_1')!=-1 || compo.types.indexOf('sublocality')!=-1){
+                  addr.sub_locality = compo.long_name;
+              }
+              if(compo.types.indexOf('locality')!=-1){
+                  addr.city = compo.long_name;
+              }
+              if(compo.types.indexOf('administrative_area_level_1')!=-1){
+                  addr.province = compo.long_name;
               }
               
+              addr.lat = place.geometry.location.lat();
+              addr.lng = place.geometry.location.lng();
+              
             }
-            let sAddr = `${addr.street_number} ${addr.route}, ${addr.locality}, ${addr.administrative_area_level_1}`;
+            let sAddr = `${addr.street_number} ${addr.street_name}, ${addr.sub_locality}, ${addr.province}, ${addr.postal_code}`;
             
             self.commerceServ.getLocation(sAddr).subscribe(ret=>{
-                addr.lat = ret.lat;
-                addr.lng = ret.lng;
-                localStorage.setItem('location-'+APP, JSON.stringify(addr));
-                self.router.navigate(['restaurants']);
+                if(ret && ret.lat && ret.lng){
+                  addr.lat = ret.lat;
+                  addr.lng = ret.lng;
+                  localStorage.setItem('location-'+APP, JSON.stringify(addr));
+
+                  let locality = ret.sub_locality;
+                  if(locality){
+                    self.sharedServ.emitMsg({name:'OnUpdateHeader', 'locality':locality});
+                  }else{
+                    locality = ret.locality
+                    self.sharedServ.emitMsg({name:'OnUpdateHeader', 'locality':locality});
+                  }
+                  
+                  //self.router.navigate(['restaurants']);
+                }else{
+
+                }
             });
           });
         }
@@ -118,7 +149,10 @@ export class HomeComponent implements OnInit {
 
     }
 
-
+    search(){
+      let self = this;
+      self.router.navigate(['restaurants']);
+    }
 
     seachByLocation(keyword:string){
       //self.commerceServ.getLocation()
