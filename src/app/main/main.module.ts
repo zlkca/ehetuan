@@ -13,6 +13,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { CommerceService } from '../commerce/commerce.service';
 import { ProductComponent } from './product/product.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
+import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { RestaurantComponent } from './restaurant/restaurant.component';
     ContactComponent,
     LayoutComponent,
     ProductComponent,
-    RestaurantComponent
+    RestaurantComponent,
+    RestaurantGridComponent
   ],
   providers:[CommerceService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

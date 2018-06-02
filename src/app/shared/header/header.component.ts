@@ -11,6 +11,8 @@ import 'rxjs/add/operator/switchMap';
 import { environment } from '../../../environments/environment';
 declare var $: any;
 
+const APP = environment.APP;
+
 @Component({
     providers:[AuthService, CommerceService],
     selector: 'app-header',
@@ -68,6 +70,11 @@ export class HeaderComponent implements OnInit {
     toPage(url){
       this.closeNavMenu();
       this.router.navigate([url]);
+    }
+
+    changeAddress(){
+        localStorage.removeItem('location-'+APP);
+        this.router.navigate(['home']);
     }
 
     changeLanguage(code){

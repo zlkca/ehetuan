@@ -4,6 +4,8 @@ import { RouterModule, Routes }  from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+import { NgReduxModule, NgRedux } from '@angular-redux/store';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -22,6 +24,7 @@ import { LoginComponent } from './account/login/login.component';
 // import { PaymentComponent } from './products/payment/payment.component';
 //import { AdminLoginComponent } from './admin/main/login/login.component';
 
+import { RestaurantGridComponent } from './main/restaurant-grid/restaurant-grid.component';
 import { ProductListComponent } from './commerce/product-list/product-list.component';
 import { ProductComponent } from './main/product/product.component';
 import { RestaurantComponent } from './main/restaurant/restaurant.component';
@@ -63,6 +66,7 @@ const appRoutes: Routes = [
   //       { path: 'home', component:HomeComponent }
   //     ]
   // }
+        { path: 'restaurants', component:RestaurantGridComponent },
         { path: 'restaurant/:id', component:RestaurantComponent },
         { path: 'products', component:ProductListComponent },
         { path: 'product/:id', component:ProductComponent },
@@ -85,6 +89,7 @@ const appRoutes: Routes = [
       // { enableTracing: true } // <-- debugging purposes only
     ),
     NgbModule.forRoot(),
+    NgReduxModule,
     SharedModule,
     AccountModule,
     CommerceModule,

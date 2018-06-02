@@ -3,13 +3,7 @@ $mobile: "(min-width:576px) and (max-width: 767px)";
 $tablet: "(min-width: 768px) and (max-width: 1199px)";
 $desktop: "(min-width: 1200px)";
 
-.home-page{
-
-	.pac-container:after {
-	    background-image: none !important;
-	    height: 0px;
-	}
-
+.page{
 	.row{
 		margin-left:0px;
 		margin-right:0px;

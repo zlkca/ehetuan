@@ -380,7 +380,7 @@ body{
     }
   }// end of auth-form
 
-
+.pac-container:after{display:none !important;}
 
 
   @media #{$desktop}{
