@@ -74,11 +74,11 @@ export class AuthService {
         });
     }
 
-    signup(username: string, email: string, password: string): Observable<User> {
+    signup(username: string, email: string, password: string, type:string): Observable<User> {
         // note: http.post return { token:'x', data: user data }
         const url = this.API_URL + 'signup';
         let self = this;
-        let body = {"username": username, "email": email, "password": password};
+        let body = {"username": username, "email": email, "password": password, "type":type};
         let headers = new HttpHeaders().set('Content-Type', "application/json");
         return this.http.post(url, body, {'headers': headers}).map((res:any) => {
             localStorage.setItem('token-' + this.APP, res.token);

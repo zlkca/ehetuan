@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
               if(user && user.username){
                   //self.sharedServ.emitMsg({name:'OnUpdateHeader'});
                   self.user = user;
-                  self.toHome();
+                  self.toPage('home');
               }else{
                 self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";          
               }
@@ -96,9 +96,9 @@ export class LoginComponent implements OnInit {
     this.errMsg = "";
   }
 
-  toHome(){
-    //this.router.navigateByUrl("/");
-    this.router.navigate(["home"]);
+
+  toPage(page:string){
+    this.router.navigate([page]);
   }
 
 }

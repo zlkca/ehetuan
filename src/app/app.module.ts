@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { NgReduxModule, NgRedux } from '@angular-redux/store';
+import { rootReducer, IAppState, INITIAL_STATE } from './store';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -14,7 +15,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './main/home/home.component';
 // import { ContactComponent } from './main/contact/contact.component';
 import { LoginComponent } from './account/login/login.component';
-// import { SignupComponent } from './users/signup/signup.component';
+import { SignupComponent } from './account/signup/signup.component';
+
 // import { ForgetPasswordComponent } from './users/forget-password/forget-password.component';
 // import { ProductListComponent } from './products/product-list/product-list.component';
 // import { ShoppingCartComponent } from './products/shopping-cart/shopping-cart.component';
@@ -22,8 +24,7 @@ import { LoginComponent } from './account/login/login.component';
 // import { ProfileEditComponent } from './users/profile-edit/profile-edit.component';
 // import { ChangePasswordComponent } from './users/change-password/change-password.component';
 // import { PaymentComponent } from './products/payment/payment.component';
-//import { AdminLoginComponent } from './admin/main/login/login.component';
-
+import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { RestaurantGridComponent } from './main/restaurant-grid/restaurant-grid.component';
 import { ProductListComponent } from './commerce/product-list/product-list.component';
 import { ProductComponent } from './main/product/product.component';
@@ -45,7 +46,7 @@ import { LayoutComponent } from './main/layout/layout.component';
 
 const appRoutes: Routes = [
   // { path: 'login', component:LoginComponent },
-  // { path: 'signup', component:SignupComponent },
+  
   // { path: 'contact-us', component:ContactComponent },
   // { path: 'product-list', component:ProductListComponent },
   // { path: 'product/:id', component:ProductDetailComponent },
@@ -66,13 +67,16 @@ const appRoutes: Routes = [
   //       { path: 'home', component:HomeComponent }
   //     ]
   // }
+      { path: 'dashboard', component:DashboardComponent },
         { path: 'restaurants', component:RestaurantGridComponent },
         { path: 'restaurant/:id', component:RestaurantComponent },
         { path: 'products', component:ProductListComponent },
         { path: 'product/:id', component:ProductComponent },
         { path: 'login', component:LoginComponent },
+        { path: 'signup', component:SignupComponent },
         { path: 'home', component:HomeComponent }
 ];
+
 
 
 @NgModule({
@@ -100,4 +104,8 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent],
   
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(ngRedux:NgRedux<IAppState>){
+    ngRedux.configureStore(rootReducer, INITIAL_STATE);
+  }
+}

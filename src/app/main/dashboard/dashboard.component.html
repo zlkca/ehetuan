@@ -1,0 +1,18 @@
+<p style="padding-top: 100px;">
+  dashboard works!
+</p>
+    <form [formGroup]="form" class="restaurant-form">
+        <div class="row">
+            <div class="label-sm">Dashboard Name:</div>
+            <input name="name" formControlName="name"/>
+            <div *ngIf="name.touched && name.invalid" class="alert alert-danger">
+                <div *ngIf="name.errors.required">Dashboard Name is required</div>
+                <div *ngIf="name.errors.minlength">Dashboard Name should be minimum 3 characters.</div>
+            </div>
+        </div>
+        <button (click)="submit()">Submit</button>
+    </form>
+  <app-blog></app-blog>
+
+  <app-comment></app-comment>
+

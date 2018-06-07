@@ -268,11 +268,17 @@ body{
       }
 
       input{
-          width:480px;
+        width:480px;
       }
 
       input.input-dt{
           width:440px;
+      }
+
+      input[type="checkbox"], input[type="radio"] {
+          margin:6px;
+          width:18px;
+          height:18px;
       }
 
       .upload-input{

@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { SharedModule } from '../shared/shared.module';
@@ -14,11 +14,14 @@ import { CommerceService } from '../commerce/commerce.service';
 import { ProductComponent } from './product/product.component';
 import { RestaurantComponent } from './restaurant/restaurant.component';
 import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { BlogComponent } from './blog/blog.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
     CommerceModule,
@@ -31,7 +34,10 @@ import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.compo
     LayoutComponent,
     ProductComponent,
     RestaurantComponent,
-    RestaurantGridComponent
+    RestaurantGridComponent,
+    DashboardComponent,
+    BlogComponent,
+    CommentComponent
   ],
   providers:[CommerceService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

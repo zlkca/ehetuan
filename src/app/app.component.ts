@@ -30,24 +30,27 @@ export class AppComponent implements OnInit {
     let self = this;
 
     let s = localStorage.getItem('location-'+APP);
-    if(s){
-      self.toPage('home');
-    }else{
-      self.toPage('restaurants');
-    }
-    // self.authServ.hasLoggedIn().subscribe(
-    //   (r:boolean)=>{
-    //     self.isLogin = r? true : false;
-
-    //     if(self.isLogin){
-    //       self.sharedServ.emitMsg({name:'OnUpdateHeader'});
-    //       self.toPage("home");
-    //     }else{
-    //       self.toPage("login");
-    //     }
-    //   },(err:any)=>{
-    //     self.toPage("login");
-    //   });
+    // if(s){
+    //   self.toPage('home');
+    // }else{
+    //   self.toPage('restaurants');
+    // }
+    self.authServ.hasLoggedIn().subscribe(
+      (r:any)=>{
+        self.isLogin = r? true : false;
+        if(self.isLogin){
+          self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
+          if(r.type=='business'){
+            self.toPage("dashboard");
+          }else{
+            self.toPage("home");
+          }
+        }else{
+          self.toPage("login");
+        }
+      },(err:any)=>{
+        self.toPage("login");
+      });
   }
 
   toPage(url:string){

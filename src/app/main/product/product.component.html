@@ -12,10 +12,6 @@
                     <span class="w-inline title-sm">Year:</span>
                     <span class="w-inline text-sm">{{product.year}}</span>
                 </div>
-              <!--   <div class="w-inline" style="width:150px;">
-                    <span class="w-inline title-sm">{{'OWNER'|translate}}:</span>
-                    <span class="w-inline text-sm"><a (click)="toOwner()">{{p.owner.username}}</a></span>
-                </div> [thumbnails]="p.items"-->
             </div>
         </div>
 
@@ -30,10 +26,6 @@
                         <div class="w-row title-sm">Dimension:</div>
                         <div class="w-row text-sm">{{product.dimension}}</div>
                     </div>
-                  <!--   <div class="detail-col">
-                        <div class="w-row title-sm">{{'NUM_OF_COPIES'|translate}}:</div>
-                        <div class="w-row text-sm">{{p.n_copies}}</div>
-                    </div> -->
                 </div>
             </div><!-- end of detail-block -->
         </div><!--end of left-holder -->
@@ -41,7 +33,6 @@
         <div class="col-sm-12 col-md-5 right-side">
             <div class="cart-block">
                 <div class="text-lg item-price">{{product.price | currency:'USD':true }}</div>
-                <!-- <div *ngIf="product.price==0" class="text-lg item-price">Unknow Price</div> -->
                 <div class="w-row text-md">{{product.name}}</div>
                 <div class="w-row">
                     <div class="w-inline text-xs">{{product.restaurant.name}}</div>

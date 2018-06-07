@@ -13,20 +13,16 @@
 			<input name="username" type="text" [(ngModel)]="username" (ngModelChange)="onInputChange($event)" required/>
 		</div>
 
-<!-- 		<div class="row user-type">
-			<div class="row">	
-			    <div>Business</div>
-			    <input type="radio" name="user-type" value="orgnizer" [(ngModel)]="userType" />
+		<div class="row user-type">
+			<div class="row">
+			    <input type="radio" name="user-type" value="user" [(ngModel)]="userType" />
+			    <label>Individual User</label>
 			</div>
-			<div class="row">	
-			    <div>Consumer</div>
-			    <input type="radio" name="user-type" value="guest" [(ngModel)]="userType" />
+			<div class="row">
+			    <input type="radio" name="user-type" value="business" [(ngModel)]="userType" />
+			    <label>Business User</label>
 			</div>
 	    </div>
-		<p>	
-		    <input type="radio" name="gender" value="male" [(ngModel)]="gender" />	{{'MALE'|translate}}
-			<input type="radio" name="gender" value="femal" [(ngModel)]="gender" /> {{'FEMALE'|translate}}
-	    </p> -->
 
 		<div class="row">
 			<div class="label-sm">Email</div>
