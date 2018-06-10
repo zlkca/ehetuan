@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/switchMap';
+
 import { CommerceService } from '../../commerce/commerce.service';
 import { Product } from '../../commerce/commerce';
 import { SharedService } from '../../shared/shared.service';
 import { AuthService } from '../../account/auth.service';
 import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-restaurant',
@@ -17,8 +19,19 @@ import { environment } from '../../../environments/environment';
 export class RestaurantComponent implements OnInit {
 	productList:any = [];
   restaurant_id :string;
-	
-  constructor(private commerceServ:CommerceService, private router:Router, private route: ActivatedRoute) {
+	subscription;
+  cart;
+
+  constructor(private commerceServ:CommerceService, 
+    private router:Router, 
+    private route: ActivatedRoute,
+    // private ngRedux:NgRedux<IAppState>,
+    // private actions: CartActions
+    ) {
+
+    // this.subscription = ngRedux.select<ICartItem[]>('cart').subscribe(
+    //   cart=> this.cart = cart);
+  
   	let self = this;
   }
 
@@ -36,6 +49,7 @@ export class RestaurantComponent implements OnInit {
           }
         );
     }
+
 
   }
 

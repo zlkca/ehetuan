@@ -10,7 +10,8 @@
 			<!-- <div class="text-sm">{{p.description}}</div> -->
 		</div>
 		<div class="btn-holder">
-			<div class="btn btn-xs pull-right">Add</div>
+			<div class="btn btn-xs pull-right" (click)="addToCart(p)">Add</div>
+			<div class="btn btn-xs pull-right" (click)="removeFromCart(p)">Remove</div>
 		</div>
 	</div>
 </div>

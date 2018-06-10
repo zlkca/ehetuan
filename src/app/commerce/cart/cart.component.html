@@ -1,0 +1,10 @@
+<div class="cart">
+	<div *ngFor="let item of cart.items">
+		<div class="row">
+			<div class="item-col">{{item.name}}</div>
+			<div class="item-col">{{item.quantity}} 份</div>
+			<div class="item-col">${{item.price * item.quantity}}</div>
+		</div>
+	</div>
+	<div>Total:{{total}}</div>
+</div>

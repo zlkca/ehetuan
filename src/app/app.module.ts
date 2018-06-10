@@ -105,7 +105,7 @@ const appRoutes: Routes = [
   
 })
 export class AppModule { 
-  constructor(ngRedux:NgRedux<IAppState>){
+  constructor(ngRedux:NgRedux<any>){
     ngRedux.configureStore(rootReducer, INITIAL_STATE);
   }
 }

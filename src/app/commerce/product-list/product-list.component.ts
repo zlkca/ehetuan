@@ -3,6 +3,11 @@ import { Router } from '@angular/router';
 import { CommerceService } from '../commerce.service';
 import { Product } from '../commerce';
 import { environment } from '../../../environments/environment';
+import { NgRedux } from '@angular-redux/store';
+import { IAppState } from '../../store';
+import { ICart, CartActions } from '../cart/cart.actions';
+
+
 @Component({
     providers:[CommerceService],
     selector: 'app-product-list',
@@ -12,12 +17,9 @@ import { environment } from '../../../environments/environment';
 export class ProductListComponent implements OnInit {
     productList:Product[] = [];
     MEDIA_URL:string = environment.MEDIA_URL;
-    //_data:any;
-  
-    // @Input()
-    // set data(d:any){
-    //     this._data = d;
-    // }
+    subscription:any;
+    cart:any;
+
     @Input() data: Product[];
 
     ngOnInit(){
@@ -31,13 +33,28 @@ export class ProductListComponent implements OnInit {
         //     });
     }
 
-    constructor(private commerceServ:CommerceService, private router:Router) {
+    constructor(private commerceServ:CommerceService, 
+        private router:Router,
+        private ngRedux:NgRedux<IAppState>//,
+        // private actions: CartActions
+        ) {
 
+        // this.subscription = ngRedux.select<ICart>('cart').subscribe(
+        //   cart=> this.cart = cart);
     }
 
     toDetail(p){
         this.router.navigate(["product/"+p.id]);
     }
+
+    addToCart(p){
+      this.ngRedux.dispatch({type:CartActions.ADD_TO_CART, payload:{pid:p.id, name:p.name, price:p.price}});
+    }
+
+    removeFromCart(p){
+      this.ngRedux.dispatch({type:CartActions.REMOVE_FROM_CART, payload:{pid:p.id, name:p.name, price:p.price}});
+    }
+
 
 }
 
