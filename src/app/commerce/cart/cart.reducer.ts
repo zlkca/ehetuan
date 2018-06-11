@@ -41,6 +41,8 @@ export function cartReducer(state:ICart={items:[]}, action:any){
 				}else{
 					return state;
 				}
+			case CartActions.CLEAR_CART:
+				return { ...state, items:[] }
 		}
 	}
 	

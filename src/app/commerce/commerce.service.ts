@@ -553,16 +553,17 @@ export class CommerceService {
         });
     }
 
-    saveCart(d:Cart):Observable<Cart>{
-        const url = this.API_URL + 'cart';
-        let data = {
+    checkout(d:Cart):Observable<boolean>{
+        const url = this.API_URL + 'orders';
+
+        return this.http.post(url, {
             'id': (d.id? d.id:''),
-          'user_id': d.user.id,
-          'created': d.created,
-          'updated': d.updated,
-        }
-        return this.http.post(url, data).map((res:any) => {
-            return new Cart(res.data);
+            'items': d.items, //{pid:x, quantity:number}
+            // 'user_id': d.user.id,
+            // 'created': d.created,
+            // 'updated': d.updated,
+        }).map((res:any) => {
+            return res.success;
         })
         .catch((err) => {
             return Observable.throw(err.message || err);
@@ -613,23 +614,23 @@ export class CommerceService {
         });
     }
 
-    saveCartItem(d:CartItem):Observable<CartItem>{
-        const url = this.API_URL + 'cartItem';
-        let data = {
-            'id': (d.id? d.id:''),
-          'quantity': d.quantity,
-          'product_id': d.product.id,
-          'cart_id': d.cart.id,
-          'created': d.created,
-          'updated': d.updated,
-        }
-        return this.http.post(url, data).map((res:any) => {
-            return new CartItem(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
-    }
+    // saveCartItem(d:CartItem):Observable<CartItem>{
+    //     const url = this.API_URL + 'cartItem';
+    //     let data = {
+    //         'id': (d.id? d.id:''),
+    //       'quantity': d.quantity,
+    //       'product_id': d.product.id,
+    //       'cart_id': d.cart.id,
+    //       'created': d.created,
+    //       'updated': d.updated,
+    //     }
+    //     return this.http.post(url, data).map((res:any) => {
+    //         return new CartItem(res.data);
+    //     })
+    //     .catch((err) => {
+    //         return Observable.throw(err.message || err);
+    //     });
+    // }
 
     rmCartItem(id:number):Observable<CartItem[]>{
         const url = this.API_URL + 'cartItem/' + id;

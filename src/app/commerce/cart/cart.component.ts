@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
 import { ICart, CartActions } from './cart.actions';
+import { CommerceService } from '../commerce.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,14 +10,21 @@ import { ICart, CartActions } from './cart.actions';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-
+	total:number = 0;
 	subscription;
 	cart;
 
-	constructor(private ngRedux:NgRedux<IAppState>) {
+	constructor(private ngRedux:NgRedux<IAppState>, private commerceServ:CommerceService) {
+		let self = this;
+
 		this.subscription = ngRedux.select<ICart>('cart').subscribe(
-			cart=> this.cart = cart
-		);
+			cart=> {
+				this.total = 0;
+				this.cart = cart;
+				this.cart.items.map(x=> {
+					self.total += x.price * x.quantity;
+				});
+			});
 	}
 
   ngOnInit() {
@@ -29,6 +37,15 @@ export class CartComponent implements OnInit {
 
 	removeFromCart(p){
 	  this.ngRedux.dispatch({type:CartActions.REMOVE_FROM_CART, payload:{pid:p.id}});
+	}
+
+	checkout(){
+		let self = this;
+		this.commerceServ.checkout(this.cart).subscribe(r=>{
+			if(r){
+				self.ngRedux.dispatch({type:CartActions.CLEAR_CART, payload:{}})
+			}
+		})
 	}
 
   ngOnDestroy(){

@@ -204,46 +204,40 @@ export class Product{
   }
 }
 
+export class CartItem{
+  quantity:number;
+  product:any = {id:1};
+  constructor(o?:any){
+    if(o){
+      this.quantity = o.quantity;
+      if(o.product){
+          this.product = o.product;
+      }
+    }
+  }
+}
 
 export class Cart{
-  public id:string;
-  public user:any = {id:1};
-  public created:string;
-  public updated:string;
-    constructor(o?:any){
-        if(o){
-           this.id = o.id;
-            if(o.user){
-                this.user = o.user;
-            }
-            this.created = o.created;
-            this.updated = o.updated;
+  id:string;
+  user:any = {id:1};
+  items:CartItem[];
+  created:string;
+  updated:string;
+
+  constructor(o?:any){
+    if(o){
+      this.id = o.id;
+      if(o.user){
+          this.user = o.user;
       }
+      this.items = o.items;
+      this.created = o.created;
+      this.updated = o.updated;
+    }
   }
 }
 
-export class CartItem{
-  public id:string;
-  public quantity:number;
-  public product:any = {id:1};
-  public cart:any = {id:1};
-  public created:string;
-  public updated:string;
-    constructor(o?:any){
-        if(o){
-           this.id = o.id;
-            this.quantity = o.quantity;
-            if(o.product){
-                this.product = o.product;
-            }
-            if(o.cart){
-                this.cart = o.cart;
-            }
-            this.created = o.created;
-            this.updated = o.updated;
-      }
-  }
-}
+
 
 export class Order{
   public id:string;
