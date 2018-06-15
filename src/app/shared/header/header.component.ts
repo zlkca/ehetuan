@@ -109,4 +109,9 @@ export class HeaderComponent implements OnInit {
           this.router.navigate(['home'])
         }
     }
+
+    toBusinessCenter(){
+        // if login and user is business, redirect to business center, otherwise redirect to business signup
+        this.router.navigate(['institution-signup']);
+    }
 }

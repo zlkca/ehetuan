@@ -17,6 +17,7 @@ import { MapComponent } from './map/map.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ProductGridComponent } from './product-grid/product-grid.component';
+import { AddressInputComponent } from './address-input/address-input.component';
 // import { PageService } from '../pages/page.service';
 // import { PagesModule } from '../pages/pages.module';
 @NgModule({
@@ -40,9 +41,11 @@ import { ProductGridComponent } from './product-grid/product-grid.component';
     MapComponent,
     HeaderComponent,
     FooterComponent,
-    ProductGridComponent
+    ProductGridComponent,
+    AddressInputComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  exports:[ WizardComponent, ImageViewerComponent, FeedbackComponent, MapComponent, HeaderComponent, FooterComponent, ProductGridComponent]
+  exports:[ WizardComponent, ImageViewerComponent, FeedbackComponent, MapComponent, HeaderComponent, FooterComponent, 
+  ProductGridComponent, AddressInputComponent]
 })
 export class SharedModule { }

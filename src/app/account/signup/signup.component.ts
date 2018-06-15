@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
 
   onSignup(){
     let self = this;
-  	this.authServ.signup(this.username, this.email, this.password, this.userType)//, this.gender, '', '', '')
+  	this.authServ.signup(this.username, this.email, this.password, 'user')//, this.gender, '', '', '')
       .subscribe(function(user){
     		let s = user;
         self.router.navigate(["/login"]);

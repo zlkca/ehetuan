@@ -17,6 +17,7 @@ import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BlogComponent } from './blog/blog.component';
 import { CommentComponent } from './comment/comment.component';
+import { InstitutionSignupComponent } from './institution-signup/institution-signup.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { CommentComponent } from './comment/comment.component';
     RestaurantComponent,
     RestaurantGridComponent,
     DashboardComponent,
+    InstitutionSignupComponent,
     BlogComponent,
     CommentComponent
   ],

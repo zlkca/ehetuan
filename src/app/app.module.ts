@@ -16,7 +16,7 @@ import { HomeComponent } from './main/home/home.component';
 // import { ContactComponent } from './main/contact/contact.component';
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
-
+import { InstitutionSignupComponent } from './main/institution-signup/institution-signup.component';
 // import { ForgetPasswordComponent } from './users/forget-password/forget-password.component';
 // import { ProductListComponent } from './products/product-list/product-list.component';
 // import { ShoppingCartComponent } from './products/shopping-cart/shopping-cart.component';
@@ -74,6 +74,7 @@ const appRoutes: Routes = [
         { path: 'product/:id', component:ProductComponent },
         { path: 'login', component:LoginComponent },
         { path: 'signup', component:SignupComponent },
+        { path: 'institution-signup', component:InstitutionSignupComponent },
         { path: 'home', component:HomeComponent }
 ];
 
