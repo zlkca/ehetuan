@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgRedux } from '@angular-redux/store';
+import { AccountActions, IAccount } from './account/account.actions';
 
 import { AuthService } from './account/auth.service';
 import { SharedService } from './shared/shared.service';
@@ -19,7 +21,8 @@ const APP = environment.APP;
 export class AppComponent implements OnInit {
 
   isLogin:boolean = false;
-  constructor(private router:Router, private sharedServ:SharedService, private authServ: AuthService){
+  constructor(private router:Router, private sharedServ:SharedService, private authServ: AuthService,
+    private ngRedux: NgRedux<IAccount>){
     
     window.addEventListener("orientationchange", function() {
         window.location.reload();
@@ -39,6 +42,8 @@ export class AppComponent implements OnInit {
       (r:any)=>{
         self.isLogin = r? true : false;
         if(self.isLogin){
+          self.ngRedux.dispatch({type:AccountActions.LOGIN, payload:r});
+
           self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
           if(r.type=='business'){
             self.toPage("dashboard");

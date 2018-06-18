@@ -1,4 +1,4 @@
-<p style="padding-top: 100px;">
+<!-- <p style="padding-top: 100px;">
   dashboard works!
 </p>
     <form [formGroup]="form" class="restaurant-form">
@@ -12,7 +12,35 @@
         </div>
         <button (click)="submit()">Submit</button>
     </form>
-  <app-blog></app-blog>
+ -->  
+ <!-- <app-blog></app-blog> -->
 
-  <app-comment></app-comment>
+  <!-- <app-comment></app-comment> -->
 
+
+<div class="page dashboard-page">
+
+
+
+
+  <div class="container">
+    <ngb-tabset>
+      <ngb-tab title="Orders">
+        <ng-template ngbTabContent>
+          <app-order-list [rid]="account.restaurant_id"></app-order-list>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Restaurant">
+        <ng-template ngbTabContent>
+          <app-restaurant-form></app-restaurant-form>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Products">
+        <ng-template ngbTabContent>
+          <app-product-list></app-product-list>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+
+</div>

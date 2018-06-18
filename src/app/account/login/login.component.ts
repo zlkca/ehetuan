@@ -1,9 +1,14 @@
 import { Component, Output, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgRedux } from '@angular-redux/store';
+import { IAccount } from '../account.actions';
+
 import { User } from '../account';
 import { AuthService } from '../auth.service';
 import { SharedService } from '../../shared/shared.service';
+import { AccountActions } from '../account.actions';
+
 
 @Component({
   providers: [AuthService],
@@ -21,7 +26,9 @@ export class LoginComponent implements OnInit {
   errMsg = '';
   auth2:any;
 
-  constructor(public authServ:AuthService, private router:Router, private sharedServ:SharedService) { 
+  constructor(public authServ:AuthService, private router:Router, private sharedServ:SharedService,
+    private ngRedux: NgRedux<IAccount>) {
+
   }
 
   ngOnInit() {
@@ -68,8 +75,14 @@ export class LoginComponent implements OnInit {
           (user:any) => {
               if(user && user.username){
                   //self.sharedServ.emitMsg({name:'OnUpdateHeader'});
+                  this.ngRedux.dispatch({type:AccountActions.LOGIN, payload:user});
                   self.user = user;
-                  self.toPage('home');
+                  if(user.type=='business'){
+                    self.router.navigate(['dashboard']);
+                  }else{
+                    self.router.navigate(['home']);
+                  }
+                  
               }else{
                 self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";          
               }

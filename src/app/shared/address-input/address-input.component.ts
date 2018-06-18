@@ -1,9 +1,15 @@
 // output addrChange({addr:x, sAddr:'Formatted address string'})
 
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnChanges, ElementRef, Output, EventEmitter, forwardRef } from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 
 declare var google;
 
+// export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+//     provide: NG_VALUE_ACCESSOR,
+//     useExisting: forwardRef(() => AddressInputComponent),
+//     multi: true
+// };
 
 @Component({
   selector: 'address-input',
@@ -17,6 +23,8 @@ export class AddressInputComponent implements OnInit {
 
 	gAutocomplete:any;
 
+   	//The internal data model for form control value access
+    private innerValue: any = '';
 
   constructor() { }
 
@@ -95,5 +103,24 @@ export class AddressInputComponent implements OnInit {
         });
       }//end of if
   }
+
+  	// onChange(v){
+  	// 	let k = v;
+  	// }
+   //  //From ControlValueAccessor interface
+  	
+   //  writeValue(value: any) {
+   //      this.innerValue = value;
+   //  }
+
+   //  //From ControlValueAccessor interface
+   //  registerOnChange(fn: any) {
+   //      this.onChange = fn;
+   //  }
+
+   //  //From ControlValueAccessor interface
+   //  registerOnTouched(fn: any) {
+
+   //  }
 
 }

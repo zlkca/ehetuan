@@ -1,8 +1,12 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+import { catchError, map } from 'rxjs/operators';
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { environment } from '../../environments/environment';
 import { Restaurant,Category,Color,Style,PriceRange,Product,Picture,Cart,CartItem,Order,OrderItem,FavoriteProduct } from './commerce';
 
@@ -46,7 +50,7 @@ export class CommerceService {
     
     getLocation(addr:string):Observable<any>{
         let url = 'http://maps.google.com/maps/api/geocode/json?address=' + addr + 'CA&sensor=false'
-        return this.http.get(url).map((res:any)=>{
+        return this.http.get(url).pipe(map((res:any)=>{
             if(res.results && res.results.length>0){
                 let r = res.results[0];
                 let postal_code = '', sub_locality = '', locality = '';
@@ -68,13 +72,13 @@ export class CommerceService {
             }else{
                 return null;
             }
-        });
+        }));
     }
 
     getRestaurantList(query?:string):Observable<Restaurant[]>{
         const url = API_URL + 'restaurants' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Restaurant[] = [];
             let d = res.data;
             if( d && d.length > 0){
@@ -83,21 +87,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getRestaurant(id:number):Observable<Restaurant>{
         const url = API_URL + 'restaurants/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Restaurant(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     // saveRestaurant(d:Restaurant):Observable<Restaurant>{
@@ -137,7 +141,7 @@ export class CommerceService {
     getCategoryList(query?:string):Observable<Category[]>{
         const url = this.API_URL + 'categories' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Category[] = [];
             let d = res.data;
             if( d && d.length > 0){
@@ -146,21 +150,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getCategory(id:number):Observable<Category>{
         const url = this.API_URL + 'categories/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Category(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveCategory(d:Category):Observable<Category>{
@@ -174,18 +178,18 @@ export class CommerceService {
           'created': d.created,
           'updated': d.updated,
         }
-        return this.http.post(url, data, {'headers': headers}).map((res:any) => {
+        return this.http.post(url, data, {'headers': headers}).pipe(map((res:any) => {
             return new Category(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmCategory(id:number):Observable<Category[]>{
         const url = this.API_URL + 'categories/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.delete(url, {'headers': headers}).map((res:any) => {
+        return this.http.delete(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Category[] = [];
             let d = res.data;
             if( d && d.length > 0){
@@ -194,16 +198,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getColorList(query?:string):Observable<Color[]>{
         const url = this.API_URL + 'colors' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Color[] = [];
             let d = res.data;
             if( d && d.length > 0){
@@ -212,21 +216,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getColor(id:number):Observable<Color>{
         const url = this.API_URL + 'colors/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Color(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveColor(d:Color):Observable<Color>{
@@ -238,18 +242,18 @@ export class CommerceService {
           'description': d.description
           // 'status': d.status,
         }
-        return this.http.post(url, data, {'headers': headers}).map((res:any) => {
+        return this.http.post(url, data, {'headers': headers}).pipe(map((res:any) => {
             return new Color(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmColor(id:number):Observable<Color[]>{
         const url = this.API_URL + 'colors/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.delete(url, {'headers': headers}).map((res:any) => {
+        return this.http.delete(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Color[] = [];
             let d = res.data;
             if( d && d.length > 0){
@@ -258,16 +262,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getStyleList(query?:string):Observable<Style[]>{
         const url = this.API_URL + 'styles' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Style[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -275,21 +279,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getStyle(id:number):Observable<Style>{
         const url = this.API_URL + 'style/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Style(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveStyle(d:Style):Observable<Style>{
@@ -302,17 +306,17 @@ export class CommerceService {
           'created': d.created,
           'updated': d.updated,
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new Style(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmStyle(id:number):Observable<Style[]>{
         const url = this.API_URL + 'style/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:Style[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -320,16 +324,127 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
+    saveRestaurant(d:Restaurant){
+        let token = localStorage.getItem('token-' + this.APP);
+        let self = this;
+
+        return fromPromise(new Promise((resolve, reject)=>{
+            let formData = new FormData();
+            formData.append('id', d.id? d.id:'');
+            formData.append('name', d.name);
+            formData.append('description', d.description);
+            formData.append('address_id', d.address.id);
+            formData.append('street', d.address.street);
+            formData.append('sub_locality', d.address.sub_locality);
+            formData.append('postal_code', d.address.postal_code);
+            formData.append('province_id', d.address.province.id);
+            formData.append('city_id', d.address.city.id);
+            formData.append('categories', Array.from(d.categories, x => x.id).join(','));
+            formData.append('lat', d.address.lat);
+            formData.append('lng', d.address.lng);
+                 
+            let image = d.image;
+            if(d.image.data == ''){
+                formData.append('image_status', 'removed');
+            }else{
+                if(d.image.file == ''){
+                    formData.append('image_status', 'unchange');
+                }else{
+                    formData.append('image_status', 'changed');
+                    formData.append('image', image.file);
+                }
+            }
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function (e) {
+              if (xhr.readyState === 4) { // done
+                if (xhr.status === 200) { // ok
+                    resolve(JSON.parse(xhr.response));
+                } else {
+                    reject(xhr.response);
+                }
+              }
+            };
+
+            xhr.onerror = function (e) {
+                reject(xhr.response);
+            };
+
+            xhr.open("POST", API_URL + 'restaurants', true);
+            xhr.setRequestHeader("authorization", "Bearer " + btoa(token));
+            xhr.send(formData);
+        }));
+    }
+
+    saveProduct(d:Product){
+        let token = localStorage.getItem('token-' + this.APP);
+        let self = this;
+
+        return fromPromise(new Promise((resolve, reject)=>{
+            let formData = new FormData();
+            formData.append('id', d.id? d.id:'');
+            formData.append('name', d.name);
+            formData.append('description', d.description);
+            // formData.append('year', '2015');//d.n_subscription.toString());
+            formData.append('status', 'active');
+            // formData.append('dimension', d.dimension);//d.rating.toString());
+            formData.append('price', d.price? d.price.toString():'');
+            formData.append('currency', 'CAD');
+            formData.append('categories', Array.from(d.categories, x => x.id).join(','));
+            // formData.append('color_id', d.color.id);
+            formData.append('restaurant_id', d.restaurant.id);
+            
+            formData.append('n_pictures', d.pictures.length?d.pictures.length.toString():'0');
+            for(let i=0; i<d.pictures.length; i++){
+                formData.append('name'+i, d.pictures[i].name);
+                let image = d.pictures[i].image;
+                if(image.data == ''){
+                    formData.append('image_status'+i, 'removed');
+                }else{
+                    if(image.file == ''){
+                        formData.append('image_status'+i, 'unchange');
+                    }else{
+                        formData.append('image_status'+i, 'changed');
+                        formData.append('image'+i, image.file);
+                    }
+                }
+            }
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function (e) {
+              if (xhr.readyState === 4) { // done
+                if (xhr.status === 200) { // ok
+                    resolve(JSON.parse(xhr.response));
+                    //console.log(xhr.responseText);
+                } else {
+                    reject(xhr.response);
+                    //console.error(xhr.statusText);
+                }
+              }
+            };
+
+            xhr.onerror = function (e) {
+                reject(xhr.response);
+                //console.error(xhr.statusText);
+            };
+
+            xhr.open("POST", this.API_URL + 'product', true);
+            xhr.setRequestHeader("authorization", "Bearer " + btoa(token));
+            xhr.send(formData);
+        }));
+    }
     getProductList(query?:string):Observable<Product[]>{
         const url = API_URL + 'products' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Product[] = [];
             let d = res.data;
             if( d && d.length > 0){
@@ -338,27 +453,27 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getProduct(id:number):Observable<Product>{
         const url = API_URL + 'product/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Product(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getPriceRangeList(query?:string):Observable<PriceRange[]>{
         const url = this.API_URL + 'priceRanges' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:PriceRange[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -366,21 +481,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getPriceRange(id:number):Observable<PriceRange>{
         const url = this.API_URL + 'priceRange/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new PriceRange(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     savePriceRange(d:PriceRange):Observable<PriceRange>{
@@ -394,17 +509,17 @@ export class CommerceService {
           'created': d.created,
           'updated': d.updated,
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new PriceRange(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmPriceRange(id:number):Observable<PriceRange[]>{
         const url = this.API_URL + 'priceRange/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:PriceRange[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -412,10 +527,10 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     
@@ -448,7 +563,7 @@ export class CommerceService {
 
     rmProduct(id:number):Observable<Product[]>{
         const url = this.API_URL + 'product/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:Product[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -456,16 +571,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getPictureList(query?:string):Observable<Picture[]>{
         const url = this.API_URL + 'pictures' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Picture[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -473,21 +588,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getPicture(id:number):Observable<Picture>{
         const url = this.API_URL + 'picture/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Picture(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     savePicture(d:Picture):Observable<Picture>{
@@ -501,17 +616,17 @@ export class CommerceService {
             'height': d.height,
             'product_id': d.product.id,
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new Picture(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmPicture(id:number):Observable<Picture[]>{
         const url = this.API_URL + 'picture/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:Picture[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -519,16 +634,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getCartList(query?:string):Observable<Cart[]>{
         const url = this.API_URL + 'carts' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Cart[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -536,43 +651,43 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getCart(id:number):Observable<Cart>{
         const url = this.API_URL + 'cart/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Cart(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
-    checkout(d:Cart):Observable<boolean>{
+    checkout(orders:any, user_id:string):Observable<boolean>{
         const url = this.API_URL + 'orders';
 
         return this.http.post(url, {
-            'id': (d.id? d.id:''),
-            'items': d.items, //{pid:x, quantity:number}
-            // 'user_id': d.user.id,
+            //'id': (d.id? d.id:''),
+            'orders': orders, //{pid:x, quantity:number}
+            'user_id': user_id
             // 'created': d.created,
             // 'updated': d.updated,
-        }).map((res:any) => {
+        }).pipe(map((res:any) => {
             return res.success;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmCart(id:number):Observable<Cart[]>{
         const url = this.API_URL + 'cart/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:Cart[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -580,16 +695,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getCartItemList(query?:string):Observable<CartItem[]>{
         const url = this.API_URL + 'cartItems' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:CartItem[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -597,21 +712,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getCartItem(id:number):Observable<CartItem>{
         const url = this.API_URL + 'cartItem/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new CartItem(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     // saveCartItem(d:CartItem):Observable<CartItem>{
@@ -634,7 +749,7 @@ export class CommerceService {
 
     rmCartItem(id:number):Observable<CartItem[]>{
         const url = this.API_URL + 'cartItem/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:CartItem[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -642,16 +757,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getOrderList(query?:string):Observable<Order[]>{
         const url = this.API_URL + 'orders' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Order[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -659,21 +774,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getOrder(id:number):Observable<Order>{
         const url = this.API_URL + 'order/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Order(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveOrder(d:Order):Observable<Order>{
@@ -687,17 +802,17 @@ export class CommerceService {
           'created': d.created,
           'updated': d.updated,
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new Order(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmOrder(id:number):Observable<Order[]>{
         const url = this.API_URL + 'order/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:Order[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -705,16 +820,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getOrderItemList(query?:string):Observable<OrderItem[]>{
         const url = this.API_URL + 'orderItems' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:OrderItem[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -722,21 +837,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getOrderItem(id:number):Observable<OrderItem>{
         const url = this.API_URL + 'orderItem/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new OrderItem(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveOrderItem(d:OrderItem):Observable<OrderItem>{
@@ -744,21 +859,19 @@ export class CommerceService {
         let data = {
             'id': (d.id? d.id:''),
           'order_id': d.order.id,
-          'product_id': d.product.id,
-          'created': d.created,
-          'updated': d.updated,
+          'product_id': d.product.id
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new OrderItem(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmOrderItem(id:number):Observable<OrderItem[]>{
         const url = this.API_URL + 'orderItem/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:OrderItem[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -766,16 +879,16 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getFavoriteProductList(query?:string):Observable<FavoriteProduct[]>{
         const url = this.API_URL + 'favoriteProducts' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:FavoriteProduct[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -783,21 +896,21 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getFavoriteProduct(id:number):Observable<FavoriteProduct>{
         const url = this.API_URL + 'favoriteProduct/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new FavoriteProduct(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveFavoriteProduct(d:FavoriteProduct):Observable<FavoriteProduct>{
@@ -810,17 +923,17 @@ export class CommerceService {
           'created': d.created,
           'updated': d.updated,
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new FavoriteProduct(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmFavoriteProduct(id:number):Observable<FavoriteProduct[]>{
         const url = this.API_URL + 'favoriteProduct/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:FavoriteProduct[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -828,10 +941,10 @@ export class CommerceService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
 }

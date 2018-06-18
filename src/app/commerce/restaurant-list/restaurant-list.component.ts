@@ -23,6 +23,6 @@ export class RestaurantListComponent implements OnInit {
     }
 
     toDetail(p){
-        this.router.navigate(["restaurant/"+p.id]);
+        this.router.navigate(["restaurant-detail/"+p.id]);
     }
 }

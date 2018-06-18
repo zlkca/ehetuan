@@ -3,6 +3,7 @@ import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
 import { ICart, CartActions } from './cart.actions';
 import { CommerceService } from '../commerce.service';
+import { IAccount } from '../../account/account.actions';
 
 @Component({
   selector: 'app-cart',
@@ -12,7 +13,9 @@ import { CommerceService } from '../commerce.service';
 export class CartComponent implements OnInit {
 	total:number = 0;
 	subscription;
+	subscriptionAccount;
 	cart;
+	user;
 
 	constructor(private ngRedux:NgRedux<IAppState>, private commerceServ:CommerceService) {
 		let self = this;
@@ -25,12 +28,18 @@ export class CartComponent implements OnInit {
 					self.total += x.price * x.quantity;
 				});
 			});
+
+		this.subscriptionAccount = ngRedux.select<IAccount>('account').subscribe(
+			account=>{
+				self.user = account;
+			})
 	}
 
-  ngOnInit() {
+	ngOnInit() {
 
-  }
+	}
 
+	// to fix
 	addToCart(p){
 	  this.ngRedux.dispatch({type:CartActions.ADD_TO_CART, payload:{pid:p.id}});
 	}
@@ -41,14 +50,37 @@ export class CartComponent implements OnInit {
 
 	checkout(){
 		let self = this;
-		this.commerceServ.checkout(this.cart).subscribe(r=>{
+		let orders = this.createOrders(this.cart);
+		this.commerceServ.checkout(orders, self.user.id).subscribe(r=>{
 			if(r){
 				self.ngRedux.dispatch({type:CartActions.CLEAR_CART, payload:{}})
 			}
 		})
 	}
 
-  ngOnDestroy(){
-  	this.subscription.unsubscribe();
-  }
+	createOrders(cart){
+		let items = cart.items;
+		let restaurantSet = new Set(cart.items.map(x => x.restaurant_id));
+		let restaurantIds = [...restaurantSet];
+		let orders = [];
+
+		for(let id of restaurantIds){
+			orders.push({restaurant_id:id, items:[]})
+		}
+
+		for(let item of cart.items){
+			for(let order of orders){
+				if(item.restaurant_id == order.restaurant_id){
+					order.items.push(item);
+				}
+			}
+		}
+		return orders;
+	}
+
+
+	ngOnDestroy(){
+		this.subscription.unsubscribe();
+		this.subscriptionAccount.unsubscribe();
+	}
 }

@@ -1,13 +1,19 @@
+
+import {throwError as observableThrowError } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+
+import {map, catchError} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+
+
 import { environment } from '../../environments/environment';
 import { User } from './account';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 
 const APP = environment.APP;
+const API_URL = environment.API_URL;
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -32,21 +38,21 @@ export class AuthService {
 
     constructor(private http: HttpClient) {}
 
-    login(account: string, password: string): Observable<User> {
+    login(account: string, password: string): Observable<any> {
         const url = this.API_URL + 'login';
         let self = this;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.post(url, {"account": account, "password": password}, {'headers': headers}).map((res:any) => {
+        return this.http.post(url, {"account": account, "password": password}, {'headers': headers}).pipe(map((res:any) => {
             localStorage.setItem('token-'+APP, res.token);
             if(res.data){
-                return new User(res.data);
+                return res.data;
             }else{
                 return null;
             }
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     logout(){
@@ -62,16 +68,16 @@ export class AuthService {
         const url = this.API_URL + 'token';
         let self = this;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.post(url, {"token": token}, {'headers': headers}).map((res:any) => {
+        return this.http.post(url, {"token": token}, {'headers': headers}).pipe(map((res:any) => {
             if(res.data){
                 return res.data;
             }else{
                 return null;
             }
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     signup(username: string, email: string, password: string, type:string): Observable<User> {
@@ -80,28 +86,72 @@ export class AuthService {
         let self = this;
         let body = {"username": username, "email": email, "password": password, "type":type};
         let headers = new HttpHeaders().set('Content-Type', "application/json");
-        return this.http.post(url, body, {'headers': headers}).map((res:any) => {
+        return this.http.post(url, body, {'headers': headers}).pipe(map((res:any) => {
             localStorage.setItem('token-' + this.APP, res.token);
             if (res.data) {
                 return new User(res.data);
             } else {
                 return null;
             }
-        }).catch((error:any)=>{
-            return Observable.throw(error.message || error);
-        });
+        }),catchError((error:any)=>{
+            return observableThrowError(error.message || error);
+        }),);
     }
 
+
+    institutionSignup(username: string, email: string, password: string, 
+        address:any=null, restaurant:string, phone:string, image:any){
+        
+        let self = this;
+        return fromPromise(new Promise((resolve, reject)=>{
+            let formData = new FormData();
+            formData.append('username', username);
+            formData.append('email', email);
+            formData.append('password', password);
+            //formData.append('address', addr);
+            formData.append('restaurant', restaurant);
+            formData.append('phone', phone);
+            formData.append('image', image.file);
+            
+            formData.append('street', address.street);
+            formData.append('sub_locality', address.sub_locality);
+            formData.append('postal_code', address.postal_code);
+            formData.append('province', address.province);
+            formData.append('city', address.city);
+            // formData.append('categories', Array.from(d.categories, x => x.id).join(','));
+            formData.append('lat', address.lat);
+            formData.append('lng', address.lng);
+            
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function (e) {
+              if (xhr.readyState === 4) { // done
+                if (xhr.status === 200) { // ok
+                    resolve(JSON.parse(xhr.response));
+                } else {
+                    reject(xhr.response);
+                }
+              }
+            };
+
+            xhr.onerror = function (e) {
+                reject(xhr.response);
+            };
+
+            xhr.open("POST", API_URL + 'institutionsignup', true);
+            xhr.send(formData);
+        }));
+    }
 
     forgetPassword(email: string) {
         const url = this.API_URL + 'forget-password';
         let headers = new HttpHeaders().set('Content-Type', "application/json");
         let options = {headers: headers};
-        return this.http.post(url, {"email": email}, options)
-          .map(rsp => {
+        return this.http.post(url, {"email": email}, options).pipe(
+          map(rsp => {
             
-          })
-          .catch(err => err);
+          }),
+          catchError(err => err),);
     }
 
 
@@ -109,10 +159,10 @@ export class AuthService {
         const url = this.API_URL + 'change-password';
         let headers = new HttpHeaders().set('Content-Type', "application/json");
         let options = {headers: headers};
-        return this.http.post(url, {"user_id": userId, "old_password": oldPassword, "new_password": newPassword}, options)
-          .map(function(rsp: any) {
+        return this.http.post(url, {"user_id": userId, "old_password": oldPassword, "new_password": newPassword}, options).pipe(
+          map(function(rsp: any) {
             // return rsp.errors;
-          })
-          .catch(err => err);
+          }),
+          catchError(err => err),);
     }
 }

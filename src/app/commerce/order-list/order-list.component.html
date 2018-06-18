@@ -1,0 +1,20 @@
+<div class="order-list">
+	<div class="order" *ngFor="let order of data; let i = index;">
+		<div class="body" (click)="toDetail(p)">
+			<div class="title-xs">{{order.user}}</div>
+			<div class="text-xs">{{order.datetime}}</div>
+			<div class="text-xs">{{order.status}}</div>
+			<div *ngFor="let p of order.products">
+		  		<div class="text-xs">{{p.name}}</div>
+		  		<div class="text-xs">{{p.quantity}}</div>
+				<div class="text-xs">CAD {{p.price}}</div>
+			</div>
+			<div class="text-xs">Total:{{p.total}}</div> 
+			<!-- <div class="text-sm">{{p.description}}</div> -->
+		</div>
+		<div class="btn-holder">
+			<div class="btn btn-xs pull-right" (click)="toDeliver(p)">Deliver</div>
+			<!-- <div class="btn btn-xs pull-right" (click)="removeFromCart(p)">Remove</div> -->
+		</div>
+	</div>
+</div>

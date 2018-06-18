@@ -18,8 +18,10 @@ import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { InstitutionSignupComponent } from './main/institution-signup/institution-signup.component';
 // import { ForgetPasswordComponent } from './users/forget-password/forget-password.component';
-// import { ProductListComponent } from './products/product-list/product-list.component';
-// import { ShoppingCartComponent } from './products/shopping-cart/shopping-cart.component';
+import { ProductFormComponent } from './commerce/product-form/product-form.component';
+import { RestaurantFormComponent } from './commerce/restaurant-form/restaurant-form.component';
+import { OrderListComponent } from './commerce/order-list/order-list.component';
+
 // import { ProfileComponent } from './users/profile/profile.component';
 // import { ProfileEditComponent } from './users/profile-edit/profile-edit.component';
 // import { ChangePasswordComponent } from './users/change-password/change-password.component';
@@ -28,7 +30,7 @@ import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { RestaurantGridComponent } from './main/restaurant-grid/restaurant-grid.component';
 import { ProductListComponent } from './commerce/product-list/product-list.component';
 import { ProductComponent } from './main/product/product.component';
-import { RestaurantComponent } from './main/restaurant/restaurant.component';
+import { RestaurantDetailComponent } from './main/restaurant-detail/restaurant-detail.component';
 
 import { CoreModule }    from './core/core.module';
 
@@ -67,9 +69,15 @@ const appRoutes: Routes = [
   //       { path: 'home', component:HomeComponent }
   //     ]
   // }
-      { path: 'dashboard', component:DashboardComponent },
+      { path: 'dashboard', component:DashboardComponent,
+        children:[
+          {path: 'orders', component:OrderListComponent},
+          {path: 'restaurants', component:RestaurantFormComponent},
+          {path: 'products', component:ProductListComponent}
+        ]
+      },
         { path: 'restaurants', component:RestaurantGridComponent },
-        { path: 'restaurant/:id', component:RestaurantComponent },
+        { path: 'restaurant-detail/:id', component:RestaurantDetailComponent },
         { path: 'products', component:ProductListComponent },
         { path: 'product/:id', component:ProductComponent },
         { path: 'login', component:LoginComponent },

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { SharedModule } from '../shared/shared.module';
 import { CommerceModule } from '../commerce/commerce.module';
 import { environment } from '../../environments/environment';
@@ -12,7 +14,7 @@ import { ContactComponent } from './contact/contact.component';
 import { LayoutComponent } from './layout/layout.component';
 import { CommerceService } from '../commerce/commerce.service';
 import { ProductComponent } from './product/product.component';
-import { RestaurantComponent } from './restaurant/restaurant.component';
+import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
 import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BlogComponent } from './blog/blog.component';
@@ -24,6 +26,7 @@ import { InstitutionSignupComponent } from './institution-signup/institution-sig
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule,
     SharedModule,
     CommerceModule,
   ],
@@ -34,7 +37,7 @@ import { InstitutionSignupComponent } from './institution-signup/institution-sig
     ContactComponent,
     LayoutComponent,
     ProductComponent,
-    RestaurantComponent,
+    RestaurantDetailComponent,
     RestaurantGridComponent,
     DashboardComponent,
     InstitutionSignupComponent,

@@ -4,10 +4,12 @@ import { AuthService } from '../../account/auth.service';
 import { SharedService } from '../shared.service';
 import { CommerceService } from '../../commerce/commerce.service';
 import { CategoryListComponent } from '../../commerce/category-list/category-list.component';
-import {Subject} from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/switchMap';
+
+import {NgRedux} from '@angular-redux/store';
+import {Subject} from 'rxjs';
+
+import {AccountActions, IAccount} from '../../account/account.actions';
+
 import { environment } from '../../../environments/environment';
 declare var $: any;
 
@@ -27,7 +29,7 @@ export class HeaderComponent implements OnInit {
     locality = '';
 
     constructor(private router:Router, private authServ:AuthService, private commerceServ:CommerceService, 
-        private sharedServ:SharedService) {
+        private sharedServ:SharedService, private ngRedux: NgRedux<IAccount>) {
 
         let self = this;
 
@@ -101,7 +103,7 @@ export class HeaderComponent implements OnInit {
     logout(){
         let self = this;
         let flag = self.isLogin;
-
+        this.ngRedux.dispatch({type:AccountActions.LOGOUT});
         this.closeNavMenu();
         if(flag){
           self.authServ.logout();
@@ -112,6 +114,20 @@ export class HeaderComponent implements OnInit {
 
     toBusinessCenter(){
         // if login and user is business, redirect to business center, otherwise redirect to business signup
-        this.router.navigate(['institution-signup']);
+        let self = this;
+        self.authServ.hasLoggedIn().subscribe(
+            (r:any)=>{
+                self.isLogin = r? true : false;
+                if(self.isLogin){
+                    //self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
+                    if(r.type=='business'){
+                        self.router.navigate(['dashboard']);
+                    }else{  
+                        self.router.navigate(['institution-signup']);
+                    }
+                }else{
+                    self.router.navigate(['login']);
+                }
+            });
     }
 }

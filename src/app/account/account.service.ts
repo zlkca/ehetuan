@@ -1,8 +1,11 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {map, catchError} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { environment } from '../../environments/environment';
 import { User } from './account';
 
@@ -15,7 +18,7 @@ export class AccountService {
     getUserList(query?:string):Observable<User[]>{
         const url = this.API_URL + 'user' + query ? query:'';
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:User[] = [];
             if( res.data && res.data.length > 0){
                 for(var i=0; i<res.data.length; i++){
@@ -23,21 +26,21 @@ export class AccountService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getUser(id:number):Observable<User>{
         const url = this.API_URL + 'user/id';
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new User(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveUser(d:User):Observable<User>{
@@ -50,12 +53,12 @@ export class AccountService {
           'portrait': d.portrait,
           'type': d.type,
         }
-        return this.http.post(url, data, {'headers': headers}).map((res:any) => {
+        return this.http.post(url, data, {'headers': headers}).pipe(map((res:any) => {
             return new User(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
 }

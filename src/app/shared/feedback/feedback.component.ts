@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { debounceTime } from 'rxjs/operator/debounceTime';
+import { Subject } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
+
 import { AccountService } from '../../account/account.service';
 
 @Component({

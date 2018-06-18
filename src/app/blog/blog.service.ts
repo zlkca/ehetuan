@@ -1,8 +1,11 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 import { environment } from '../../environments/environment';
 import { Post,Comment } from './blog';
 
@@ -15,7 +18,7 @@ export class BlogService {
     getPostList(query?:string):Observable<Post[]>{
         const url = this.API_URL + 'posts' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Post[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -23,21 +26,21 @@ export class BlogService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getPost(id:number):Observable<Post>{
         const url = this.API_URL + 'post/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Post(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     savePost(d:Post):Observable<Post>{
@@ -49,17 +52,17 @@ export class BlogService {
           'created': d.created,
           'updated': d.updated,
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new Post(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmPost(id:number):Observable<Post[]>{
         const url = this.API_URL + 'post/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:Post[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -67,16 +70,16 @@ export class BlogService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getCommentList(query?:string):Observable<Comment[]>{
         const url = this.API_URL + 'comments' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:Comment[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -84,21 +87,21 @@ export class BlogService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     getComment(id:number):Observable<Comment>{
         const url = this.API_URL + 'comment/' + id;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).map((res:any) => {
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             return new Comment(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     saveComment(d:Comment):Observable<Comment>{
@@ -110,17 +113,17 @@ export class BlogService {
           'created': d.created,
           'updated': d.updated,
         }
-        return this.http.post(url, data).map((res:any) => {
+        return this.http.post(url, data).pipe(map((res:any) => {
             return new Comment(res.data);
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
     rmComment(id:number):Observable<Comment[]>{
         const url = this.API_URL + 'comment/' + id;
-        return this.http.get(url).map((res:any) => {
+        return this.http.get(url).pipe(map((res:any) => {
             let a:Comment[] = [];
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
@@ -128,10 +131,10 @@ export class BlogService {
                 }
             }
             return a;
-        })
-        .catch((err) => {
-            return Observable.throw(err.message || err);
-        });
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
     }
 
 }

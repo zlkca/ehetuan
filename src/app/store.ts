@@ -4,14 +4,18 @@ import { combineReducers } from 'redux';
 import {DashboardActions} from './main/dashboard.actions';
 import { ICart } from './commerce/cart/cart.actions';
 import { cartReducer } from './commerce/cart/cart.reducer';
+import { IAccount } from './account/account.actions';
+import { DEFAULT_ACCOUNT, accountReducer } from './account/account.reducer';
 
 export interface IAppState{
   cart:ICart;
+  account:IAccount;
   // name:string;
 }
 
 export const INITIAL_STATE: IAppState = {
-	cart: {items:[]}
+	cart: {items:[]},
+	account: DEFAULT_ACCOUNT
 	// name:''
 }
 
@@ -25,4 +29,4 @@ export const INITIAL_STATE: IAppState = {
 // 	return last;
 // }
 
-export const rootReducer = combineReducers({cart: cartReducer})
+export const rootReducer = combineReducers({cart: cartReducer, account:accountReducer});

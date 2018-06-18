@@ -1,7 +1,9 @@
+
+import {switchMap} from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/switchMap';
+
 
 import { CommerceService } from '../../commerce/commerce.service';
 import { Product } from '../../commerce/commerce';
@@ -11,12 +13,12 @@ import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-restaurant',
-  templateUrl: './restaurant.component.html',
+  selector: 'app-restaurant-detail',
+  templateUrl: './restaurant-detail.component.html',
   providers: [AuthService, CommerceService],
-  styleUrls: ['./restaurant.component.scss']
+  styleUrls: ['./restaurant-detail.component.scss']
 })
-export class RestaurantComponent implements OnInit {
+export class RestaurantDetailComponent implements OnInit {
 	productList:any = [];
   restaurant_id :string;
 	subscription;
@@ -37,9 +39,9 @@ export class RestaurantComponent implements OnInit {
 
   ngOnInit() {
     let self = this;
-    self.route.paramMap.switchMap((params: ParamMap) => 
+    self.route.paramMap.pipe(switchMap((params: ParamMap) => 
       // self.restaurant_id = params.get('id')
-      self.commerceServ.getProductList("?restaurant_id="+params.get('id')))
+      self.commerceServ.getProductList("?restaurant_id="+params.get('id'))))
         .subscribe(
           (ps:Product[]) => {
               self.productList = ps;

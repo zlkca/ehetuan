@@ -38,12 +38,12 @@ export class Restaurant{
 }
 
 export class Category{
-  public id:string;
-  public name:string;
-  public description:string;
-  public status:string;
-  public created:string;
-  public updated:string;
+  id:string;
+  name:string;
+  description:string;
+  status:string;
+  created:string;
+  updated:string;
     constructor(o?:any){
         if(o){
            this.id = o.id;
@@ -58,9 +58,9 @@ export class Category{
 
 
 export class Color{
-  public id:string;
-  public name:string;
-  public description:string;
+  id:string;
+  name:string;
+  description:string;
   constructor(o?:any){
       if(o){
           this.id = o.id;
@@ -71,12 +71,12 @@ export class Color{
 }
 
 export class Style{
-  public id:string;
-  public name:string;
-  public description:string;
-  public status:string;
-  public created:string;
-  public updated:string;
+  id:string;
+  name:string;
+  description:string;
+  status:string;
+  created:string;
+  updated:string;
     constructor(o?:any){
         if(o){
            this.id = o.id;
@@ -90,13 +90,13 @@ export class Style{
 }
 
 export class PriceRange{
-  public id:string;
-  public low:number;
-  public high:number;
-  public step:number;
-  public status:string;
-  public created:string;
-  public updated:string;
+  id:string;
+  low:number;
+  high:number;
+  step:number;
+  status:string;
+  created:string;
+  updated:string;
     constructor(o?:any){
         if(o){
            this.id = o.id;
@@ -111,14 +111,14 @@ export class PriceRange{
 }
 
 export class Picture{
-  public id:string;
-  public name:string;
-  public description:string;
-  public index:number;
-  public image:any = { 'data':'', 'file':'' };
-  public width:number;
-  public height:number;
-  public product:any = {id:1};
+  id:string;
+  name:string;
+  description:string;
+  index:number;
+  image:any = { 'data':'', 'file':'' };
+  width:number;
+  height:number;
+  product:any = {id:1};
     constructor(o?:any){
         if(o){
             this.id = o.id;
@@ -135,9 +135,9 @@ export class Picture{
 }
 
 export class Product{
-  public id:string;
-  public name:string;
-  public description:string;
+  id:string;
+  name:string;
+  description:string;
   year:string;
   status:string;
   currency:string;
@@ -149,8 +149,8 @@ export class Product{
   restaurant:Restaurant;
   pictures:Picture[];
 
-  public created:string;
-  public updated:string;
+  created:string;
+  updated:string;
     constructor(o?:any){
         if(o){
             this.id = o.id;
@@ -237,59 +237,56 @@ export class Cart{
   }
 }
 
-
-
 export class Order{
-  public id:string;
-  public user:any = {id:1};
-  public amount:number;
-  public status:string;
-  public currency:string;
-  public created:string;
-  public updated:string;
-    constructor(o?:any){
-        if(o){
-           this.id = o.id;
-            if(o.user){
-                this.user = o.user;
-            }
-            this.amount = o.amount;
-            this.status = o.status;
-            this.currency = o.currency;
-            this.created = o.created;
-            this.updated = o.updated;
-      }
+  id:string;
+  user:any = {id:0};
+  restaurant:any = {id:0};
+  amount:string;
+  currency:string = 'cad';
+  status:string;
+  created:string;
+  updated:string;
+  constructor(o?:any){
+      if(o){
+         this.id = o.id;
+          if(o.user){
+              this.user = o.user;
+          }
+          this.amount = o.amount;
+          this.status = o.status;
+          this.currency = o.currency;
+          this.created = o.created;
+          this.updated = o.updated;
+    }
   }
 }
 
 export class OrderItem{
-  public id:string;
-  public order:any = {id:1};
-  public product:any = {id:1};
-  public created:string;
-  public updated:string;
+    id:string;
+    order:any = {id:1};
+    product:any = {id:1};
+    quantity:number;
     constructor(o?:any){
         if(o){
-           this.id = o.id;
+            this.id = o.id;
             if(o.order){
                 this.order = o.order;
             }
             if(o.product){
                 this.product = o.product;
             }
-            this.created = o.created;
-            this.updated = o.updated;
+            this.quantity = o.quantity;
       }
   }
 }
 
 export class FavoriteProduct{
-  public id:string;
-  public user:any = {id:1};
-  public ip:string;
-  public product:any = {id:1};
-  public created:string;
-  public updated:string;
+  id:string;
+  user:any = {id:1};
+  ip:string;
+  product:any = {id:1};
+  created:string;
+  updated:string;
     constructor(o?:any){
         if(o){
            this.id = o.id;
