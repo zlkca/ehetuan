@@ -7,7 +7,7 @@ export const DEFAULT_ACCOUNT = {
     username:'',
     email:'',
     type:'user',
-    restuarant_id:''
+    restaurant_id:''
 }
 
 export function accountReducer(state:IAccount=DEFAULT_ACCOUNT, action:any){

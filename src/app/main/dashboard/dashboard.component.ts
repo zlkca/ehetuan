@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
 	
   subscription:any;
   account:any;
+  orders:any = [];
 
   form:FormGroup = new FormGroup({
 		name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -29,6 +30,13 @@ export class DashboardComponent implements OnInit {
     this.subscription = ngRedux.select<IAccount>('account').subscribe(
       account => {
         self.account = account;
+
+        if(account.restaurant_id){
+          let query = '?restaurant_id=' + self.account.restaurant_id;
+          self.commerceServ.getOrderList(query).subscribe(r=>{
+            self.orders = r;
+          });
+        }
       });
   }
 

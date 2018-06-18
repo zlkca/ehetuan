@@ -122,7 +122,8 @@ export class HeaderComponent implements OnInit {
                     //self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
                     if(r.type=='business'){
                         self.router.navigate(['dashboard']);
-                    }else{  
+                    }else{
+                        self.authServ.logout();  
                         self.router.navigate(['institution-signup']);
                     }
                 }else{

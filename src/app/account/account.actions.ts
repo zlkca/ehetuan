@@ -11,5 +11,5 @@ export interface IAccount{
     username:string;
     email:string;
     type:string;
-    restuarant_id:string;
+    restaurant_id:string;
 }
