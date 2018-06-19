@@ -14,7 +14,7 @@ export class CartComponent implements OnInit {
 	total:number = 0;
 	subscription;
 	subscriptionAccount;
-	cart;
+	cart:any;
 	user;
 
 	constructor(private ngRedux:NgRedux<IAppState>, private commerceServ:CommerceService) {
@@ -58,7 +58,7 @@ export class CartComponent implements OnInit {
 		})
 	}
 
-	createOrders(cart){
+	createOrders(cart:any){
 		let items = cart.items;
 		let restaurantSet = new Set(cart.items.map(x => x.restaurant_id));
 		let restaurantIds = [...restaurantSet];

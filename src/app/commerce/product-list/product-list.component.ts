@@ -48,7 +48,8 @@ export class ProductListComponent implements OnInit {
     }
 
     addToCart(p){
-      this.ngRedux.dispatch({type:CartActions.ADD_TO_CART, payload:{pid:p.id, name:p.name, price:p.price, restaurant_id:p.restaurant.id}});
+      this.ngRedux.dispatch({type:CartActions.ADD_TO_CART, payload:
+          {pid:p.id, name:p.name, price:p.price, restaurant_id:p.restaurant.id}});
     }
 
     removeFromCart(p){

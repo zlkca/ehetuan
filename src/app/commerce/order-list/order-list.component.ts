@@ -15,4 +15,12 @@ export class OrderListComponent implements OnInit {
 
   }
 
+  getTotal(order){
+    let total = 0;
+    for(let item of order.items){
+      total += parseFloat(item.price) * parseInt(item.quantity);
+    }
+    return total.toFixed(2);
+  }
+
 }
