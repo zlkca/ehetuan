@@ -2,7 +2,7 @@
 	<div class="order" *ngFor="let order of orders; let i = index;">
 		<div class="body" (click)="toDetail(p)">
 			<div class="title-xs">{{order.id}}</div>
-			<!-- <div class="title-xs">{{order.user}}</div> -->
+			<div class="title-xs">{{order.user.username}}</div>
 			<div class="text-xs">{{order.created}}</div>
 			<div class="text-xs">{{order.status}}</div>
 			<div *ngFor="let it of order.items">

@@ -239,7 +239,7 @@ export class Cart{
 
 export class Order{
   id:string;
-  user:any = {id:0};
+  user:any = {id:0, username:''};
   restaurant:any = {id:0};
   items:OrderItem[];
   amount:string;
