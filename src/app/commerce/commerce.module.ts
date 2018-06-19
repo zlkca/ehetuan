@@ -27,6 +27,7 @@ import { CartComponent } from './cart/cart.component';
 import { RestaurantFormComponent } from './restaurant-form/restaurant-form.component';
 import { ProductFormComponent } from './product-form/product-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { ProductGridComponent } from './product-grid/product-grid.component';
 
 
 @NgModule({
@@ -55,6 +56,6 @@ import { OrderListComponent } from './order-list/order-list.component';
    exports:[CategoryListComponent,CategoryFormComponent,ProductListComponent,ProductFormComponent,ProductFilterComponent, 
      RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent],
    declarations:[CategoryListComponent,CategoryFormComponent,ProductListComponent, ProductFormComponent, ProductFilterComponent, 
-     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent]
+     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, ProductGridComponent]
 })
 export class CommerceModule { }

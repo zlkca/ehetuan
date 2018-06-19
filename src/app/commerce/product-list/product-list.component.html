@@ -1,6 +1,6 @@
 <div class="product-list">
 	<div class="product" *ngFor="let p of data; let i = index;">
-		<div class="body" (click)="toDetail(p)">
+		<div class="body" (click)="onClick(p)">
 			<div class="image-frame">
           		<img src="{{MEDIA_URL}}{{p.fpath}}" alt="{{p.name}}" />
 			</div>
@@ -10,8 +10,9 @@
 			<!-- <div class="text-sm">{{p.description}}</div> -->
 		</div>
 		<div class="btn-holder">
-			<div class="btn btn-xs pull-right" (click)="addToCart(p)">Add</div>
-			<div class="btn btn-xs pull-right" (click)="removeFromCart(p)">Remove</div>
+			<!-- <div class="btn btn-xs pull-right" (click)="editProduct(p)">Edit</div> -->
+			<div *ngIf="mode!='edit'" class="btn btn-xs pull-right" (click)="addToCart(p)">Add</div>
+			<div *ngIf="mode!='edit'" class="btn btn-xs pull-right" (click)="removeFromCart(p)">Remove</div>
 		</div>
 	</div>
 </div>

@@ -37,7 +37,7 @@
       </ngb-tab>
       <ngb-tab title="Products">
         <ng-template ngbTabContent>
-          <app-product-list></app-product-list>
+          <app-product-list [data]="products" [mode]="'edit'"></app-product-list>
         </ng-template>
       </ngb-tab>
     </ngb-tabset>

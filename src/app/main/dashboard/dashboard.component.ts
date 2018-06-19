@@ -5,6 +5,7 @@ import { IAccount } from '../../account/account.actions';
 
 import { Router } from '@angular/router';
 import { CommerceService } from '../../commerce/commerce.service';
+import { Product } from '../../commerce/commerce';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +17,9 @@ export class DashboardComponent implements OnInit {
   subscription:any;
   account:any;
   orders:any = [];
-
+  products:Product[] = [];
+  productGridMode:string = 'edit';
+  
   form:FormGroup = new FormGroup({
 		name: new FormControl('', [Validators.required, Validators.minLength(3)]),
 	});
@@ -30,12 +33,23 @@ export class DashboardComponent implements OnInit {
     this.subscription = ngRedux.select<IAccount>('account').subscribe(
       account => {
         self.account = account;
-
-        if(account.restaurant_id){
-          let query = '?restaurant_id=' + self.account.restaurant_id;
+        let restaurant_id = account.restaurant_id;
+        
+        if(restaurant_id){
+          let query = '?restaurant_id=' + restaurant_id;
           self.commerceServ.getOrderList(query).subscribe(r=>{
             self.orders = r;
           });
+
+          self.commerceServ.getProductList("?restaurant_id="+restaurant_id).subscribe(
+              (ps:Product[]) => {
+                  self.products = ps;
+              },
+              (err:any) => {
+                  self.products = [];
+              }
+            );
+
         }
       });
   }

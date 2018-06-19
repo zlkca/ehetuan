@@ -21,6 +21,7 @@ export class ProductListComponent implements OnInit {
     cart:any;
 
     @Input() data: Product[];
+    @Input() mode: string;
 
     ngOnInit(){
         // let self = this;
@@ -43,8 +44,12 @@ export class ProductListComponent implements OnInit {
         //   cart=> this.cart = cart);
     }
 
-    toDetail(p){
-        this.router.navigate(["product/"+p.id]);
+    onClick(p){
+        if(this.mode == 'edit'){
+
+        }else{
+            this.router.navigate(["product/"+p.id]);
+        }
     }
 
     addToCart(p){
