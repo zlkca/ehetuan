@@ -10,7 +10,7 @@ import { ImageUploaderComponent } from '../../shared/image-uploader/image-upload
   styleUrls: ['./institution-signup.component.scss']
 })
 export class InstitutionSignupComponent implements OnInit {
-
+  errMsg:string;
   formGroup:FormGroup;
   address:any;
   pictures:any[] = [];

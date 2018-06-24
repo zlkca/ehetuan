@@ -15,6 +15,7 @@ import { Product, Category, Restaurant, Color, Picture } from '../commerce';
   styleUrls: ['./product-filter.component.scss']
 })
 export class ProductFilterComponent implements OnInit {
+    bFilter:boolean = false;
 	  categoryList:Category[] = [];
     restaurantList:Restaurant[] = [];
     colorList:Color[] = [];
