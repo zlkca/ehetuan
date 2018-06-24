@@ -20,7 +20,8 @@ export class MultiProductEditorComponent implements OnInit {
     @Input() products:any[];
     @Input() rid:string; // restaurant id
 
-	constructor(private rx:NgRedux<IPicture>, private fb:FormBuilder, private commerceSvc:CommerceService) { }
+	constructor(private rx:NgRedux<IPicture>, private fb:FormBuilder, 
+		private commerceSvc:CommerceService) { }
 
 	ngOnInit() {
 		let nRows = this.products.length;

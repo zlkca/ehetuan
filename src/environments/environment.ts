@@ -8,7 +8,7 @@ export const environment = {
    API_URL: "http://localhost:8000/api/",
    APP_URL: window.location.origin,//"http://localhost:5001",
    MEDIA_URL: "http://localhost:8000/media/",
-   APP: "ehetuan",
+   APP: "etuan",
    GOOGLE_MAP:{
   	KEY:'AIzaSyBXEdwaQT9nbawdHKae1SSNL2RB2wkLBQI'
    },

@@ -42,7 +42,8 @@ export class AuthService {
         const url = this.API_URL + 'login';
         let self = this;
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.post(url, {"account": account, "password": password}, {'headers': headers}).pipe(map((res:any) => {
+        let data = {"account": account, "password": password};
+        return this.http.post(url, data, {'headers': headers}).pipe(map((res:any) => {
             localStorage.setItem('token-'+APP, res.token);
             if(res.data){
                 return res.data;
