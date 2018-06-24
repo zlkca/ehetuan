@@ -17,7 +17,7 @@ import { HomeComponent } from './main/home/home.component';
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
 import { InstitutionSignupComponent } from './main/institution-signup/institution-signup.component';
-// import { ForgetPasswordComponent } from './users/forget-password/forget-password.component';
+import { ForgetPasswordComponent } from './account/forget-password/forget-password.component';
 import { ProductFormComponent } from './commerce/product-form/product-form.component';
 import { RestaurantFormComponent } from './commerce/restaurant-form/restaurant-form.component';
 import { OrderListComponent } from './commerce/order-list/order-list.component';
@@ -53,7 +53,7 @@ const appRoutes: Routes = [
   // { path: 'product-list', component:ProductListComponent },
   // { path: 'product/:id', component:ProductDetailComponent },
   // { path: 'shopping-cart', component:ShoppingCartComponent },
-  // { path: 'forget-password', component:ForgetPasswordComponent },
+  
   // { path: 'profiles', component:ProfileComponent },
   // { path: 'profile-edit', component:ProfileEditComponent },
   // { path: 'change-password', component:ChangePasswordComponent },
@@ -80,6 +80,7 @@ const appRoutes: Routes = [
         { path: 'restaurant-detail/:id', component:RestaurantDetailComponent },
         { path: 'products', component:ProductListComponent },
         { path: 'product/:id', component:ProductComponent },
+        { path: 'forget-password', component:ForgetPasswordComponent },
         { path: 'login', component:LoginComponent },
         { path: 'signup', component:SignupComponent },
         { path: 'institution-signup', component:InstitutionSignupComponent },

@@ -373,16 +373,12 @@ body{
       padding:0px 5px;
       line-height: 19px;
       display: inline-block;
+    }
 
-      a{
-         font-size:14px;
-         text-decoration:underline;
-         color: $primary-color;
-      }
-      
-      a:hover{
-         color: $primary-focus-color;
-      }
+    .link-text{
+       font-size:14px;
+       text-decoration:underline;
+       color: $primary-color;
     }
   }// end of auth-form
 
@@ -405,6 +401,10 @@ body{
 
     .auth-form{
       width:100%;
+
+      .btn{
+        width:100%;
+      }
     }
   }
   @media #{$cellphone}{

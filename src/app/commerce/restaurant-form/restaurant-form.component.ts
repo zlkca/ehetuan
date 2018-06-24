@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { CommerceService } from '../commerce.service';
@@ -19,12 +19,7 @@ export class RestaurantFormComponent implements OnInit {
 	provinceList:Province[] = [new Province({id:'48', name:'Ontario'})];
 	pictures:any[] = [];
 
-	// addressForm:FormGroup = new FormGroup({
-	// 	street: new FormControl(),
-	// 	province_id:new FormControl(),
- //        city_id:new FormControl(),
- //        postal_code: new FormControl()
-	// })
+	@Input() data:any;
 	@ViewChild(ImageUploaderComponent)
     uploader:any;
 
@@ -83,35 +78,38 @@ export class RestaurantFormComponent implements OnInit {
 
 	ngOnInit() {
 		let self = this;
-        self.route.params.subscribe((params:any)=>{
-            self.commerceServ.getRestaurant(params.id).subscribe(
-                (r:Restaurant) => {
-                	self.restaurant = r;
-                	self.id = r.id;
-                    self.form.patchValue(r);
-                    self.street.patchValue(r.address.street);
+
+		this.form.patchValue(this.data);
+
+        //self.route.params.subscribe((params:any)=>{
+            // self.commerceServ.getRestaurant(params.id).subscribe(
+            //     (r:Restaurant) => {
+            //     	self.restaurant = r;
+            //     	self.id = r.id;
+            //         self.form.patchValue(r);
+            //         self.street.patchValue(r.address.street);
                     
-                    if(r.image && r.image.data){
-                    	self.pictures = [{index:0, name:"", image:r.image}];
-                    }else{
-                    	self.pictures = [];
-                    }
+            //         if(r.image && r.image.data){
+            //         	self.pictures = [{index:0, name:"", image:r.image}];
+            //         }else{
+            //         	self.pictures = [];
+            //         }
                     
-                    self.commerceServ.getCategoryList().subscribe(catList=>{
-		                self.categoryList = catList;
-		                for(let cat of catList){
-		                    let c = r.categories.find(x=> x.id==cat.id );
-		                    if(c){
-		                        self.categories.push(new FormControl(true));
-		                    }else{
-		                        self.categories.push(new FormControl(false));
-		                    } 
-		                    //self.categories.push(new FormControl(s.id));      
-		                }
-		            })
-                },
-                (err:any) => {
-                });
+            //         self.commerceServ.getCategoryList().subscribe(catList=>{
+		          //       self.categoryList = catList;
+		          //       for(let cat of catList){
+		          //           let c = r.categories.find(x=> x.id==cat.id );
+		          //           if(c){
+		          //               self.categories.push(new FormControl(true));
+		          //           }else{
+		          //               self.categories.push(new FormControl(false));
+		          //           } 
+		          //           //self.categories.push(new FormControl(s.id));      
+		          //       }
+		          //   })
+            //     },
+            //     (err:any) => {
+            //     });
 
 
 
@@ -140,15 +138,15 @@ export class RestaurantFormComponent implements OnInit {
             //         //self.categories.push(new FormControl(s.id));      
             //     }
             // })
-        });
+        //});
 
         //create new
-        self.commerceServ.getCategoryList().subscribe(catList=>{
-            self.categoryList = catList;
-            for(let cat of catList){
-                self.categories.push(new FormControl(false));    
-            }
-        });
+        // self.commerceServ.getCategoryList().subscribe(catList=>{
+        //     self.categoryList = catList;
+        //     for(let cat of catList){
+        //         self.categories.push(new FormControl(false));    
+        //     }
+        // });
 
         self.form.patchValue({province_id:'48', city_id:'5130'});
 	}

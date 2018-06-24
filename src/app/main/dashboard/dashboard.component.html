@@ -32,12 +32,12 @@
       </ngb-tab>
       <ngb-tab title="Restaurant">
         <ng-template ngbTabContent>
-          <app-restaurant-form></app-restaurant-form>
+          <app-restaurant-form [data]="restaurant"></app-restaurant-form>
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Products">
         <ng-template ngbTabContent>
-          <app-product-list [data]="products" [mode]="'edit'"></app-product-list>
+          <multi-product-editor [products]="products" [rid]="restaurant.id"></multi-product-editor>
         </ng-template>
       </ngb-tab>
     </ngb-tabset>

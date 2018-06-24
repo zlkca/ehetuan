@@ -1,0 +1,23 @@
+.product-list-editor{
+	.list-body{
+		.row{
+			padding-top:0px;
+		}
+		input[name="id"]{
+			width:60px;
+		}
+		.col{
+			input{
+				width:160px;
+			}
+
+			input[name="description"]{
+				width:400px;
+			}
+
+			input[name="price"]{
+				width:100px;
+			}
+		}
+	}
+}

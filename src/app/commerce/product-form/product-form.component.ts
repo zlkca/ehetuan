@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -65,15 +65,9 @@ export class ProductFormComponent implements OnInit {
     ngOnInit() {
         let self = this;
 
-
-
         self.commerceServ.getRestaurantList().subscribe(r=>{
             self.restaurantList = r;
         })
-
-        // self.commerceServ.getColorList().subscribe(r=>{
-        //     self.colorList = r;
-        // })
 
         self.route.params.subscribe((params:any)=>{
             this.commerceServ.getProduct(params.id).subscribe(

@@ -19,7 +19,8 @@ export class DashboardComponent implements OnInit {
   orders:any = [];
   products:Product[] = [];
   productGridMode:string = 'edit';
-  
+  restaurant:any;
+
   form:FormGroup = new FormGroup({
 		name: new FormControl('', [Validators.required, Validators.minLength(3)]),
 	});
@@ -40,6 +41,13 @@ export class DashboardComponent implements OnInit {
           self.commerceServ.getOrderList(query).subscribe(r=>{
             self.orders = r;
           });
+
+          self.commerceServ.getRestaurantList('?admin_id=' + account.id).subscribe(r=>{
+            if(r){
+              self.restaurant = r[0];
+            }
+            
+          })
 
           self.commerceServ.getProductList("?restaurant_id="+restaurant_id).subscribe(
               (ps:Product[]) => {

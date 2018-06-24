@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
-import { ICart, CartActions } from './cart.actions';
+import { ICart, CartActions } from '../commerce.actions';
 import { CommerceService } from '../commerce.service';
 import { IAccount } from '../../account/account.actions';
 

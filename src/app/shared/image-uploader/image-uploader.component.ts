@@ -1,37 +1,46 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { SharedService } from '../shared.service';
+import { NgRedux } from '@angular-redux/store';
+import { IPicture, PictureActions } from '../../commerce/commerce.actions';
 
 const ADD_IMAGE = environment.MEDIA_URL + 'add_photo.png';
-const FRAME_W = 180;
-const FRAME_H = 240;
+const FRAME_W = 80;
+const FRAME_H = 80;
+const IMAGE_W = 80;
+const IMAGE_H = 80;
 
-declare var $;
 
 @Component({
-  selector: 'app-image-uploader',
+  selector: 'image-uploader',
   templateUrl: './image-uploader.component.html',
   styleUrls: ['./image-uploader.component.scss']
 })
 export class ImageUploaderComponent implements OnInit {
-	@Input() data : any[];
+
+  @ViewChild('uploadInput') uploadInput:ElementRef;
+	@Input() data : any;
 	_data:any;
   currPic:any = {index:0, data:'', file:''};
+  pic:any;
 
 	MEDIA_ROOT = environment.MEDIA_URL;
 
 	// set data(d:any){
 	//     this._data = d;
 	// }
-  constructor(private sharedServ:SharedService) { }
+  constructor(private rx:NgRedux<IPicture>, private sharedServ:SharedService) { }
 
   ngOnInit(){
 
   }
 
   ngOnChanges() {
-  	let t = this.data;
-  	let ret = this.sharedServ.resizeImage(FRAME_W,FRAME_H,100, 200);
+    if(this.data){
+      this.pic = this.data;
+    }
+  	
+  	let ret = this.sharedServ.resizeImage(FRAME_W, FRAME_H, IMAGE_W, IMAGE_H);
     if(!this.data || this.data.length == 0){
       this.currPic = {index:0, data:ADD_IMAGE, file:''};
     }else{
@@ -39,65 +48,6 @@ export class ImageUploaderComponent implements OnInit {
     }
   }
 
-  // ngOnInit() {
-    //     let self = this;
-        
-    //     self.commerceServ.getCategoryList().subscribe(
-    //         (r:Category[]) => {
-    //             self.categoryList = r;
-    //         },
-    //         (err:any) => {
-    //             self.categoryList = [];
-    //         });
-
-    //     self.route.params.subscribe((params:any)=>{
-    //         self.id = params.id;
-
-    //         self.commerceServ.getImageDefaultTitle(1).subscribe((r)=>{
-    //             self.defaultTitles = [r.name0, r.name1, r.name2, r.name3];
-
-    //             if(params.id){
-    //               self.commerceServ.getWechatGroup(params.id).subscribe(
-    //                 (r:WechatGroup) => {
-    //                     r.qrs = self.commerceServ.getWechatGroupQRs(r.qrs, self.defaultTitles);
-    //                     self.wechatgroup = r
-    //                 },
-    //                 (err:any) => {
-    //                     let r = new WechatGroup();
-    //                     r.category = {'id':1};
-    //                     r.qrs = self.commerceServ.getWechatGroupQRs(r.qrs, self.defaultTitles);
-    //                     self.wechatgroup = r;
-    //                 });
-    //             }else{
-    //                 let r = new WechatGroup();
-    //                 r.category = {'id':1};
-    //                 r.qrs = self.commerceServ.getWechatGroupQRs(r.qrs, self.defaultTitles);
-    //                 self.wechatgroup = r;
-    //             }
-
-    //         },(err)=>{
-              
-    //         });
-
-
-    //     });
-    // }
-
-    // save() {
-    //     let self = this;
-    //     self.wechatgroup.user = {'id':1, 'name':'admin'};
-    //     self.wechatgroup.id = self.id;
-    //     // self.wechatgroup.images = self.images;
-    //     self.commerceServ.saveWechatGroup(self.wechatgroup).subscribe(
-    //         (r:any) => {
-    //             //self.wechatgroup = new WechatGroup(r.data[0]);
-    //             self.router.navigate(["admin/wechatgroups"]);
-    //         },
-    //         (err:any) => {
-    //             //self.wechatgroup = new WechatGroup();
-    //             self.router.navigate(["admin/wechatgroups"]);
-    //         });
-    // }
     getImageSrc(image:any){
       if(image.file){
         return image.data;
@@ -106,15 +56,16 @@ export class ImageUploaderComponent implements OnInit {
       }
     }
 
-    onLoadImage(i:number){
-      $('[name="image'+ i +'"]').click();
+    onLoadImage(){
+      let el = this.uploadInput.nativeElement as HTMLElement;
+      el.click();//('[name="image"]').click();
     }
 
-    onDeleteImage(i:number){
-        let pic = this.data[i];
+    onDeleteImage(){
+        let pic = this.data;
         pic.image.data = '';
         pic.image.file = '';
-        this.data[i] = pic;
+        this.data = pic;
     }
 
     onImageChange(event:any, i:number){
@@ -124,18 +75,27 @@ export class ImageUploaderComponent implements OnInit {
           let file = event.target.files[0];
           reader.readAsDataURL(file);
           reader.onload = () => {
-              if(i>=self.data.length){
-                self.data.push({index:i, name:"", image:{data: reader.result, file: event.target.files[0]}});
-                self.currPic = {index:i+1, data:ADD_IMAGE, file:''};
+              if(self.data && self.data.id){
+                let newData = { ...self.data, image:{data: reader.result, file: event.target.files[0]}, status:'change'};
+                self.pic = newData;
+                self.rx.dispatch({ type: PictureActions.CHANGE_PICTURE, 
+                  payload:newData
+                });
+                self.currPic = {data:ADD_IMAGE, file:''};
               }else{
-                self.data[i].image = {data: reader.result, file: event.target.files[0]};
+                let newData = { ...self.data, image:{data: reader.result, file: event.target.files[0]}, status:'add'};
+                self.pic = newData;
+                self.rx.dispatch({ type: PictureActions.ADD_PICTURE,
+                  payload:newData
+                });
+
               }//.split(',')[1];
               //self.wechatgroup.logo = event.target.files[0];
-          //   this.form.get('avatar').setValue({
-          //     filename: file.name,
-          //     filetype: file.type,
-          //     value: reader.result.split(',')[1]
-          //   })
+              //   this.form.get('avatar').setValue({
+              //     filename: file.name,
+              //     filetype: file.type,
+              //     value: reader.result.split(',')[1]
+              //   })
           }
         }
     }

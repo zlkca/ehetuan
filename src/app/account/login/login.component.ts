@@ -1,5 +1,5 @@
 import { Component, Output, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
 import { IAccount } from '../account.actions';
@@ -21,14 +21,22 @@ export class LoginComponent implements OnInit {
   public account = '';
   public password = '';
 
-  subscription:any;
   token = '';
   errMsg = '';
   auth2:any;
+  form:FormGroup;
 
-  constructor(public authServ:AuthService, private router:Router, private sharedServ:SharedService,
+  constructor(
+    private fb:FormBuilder,
+    private authServ:AuthService, 
+    private router:Router, 
+    private sharedServ:SharedService,
     private ngRedux: NgRedux<IAccount>) {
 
+    this.form = this.fb.group({
+      account:['', Validators.required],
+      password:['', Validators.required]
+    });
   }
 
   ngOnInit() {
@@ -67,11 +75,11 @@ export class LoginComponent implements OnInit {
     // }
   }
 
-  onLogin(form: NgForm) {
+  onLogin() {
     let self = this;
-    
-    if (form.valid) {
-      this.subscription = this.authServ.login(self.account, self.password).subscribe(
+    let v = this.form.value;
+    // if (this.form.valid) {
+      this.authServ.login(v.account, v.password).subscribe(
           (user:any) => {
               if(user && user.username){
                   //self.sharedServ.emitMsg({name:'OnUpdateHeader'});
@@ -90,9 +98,9 @@ export class LoginComponent implements OnInit {
           (error) => {
             console.error('An error occurred', error);
           });
-      }else{
-        self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";
-      }
+      // }else{
+      //   self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";
+      // }
   }
 
 

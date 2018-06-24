@@ -18,6 +18,7 @@ const API_URL = environment.API_URL;
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   constructor() {}
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {    
     let index = request.url.indexOf('maps.google.com/maps/api');
 
@@ -441,6 +442,66 @@ export class CommerceService {
             xhr.send(formData);
         }));
     }
+
+
+    saveMultiProducts(a:any[]){
+        let token = localStorage.getItem('token-' + this.APP);
+        let self = this;
+
+        return fromPromise(new Promise((resolve, reject)=>{
+            let formData = new FormData();
+            let i = 0;
+            for(let d of a){
+                let pic = d.pictures? d.pictures[0]:null;
+                let product = {id:d.id? d.id:'',
+                    name: d.name, 
+                    description:d.description,
+                    status:'active',
+                    price:d.price? d.price.toString():'',
+                    // categories:Array.from(d.categories, x => x.id).join(','),
+                    restaurant_id: d.restaurant_id,
+                    image_status: (pic && pic.status)? pic.status: 'unchange'
+                }
+
+                formData.append('info_'+i, JSON.stringify(product));
+
+
+                //formData.append('name'+i, d.pictures[i].name);
+                if(pic){
+                    let image = d.pictures? d.pictures[0].image:null;
+                    if(image){
+                        formData.append('image'+i, image.file);
+                    }
+                }
+
+                i = i + 1;    
+            }
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function (e) {
+              if (xhr.readyState === 4) { // done
+                if (xhr.status === 200) { // ok
+                    resolve(JSON.parse(xhr.response));
+                    //console.log(xhr.responseText);
+                } else {
+                    reject(xhr.response);
+                    //console.error(xhr.statusText);
+                }
+              }
+            };
+
+            xhr.onerror = function (e) {
+                reject(xhr.response);
+                //console.error(xhr.statusText);
+            };
+
+            xhr.open("POST", this.API_URL + 'products', true);
+            xhr.setRequestHeader("authorization", "Bearer " + btoa(token));
+            xhr.send(formData);
+        }));
+    }
+
     getProductList(query?:string):Observable<Product[]>{
         const url = API_URL + 'products' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');

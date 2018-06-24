@@ -1,6 +1,6 @@
 
 <div class="container page page-signup">
-	<form class="auth-form" #signupForm >
+	<form class="auth-form" [formGroup]="form" >
 		<div class="row">
 			<span class="title-md">Create New Account</span>
 		</div>
@@ -10,7 +10,7 @@
 
     	<div class="row">
 			<div class="label-sm">Username</div>
-			<input name="username" type="text" [(ngModel)]="username" (ngModelChange)="onInputChange($event)" required/>
+			<input formControlName="username" type="text"/>
 		</div>
 
 <!-- 		<div class="row user-type">
@@ -26,17 +26,12 @@
 
 		<div class="row">
 			<div class="label-sm">Email</div>
-			<input name="email" type="text" [(ngModel)]="email" (ngModelChange)="onInputChange($event)" required/>
+			<input formControlName="email" type="text"/>
 		</div>
 		<div class="row">
 			<div class="label-sm">Password</div>
-			<input name="password" type="password" [(ngModel)]="password" (ngModelChange)="onInputChange($event)" required/>
+			<input formControlName="password" type="password"/>
 		</div>
-		<div class="row">
-			<div class="label-sm">Confirm Password</div>
-			<input name="rePassword" type="password" [(ngModel)]="rePassword" (ngModelChange)="onInputChange($event)" required/>
-		</div>
-    
 
 		<div class="row btn-holder">
 			<button class="btn btn-primary" (click)="onSignup()" type="submit" block>Create</button>

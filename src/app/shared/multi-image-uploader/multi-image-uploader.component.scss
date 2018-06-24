@@ -4,21 +4,17 @@
 		display:inline-block;
 		
 		.img-frame{
-			width:80px;
-			height:80px;
+			width:240px;
+			height:180px;
 
 			img{
-				width:80px;
-				height:80px;
+				width:100px;
+				height:100px;
 			}
 		}
 		
 		.upload-input{
 			display:none;
 		}
-	}
-
-	.upload-new-area{
-		// display:none;
 	}
 }

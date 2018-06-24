@@ -64,7 +64,7 @@
                 <option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</option>
             </select>
         </div> -->
-        <app-image-uploader [data]="pictures" #uploader></app-image-uploader>
+        <multi-image-uploader [data]="pictures" #uploader></multi-image-uploader>
 
         <button (click)="save()">Save</button>
     </form>

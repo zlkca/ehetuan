@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
@@ -11,7 +11,7 @@ import { ProfileFormComponent } from './profile-form/profile-form.component';
 @NgModule({
    imports:[
       CommonModule,
-      FormsModule,
+      ReactiveFormsModule,
       RouterModule,
       HttpClientModule
    ],

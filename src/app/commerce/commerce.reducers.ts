@@ -1,5 +1,33 @@
-import { CartActions } from './cart.actions';
-import { ICart, ICartItem } from './cart.actions';
+import { PictureActions, CartActions } from './commerce.actions';
+import { IPicture, DEFAULT_PICTURE, ICart, ICartItem } from './commerce.actions';
+
+// export interface ICartAction{
+// 	type:string,
+// 	payload:any
+// }
+
+export function pictureReducer(state:IPicture[]=[], action:any){
+	if(action.payload){
+		let payload = action.payload;
+		let a = [];
+
+		switch(action.type){
+			case PictureActions.ADD_PICTURE:
+				a = state.filter(x=>x.product.id!=payload.product.id);
+				return [...a, ...[payload]];
+
+			case PictureActions.CHANGE_PICTURE:
+				a = state.filter(x=>x.product.id!=payload.product.id);
+				return [...a, ...[payload]];
+
+			case PictureActions.REMOVE_PICTURE:
+				return []
+		}
+	}
+	
+	return state;
+}
+
 
 export interface ICartAction{
 	type:string,

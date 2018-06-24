@@ -22,8 +22,6 @@ export class RestaurantGridComponent implements OnInit {
     center:any = {lat:43.761539,lng:-79.411079};
 
     ngOnInit() {
-        
-
         // if(window.navigator.geolocation){
         //     window.navigator.geolocation.getCurrentPosition(pos=>{
         //       let c = pos.coords;

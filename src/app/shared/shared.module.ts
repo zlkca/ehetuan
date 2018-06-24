@@ -14,6 +14,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ProductGridComponent } from './product-grid/product-grid.component';
 import { AddressInputComponent } from './address-input/address-input.component';
 import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
+import { MultiImageUploaderComponent } from './multi-image-uploader/multi-image-uploader.component';
 
 // import { PageService } from '../pages/page.service';
 // import { PagesModule } from '../pages/pages.module';
@@ -33,10 +34,11 @@ import { ImageUploaderComponent } from './image-uploader/image-uploader.componen
     FooterComponent,
     ProductGridComponent,
     AddressInputComponent,
-    ImageUploaderComponent
+    ImageUploaderComponent,
+    MultiImageUploaderComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   exports:[ WizardComponent, ImageViewerComponent, FeedbackComponent, MapComponent, HeaderComponent, FooterComponent, 
-  ProductGridComponent, AddressInputComponent, ImageUploaderComponent]
+  ProductGridComponent, AddressInputComponent, ImageUploaderComponent, MultiImageUploaderComponent]
 })
 export class SharedModule { }

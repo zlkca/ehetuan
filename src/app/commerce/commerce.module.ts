@@ -28,7 +28,8 @@ import { RestaurantFormComponent } from './restaurant-form/restaurant-form.compo
 import { ProductFormComponent } from './product-form/product-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { ProductGridComponent } from './product-grid/product-grid.component';
-
+import { MultiProductEditorComponent } from './multi-product-editor/multi-product-editor.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
    imports:[
@@ -44,7 +45,7 @@ import { ProductGridComponent } from './product-grid/product-grid.component';
     //         deps: [HttpClient]
     //     }
     // }),
-      //UiModule
+      SharedModule
    ],
    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
    providers: [SharedService,
@@ -54,8 +55,8 @@ import { ProductGridComponent } from './product-grid/product-grid.component';
       multi: true
     }],
    exports:[CategoryListComponent,CategoryFormComponent,ProductListComponent,ProductFormComponent,ProductFilterComponent, 
-     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent],
+     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, MultiProductEditorComponent],
    declarations:[CategoryListComponent,CategoryFormComponent,ProductListComponent, ProductFormComponent, ProductFilterComponent, 
-     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, ProductGridComponent]
+     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, ProductGridComponent, MultiProductEditorComponent]
 })
 export class CommerceModule { }

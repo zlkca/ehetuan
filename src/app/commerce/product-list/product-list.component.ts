@@ -5,7 +5,7 @@ import { Product } from '../commerce';
 import { environment } from '../../../environments/environment';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
-import { ICart, CartActions } from '../cart/cart.actions';
+import { ICart, CartActions } from '../commerce.actions';
 
 
 @Component({

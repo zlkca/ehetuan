@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
@@ -9,10 +10,16 @@ import { AuthService } from '../auth.service';
     styleUrls: ['./forget-password.component.scss']
 })
 export class ForgetPasswordComponent implements OnInit {
-	public email:string = '';
-	public errMsg:string = '';
 	
-	constructor(private authServ:AuthService, private router:Router) { }
+	errMsg:string;
+	form:FormGroup;
+
+	
+	constructor(private fb:FormBuilder, private authServ:AuthService, private router:Router) {
+		this.form = this.fb.group({
+			email:['', Validators.required]
+		})
+	}
 
 	ngOnInit() {
 	}

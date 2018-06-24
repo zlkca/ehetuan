@@ -2,21 +2,22 @@ import {Action} from 'redux';
 import { combineReducers } from 'redux';
 
 import {DashboardActions} from './main/dashboard.actions';
-import { ICart } from './commerce/cart/cart.actions';
-import { cartReducer } from './commerce/cart/cart.reducer';
+import { ICart, IPicture, DEFAULT_PICTURE } from './commerce/commerce.actions';
+import { cartReducer } from './commerce/commerce.reducers';
 import { IAccount } from './account/account.actions';
 import { DEFAULT_ACCOUNT, accountReducer } from './account/account.reducer';
+import { pictureReducer } from './commerce/commerce.reducers';
 
 export interface IAppState{
   cart:ICart;
   account:IAccount;
-  // name:string;
+  changed_pictures:IPicture[];
 }
 
 export const INITIAL_STATE: IAppState = {
 	cart: {items:[]},
-	account: DEFAULT_ACCOUNT
-	// name:''
+	account: DEFAULT_ACCOUNT,
+	changed_pictures:[]
 }
 
 // export function rootReducer(last:IAppState, action:Action):IAppState{
@@ -29,4 +30,8 @@ export const INITIAL_STATE: IAppState = {
 // 	return last;
 // }
 
-export const rootReducer = combineReducers({cart: cartReducer, account:accountReducer});
+export const rootReducer = combineReducers({
+	cart: cartReducer, 
+	account:accountReducer,
+	changed_pictures:pictureReducer
+});

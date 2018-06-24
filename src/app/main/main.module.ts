@@ -20,6 +20,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BlogComponent } from './blog/blog.component';
 import { CommentComponent } from './comment/comment.component';
 import { InstitutionSignupComponent } from './institution-signup/institution-signup.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { InstitutionSignupComponent } from './institution-signup/institution-sig
     DashboardComponent,
     InstitutionSignupComponent,
     BlogComponent,
-    CommentComponent
+    CommentComponent,
+    LoginComponent
   ],
   providers:[CommerceService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

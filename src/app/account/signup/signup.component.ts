@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgRedux } from '@angular-redux/store';
 import { AuthService } from '../auth.service';
+import { AccountActions, IAccount } from '../account.actions';
 
 @Component({
   providers: [AuthService],
@@ -10,45 +13,39 @@ import { AuthService } from '../auth.service';
 })
 export class SignupComponent implements OnInit {
 
-  private userType:string = 'guest';
-  private subscription:any;
-  private eid:any;
-  private gender:string;
+  errMsg:string;
+  form:FormGroup;
 
-  public username:string;
-  public email:string;
-  public password:string;
-  public rePassword:string;
-  public errMsg:string;
+  constructor(private fb:FormBuilder, 
+    private authServ:AuthService,
+    private router:Router,
+    private rx:NgRedux<IAccount>) { 
 
-  constructor(private route:ActivatedRoute, private authServ:AuthService, private router:Router) { 
-
+    this.form = this.fb.group({
+      username:['', Validators.required],
+      email:['', Validators.required],
+      password:['', Validators.required]
+    })
   }
 
   ngOnInit() {
-  	let self = this;
-    this.subscription = this.route.params.subscribe(params => {
-  		self.eid = params['eid'];
-  		self.userType = 'guest';
-  	})
+  	
   }
   
   ngOnDestroy(){
-  	this.subscription.unsubscribe();
+  
   }
 
   onSignup(){
     let self = this;
-  	this.authServ.signup(this.username, this.email, this.password, 'user')//, this.gender, '', '', '')
-      .subscribe(function(user){
-    		let s = user;
-        self.router.navigate(["/login"]);
-    	}, function(err){
-    		let e = err;
+    let v = this.form.value;
+  	this.authServ.signup(v.username, v.email, v.password, 'user').subscribe(user=>{
+        self.rx.dispatch({type:AccountActions.LOGIN, payload:user});
+        self.router.navigate(['home']);
+    	},
+      err=>{
+    		self.errMsg = 'Create Account Failed';
     	})
   }
 
-  onInputChange(event){
-
-  }
 }
