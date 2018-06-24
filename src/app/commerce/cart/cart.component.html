@@ -1,11 +1,29 @@
-<div class="cart">
-	<div *ngFor="let item of cart.items">
-		<div class="row">
-			<div class="item-col">{{item.name}}</div>
-			<div class="item-col">{{item.quantity}} 份</div>
-			<div class="item-col">${{item.price * item.quantity}}</div>
+<div class="cart" *ngIf="cart.items.length>0">
+	<!-- <div class="cart-title title-xs">Shopping Cart</div> -->
+	
+	<div class="cart-body">
+		<div class="text-sm" *ngFor="let item of cart.items">
+			<div class="cart-item">
+				<div class="row">
+					<div class="row item-info">
+						<div class="item-col">{{item.name}}</div>
+						<div class="item-col">{{item.quantity}} 份</div>
+						<div class="item-col">${{item.price * item.quantity}}</div>
+					</div>
+					<div class="item-operation">
+						<i class="fa fa-2x fa-plus-circle" (click)="addToCart(item)"></i>
+						<i class="fa fa-2x fa-minus-circle" (click)="removeFromCart(item)"></i>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div>Total:${{total}}</div>
-	<div *ngIf="cart.items.length > 0" class="btn" (click)="checkout()">Check out</div>
+	<div class="row cart-bottom">
+		<div class="col-5 cart-total title-sm">Total:${{total}}</div>
+		<div class="col-7 btn-holder">
+			<div class="btn btn-xs btn-secondary pull-right" (click)="clearCart()">Cancel</div>
+			<div class="btn btn-xs btn-primary pull-right" (click)="checkout()">Check out</div>
+			
+		</div>
+	</div>
 </div>

@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page restaurant-detail-page">
 	<div class="row">
 		<div class="col-sm-12 col-md-3">
 			<div class="input-group search-box">
@@ -6,7 +6,7 @@
 				<span class="input-group-addon" (click)="search(keyword)"><i class="fa fa-search"></i></span> -->
 			</div>
 			<!-- <app-product-filter></app-product-filter> -->
-			<app-cart></app-cart>
+			<app-cart  class="cart-widget"></app-cart>
 		</div>
 		<div class="col-sm-12 col-md-9">
 			<app-product-list [data]="productList"></app-product-list>

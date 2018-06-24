@@ -3,19 +3,29 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+
+import { SharedModule } from '../shared/shared.module';
+
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { ProfileFormComponent } from './profile-form/profile-form.component';
+import { InstitutionSignupComponent } from './institution-signup/institution-signup.component';
+import { InstitutionLoginComponent } from './institution-login/institution-login.component';
+
 @NgModule({
    imports:[
       CommonModule,
       ReactiveFormsModule,
       RouterModule,
-      HttpClientModule
+      HttpClientModule,
+      SharedModule
    ],
    exports:[],
-   declarations:[LoginComponent, SignupComponent, ChangePasswordComponent, ForgetPasswordComponent, ProfileFormComponent]
+   declarations:[LoginComponent, SignupComponent, ChangePasswordComponent, ForgetPasswordComponent, ProfileFormComponent,
+   InstitutionSignupComponent,
+   InstitutionLoginComponent
+   ]
 })
 export class AccountModule { }

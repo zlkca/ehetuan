@@ -2,17 +2,22 @@
 	<div class="product" *ngFor="let p of data; let i = index;">
 		<div class="body" (click)="onClick(p)">
 			<div class="image-frame">
-          		<img src="{{MEDIA_URL}}{{p.fpath}}" alt="{{p.name}}" />
+          		<img [src]="getImageSrc(p)" alt="{{p.name}}" />
 			</div>
-			<div class="title-xs">{{p.name}}</div>
-		  	<div class="text-xs">{{p.dimension}}</div>
-			<div class="text-xs">CAD {{p.price}}</div>
-			<!-- <div class="text-sm">{{p.description}}</div> -->
+			<div class="text-block">
+				<div class="title-sm">{{p.name}}</div>
+			  	<!-- <div class="text-sm">{{p.dimension}}</div> -->
+				<div class="text-sm">CAD {{p.price}}</div>
+				<!-- <div class="text-sm">{{p.description}}</div> -->
+			</div>
 		</div>
-		<div class="btn-holder">
-			<!-- <div class="btn btn-xs pull-right" (click)="editProduct(p)">Edit</div> -->
+		<div class="item-operation pull-right">
+			<i class="fa fa-2x fa-plus-circle" (click)="addToCart(p)"></i>
+			<i class="fa fa-2x fa-minus-circle" (click)="removeFromCart(p)"></i>
+		</div>
+<!-- 		<div class="btn-holder">
 			<div *ngIf="mode!='edit'" class="btn btn-xs pull-right" (click)="addToCart(p)">Add</div>
 			<div *ngIf="mode!='edit'" class="btn btn-xs pull-right" (click)="removeFromCart(p)">Remove</div>
-		</div>
+		</div> -->
 	</div>
 </div>

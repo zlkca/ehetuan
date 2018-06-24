@@ -1,10 +1,12 @@
 <div class="page home-page">
-	<div class="container">
 		
 		<!-- <div class="input-group location-box"> -->
-			<input #div type="text" id="userlocationinput"/>
 
-			<div class="btn btn-primary btn-search" (click)="search()">Search</div>
+			<div class="row search-bar">
+				<input #div type="text" id="userlocationinput" placeholder="Search by Street or Postal Code"/>
+				<div class="btn btn-primary btn-search" (click)="search()">Search</div>
+			</div>
+
 			<!-- <input #div type="text" id="userlocationinput" class="form-control" placeholder="Street or Postal Code" aria-describedby="basic-addon2">
 			<span class="input-group-addon" (click)="seach()"><i class="fa fa-search"></i></span> -->
 		<!-- </div> -->
@@ -12,8 +14,6 @@
 <!-- 		<div class="map-area">
 			<app-map [center]="center" [zoom]="14" [places]="places"></app-map>
 		</div> -->
-	</div>
-	
 </div>
 <!-- <div class="page">
 	<div class="row">

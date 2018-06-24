@@ -7,6 +7,7 @@ import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
 import { ICart, CartActions } from '../commerce.actions';
 
+const ADD_IMAGE = 'add_photo.png';
 
 @Component({
     providers:[CommerceService],
@@ -61,6 +62,12 @@ export class ProductListComponent implements OnInit {
       this.ngRedux.dispatch({type:CartActions.REMOVE_FROM_CART, payload:{pid:p.id, name:p.name, price:p.price, restaurant_id:p.restaurant.id}});
     }
 
-
+    getImageSrc(p){
+        if(p.fpath){
+            return this.MEDIA_URL + p.fpath;
+        }else{
+            return this.MEDIA_URL + ADD_IMAGE;
+        }
+    }
 }
 

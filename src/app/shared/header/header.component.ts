@@ -115,7 +115,8 @@ export class HeaderComponent implements OnInit {
     toBusinessCenter(){
         // if login and user is business, redirect to business center, otherwise redirect to business signup
         let self = this;
-        self.authServ.hasLoggedIn().subscribe(
+        this.closeNavMenu();
+        this.authServ.hasLoggedIn().subscribe(
             (r:any)=>{
                 self.isLogin = r? true : false;
                 if(self.isLogin){
@@ -127,7 +128,7 @@ export class HeaderComponent implements OnInit {
                         self.router.navigate(['institution-signup']);
                     }
                 }else{
-                    self.router.navigate(['login']);
+                    self.router.navigate(['institution-login']);
                 }
             });
     }

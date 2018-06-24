@@ -458,6 +458,7 @@ export class CommerceService {
                     description:d.description,
                     status:'active',
                     price:d.price? d.price.toString():'',
+                    currency:'cad',
                     // categories:Array.from(d.categories, x => x.id).join(','),
                     restaurant_id: d.restaurant_id,
                     image_status: (pic && pic.status)? pic.status: 'unchange'

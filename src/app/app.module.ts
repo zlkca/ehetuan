@@ -16,7 +16,8 @@ import { HomeComponent } from './main/home/home.component';
 // import { ContactComponent } from './main/contact/contact.component';
 import { LoginComponent } from './account/login/login.component';
 import { SignupComponent } from './account/signup/signup.component';
-import { InstitutionSignupComponent } from './main/institution-signup/institution-signup.component';
+import { InstitutionSignupComponent } from './account/institution-signup/institution-signup.component';
+import { InstitutionLoginComponent } from './account/institution-login/institution-login.component';
 import { ForgetPasswordComponent } from './account/forget-password/forget-password.component';
 import { ProductFormComponent } from './commerce/product-form/product-form.component';
 import { RestaurantFormComponent } from './commerce/restaurant-form/restaurant-form.component';
@@ -82,6 +83,7 @@ const appRoutes: Routes = [
         { path: 'product/:id', component:ProductComponent },
         { path: 'forget-password', component:ForgetPasswordComponent },
         { path: 'login', component:LoginComponent },
+        { path: 'institution-login', component:InstitutionLoginComponent },
         { path: 'signup', component:SignupComponent },
         { path: 'institution-signup', component:InstitutionSignupComponent },
         { path: 'home', component:HomeComponent }

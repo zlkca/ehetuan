@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
-import { ICart, CartActions } from '../commerce.actions';
+import { ICart, CartActions, ICartItem } from '../commerce.actions';
 import { CommerceService } from '../commerce.service';
 import { IAccount } from '../../account/account.actions';
 
@@ -17,10 +17,10 @@ export class CartComponent implements OnInit {
 	cart:any;
 	user;
 
-	constructor(private ngRedux:NgRedux<IAppState>, private commerceServ:CommerceService) {
+	constructor(private rx:NgRedux<IAppState>, private commerceServ:CommerceService) {
 		let self = this;
 
-		this.subscription = ngRedux.select<ICart>('cart').subscribe(
+		this.subscription = this.rx.select<ICart>('cart').subscribe(
 			cart=> {
 				this.total = 0;
 				this.cart = cart;
@@ -29,7 +29,7 @@ export class CartComponent implements OnInit {
 				});
 			});
 
-		this.subscriptionAccount = ngRedux.select<IAccount>('account').subscribe(
+		this.subscriptionAccount = this.rx.select<IAccount>('account').subscribe(
 			account=>{
 				self.user = account;
 			})
@@ -39,23 +39,28 @@ export class CartComponent implements OnInit {
 
 	}
 
-	// to fix
-	addToCart(p){
-	  this.ngRedux.dispatch({type:CartActions.ADD_TO_CART, payload:{pid:p.id}});
-	}
+	addToCart(item:ICartItem){
+      this.rx.dispatch({type:CartActions.ADD_TO_CART, 
+      	payload:{pid:item.pid, name:item.name, price:item.price, restaurant_id:item.rid}});
+    }
 
-	removeFromCart(p){
-	  this.ngRedux.dispatch({type:CartActions.REMOVE_FROM_CART, payload:{pid:p.id}});
-	}
+    removeFromCart(item:ICartItem){
+      this.rx.dispatch({type:CartActions.REMOVE_FROM_CART, 
+      	payload:{pid:item.pid, name:item.name, price:item.price, restaurant_id:item.rid}});
+    }
 
 	checkout(){
 		let self = this;
 		let orders = this.createOrders(this.cart);
 		this.commerceServ.checkout(orders, self.user.id).subscribe(r=>{
 			if(r){
-				self.ngRedux.dispatch({type:CartActions.CLEAR_CART, payload:{}})
+				self.rx.dispatch({type:CartActions.CLEAR_CART, payload:{}})
 			}
 		})
+	}
+
+	clearCart(){
+		this.rx.dispatch({type:CartActions.CLEAR_CART, payload:{}});
 	}
 
 	createOrders(cart:any){
@@ -78,9 +83,13 @@ export class CartComponent implements OnInit {
 		return orders;
 	}
 
-
 	ngOnDestroy(){
 		this.subscription.unsubscribe();
 		this.subscriptionAccount.unsubscribe();
 	}
+
+
+
+
+
 }

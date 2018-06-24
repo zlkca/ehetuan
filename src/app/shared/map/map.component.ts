@@ -30,39 +30,43 @@ export class MapComponent implements OnInit {
 
 	initMap() {
 		let self = this;
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: self.zoom,
-        center: self.center
-      });
-        
-    var marker = new google.maps.Marker({
-      position: self.center,
-      map: map,
-      label: 'Me'
-    });
-
-    if(this.places && this.places.length){
-        // var infowindow = new google.maps.InfoWindow({
-        //   content: contentString
-        // });
-
-        // var marker = new google.maps.Marker({
-        //   position: uluru,
-        //   map: map,
-        //   title: 'Uluru (Ayers Rock)'
-        // });
-        // marker.addListener('click', function() {
-        //   infowindow.open(map, marker);
-        // });
-
-      var markers = this.places.map((location, i)=>{
-        return new google.maps.Marker({
-          position:location,
-          label: self.places[i].name
+    if(typeof google !== 'undefined'){
+      var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: self.zoom,
+          center: self.center
         });
+          
+      var marker = new google.maps.Marker({
+        position: self.center,
+        map: map,
+        label: 'Me'
       });
 
-      var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+      if(this.places && this.places.length){
+          // var infowindow = new google.maps.InfoWindow({
+          //   content: contentString
+          // });
+
+          // var marker = new google.maps.Marker({
+          //   position: uluru,
+          //   map: map,
+          //   title: 'Uluru (Ayers Rock)'
+          // });
+          // marker.addListener('click', function() {
+          //   infowindow.open(map, marker);
+          // });
+
+        var markers = this.places.map((location, i)=>{
+          return new google.maps.Marker({
+            position:location,
+            label: self.places[i].name
+          });
+        });
+
+        var markerCluster = new MarkerClusterer(map, markers, {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+
+      }//end of this.places
 
     }
   }

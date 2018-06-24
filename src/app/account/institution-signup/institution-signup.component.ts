@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../account/auth.service';
+import { AuthService } from '../auth.service';
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
 @Component({

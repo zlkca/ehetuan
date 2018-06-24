@@ -45,6 +45,8 @@ export class RestaurantGridComponent implements OnInit {
         
         if(loc){
           self.center = {lat:loc.lat, lng:loc.lng};
+        }else{
+          self.center = {lat:43.761539,lng:-79.411079}; // default
         }
 
         // setup event listener

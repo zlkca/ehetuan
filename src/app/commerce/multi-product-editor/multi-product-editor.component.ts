@@ -32,7 +32,10 @@ export class MultiProductEditorComponent implements OnInit {
 			this.generateRows(this.nRows);
 			for(let i=0; i<nRows; i++){
 		  		this.items.at(i).patchValue(this.products[i]);
-		  		if(this.products[i].pictures){
+		  	}
+
+		  	for(let i=0; i<this.nRows; i++){
+		  		if(i<nRows && this.products[i].pictures){
 		  			this.pictures.push(this.products[i].pictures[0]);
 		  		}else{
 		  			this.pictures.push({ id:0, name:'',
@@ -41,7 +44,8 @@ export class MultiProductEditorComponent implements OnInit {
 						  image:{ 'data':'', 'file':'' },
 						  width:0,
 						  height:0,
-						  product:{id:this.products[i].id}
+						  product:{id:0},
+						  status:'empty'
 						})
 		  		}
 		  	}
@@ -56,6 +60,10 @@ export class MultiProductEditorComponent implements OnInit {
 				//self.user = account;
 				self.changedPictures = changedPictures;
 			})
+	}
+
+	ngOnDestroy(){
+		this.subscriptionPicture.unsubscribe();
 	}
 
   generateRows(nRows:number){

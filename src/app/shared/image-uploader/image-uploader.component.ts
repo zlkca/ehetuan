@@ -4,7 +4,8 @@ import { SharedService } from '../shared.service';
 import { NgRedux } from '@angular-redux/store';
 import { IPicture, PictureActions } from '../../commerce/commerce.actions';
 
-const ADD_IMAGE = environment.MEDIA_URL + 'add_photo.png';
+//const ADD_IMAGE = environment.MEDIA_URL + 'add_photo.png';
+const ADD_IMAGE = 'add_photo.png';
 const FRAME_W = 80;
 const FRAME_H = 80;
 const IMAGE_W = 80;
@@ -41,10 +42,9 @@ export class ImageUploaderComponent implements OnInit {
     }
   	
   	let ret = this.sharedServ.resizeImage(FRAME_W, FRAME_H, IMAGE_W, IMAGE_H);
-    if(!this.data || this.data.length == 0){
-      this.currPic = {index:0, data:ADD_IMAGE, file:''};
-    }else{
-      this.currPic = {index:this.data.length, data:ADD_IMAGE, file:''};
+
+    if(this.pic && !this.pic.image.data){
+      this.pic.image = {index:0, data:ADD_IMAGE, file:''};
     }
   }
 

@@ -21,15 +21,25 @@ $desktop: "(min-width: 1200px)";
 	    padding: 0px;
 	}
 
-	#userlocationinput{ //input.form-control
-	  outline:none;
-	  width:480px;
-	  float:left;
-	}
-	.btn-search{
+	.search-bar{
+		margin-top:180px;
+		margin-left:auto;
+		margin-right:auto;
+		width:510px;
 		height:40px;
-		float:left;
+
+		#userlocationinput{ //input.form-control
+		  outline:none;
+		  width:calc(100% - 80px);
+		  float:left;
+		}
+
+		.btn-search{
+			height:40px;
+			float:left;
+		}	
 	}
+
 
 	@media #{$desktop}{
 
@@ -43,8 +53,12 @@ $desktop: "(min-width: 1200px)";
 		.left-side{
 			min-height:40px;
 		}
-		#userlocationinput{
-			width:calc(100% - 80px);
+		.search-bar{
+			width:100%;
+			padding: 0px 10px;
+			#userlocationinput{
+				width:calc(100% - 80px);
+			}
 		}
 	}
 }
