@@ -112,8 +112,7 @@ export class AuthService {
             //formData.append('address', addr);
             formData.append('restaurant', restaurant);
             formData.append('phone', phone);
-            formData.append('image', image.file);
-            
+            formData.append('image', image? image.file:'');
             formData.append('street', address.street);
             formData.append('sub_locality', address.sub_locality);
             formData.append('postal_code', address.postal_code);

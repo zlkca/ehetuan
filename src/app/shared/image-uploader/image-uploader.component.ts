@@ -43,7 +43,7 @@ export class ImageUploaderComponent implements OnInit {
   	
   	let ret = this.sharedServ.resizeImage(FRAME_W, FRAME_H, IMAGE_W, IMAGE_H);
 
-    if(this.pic && !this.pic.image.data){
+    if(this.pic && this.pic.image && !this.pic.image.data){
       this.pic.image = {index:0, data:ADD_IMAGE, file:''};
     }
   }

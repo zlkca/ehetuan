@@ -41,9 +41,13 @@ export class InstitutionSignupComponent implements OnInit {
 
   onSignup(){
     let v = this.formGroup.value;
-
     let self = this;
-    let pic = self.uploader.data[0];
+    let pic = {image:''};
+
+    if(self.uploader.data.length >0){
+      pic = self.uploader.data[0];  
+    }
+    
         // institutionSignup(username: string, email: string, password: string, 
         // addr:any=null, restaurant:string, phone:string, image:any){
  
@@ -53,7 +57,7 @@ export class InstitutionSignupComponent implements OnInit {
         self.router.navigate(["/dashboard"]);
       }, function(err){
         let e = err;
-      })
+      });
   }
 
       
