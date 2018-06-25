@@ -30,8 +30,8 @@ export class AddressInputComponent implements OnInit {
 
   ngOnInit() {
   	let self = this;
-
-	var defaultBounds = new google.maps.LatLngBounds(
+    if(typeof google !== 'undefined'){
+        var defaultBounds = new google.maps.LatLngBounds(
           new google.maps.LatLng(43.821662, -79.928525),
           new google.maps.LatLng(43.494848, -79.133542));
 
@@ -102,6 +102,9 @@ export class AddressInputComponent implements OnInit {
             // });
         });
       }//end of if
+
+    }
+	      
   }
 
   	// onChange(v){

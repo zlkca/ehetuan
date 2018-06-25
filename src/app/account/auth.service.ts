@@ -113,14 +113,17 @@ export class AuthService {
             formData.append('restaurant', restaurant);
             formData.append('phone', phone);
             formData.append('image', image? image.file:'');
-            formData.append('street', address.street);
-            formData.append('sub_locality', address.sub_locality);
-            formData.append('postal_code', address.postal_code);
-            formData.append('province', address.province);
-            formData.append('city', address.city);
-            // formData.append('categories', Array.from(d.categories, x => x.id).join(','));
-            formData.append('lat', address.lat);
-            formData.append('lng', address.lng);
+            
+            if(address){
+                formData.append('street', address.street);
+                formData.append('sub_locality', address.sub_locality);
+                formData.append('postal_code', address.postal_code);
+                formData.append('province', address.province);
+                formData.append('city', address.city);
+                // formData.append('categories', Array.from(d.categories, x => x.id).join(','));
+                formData.append('lat', address.lat);
+                formData.append('lng', address.lng);    
+            }
             
             var xhr = new XMLHttpRequest();
 

@@ -20,11 +20,10 @@ const IMAGE_H = 80;
 export class ImageUploaderComponent implements OnInit {
 
   @ViewChild('uploadInput') uploadInput:ElementRef;
-	@Input() data : any;
+	@Input() data : any; // single image with structure {image:{data:'url', file:'file data'}}
 	_data:any;
   currPic:any = {index:0, data:'', file:''};
   pic:any;
-
 	MEDIA_ROOT = environment.MEDIA_URL;
 
 	// set data(d:any){

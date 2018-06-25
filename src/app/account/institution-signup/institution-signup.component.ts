@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgRedux } from '@angular-redux/store';
+import { IAccount, AccountActions } from '../account.actions';
 import { AuthService } from '../auth.service';
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
@@ -13,11 +15,12 @@ export class InstitutionSignupComponent implements OnInit {
   errMsg:string;
   formGroup:FormGroup;
   address:any;
-  pictures:any[] = [];
+  picture:any = {image:{data:'', file:''}};
   @ViewChild(ImageUploaderComponent)
   uploader:any;
 
-  constructor(private fb:FormBuilder, private authServ:AuthService, private router:Router) {
+  constructor(private fb:FormBuilder, private authServ:AuthService, 
+    private rx:NgRedux<IAccount>, private router:Router) {
 
     this.formGroup = this.fb.group({
       username:['', Validators.required],
@@ -44,19 +47,24 @@ export class InstitutionSignupComponent implements OnInit {
     let self = this;
     let pic = {image:''};
 
-    if(self.uploader.data.length >0){
-      pic = self.uploader.data[0];  
+    if(self.uploader.pic){
+      pic = self.uploader.pic;  
     }
     
         // institutionSignup(username: string, email: string, password: string, 
         // addr:any=null, restaurant:string, phone:string, image:any){
  
     this.authServ.institutionSignup(v.username, v.email, v.password,
-      this.address, v.restaurant, v.phone, pic.image ).subscribe(function(user){
-        let s = user;
-        self.router.navigate(["/dashboard"]);
+      this.address, v.restaurant, v.phone, pic.image ).subscribe((r:any)=>{
+        if(r.token){
+          self.rx.dispatch({type:AccountActions.LOGIN, payload:r.user}); //r.error
+          self.router.navigate(["/dashboard"]);
+        }else{
+          self.errMsg = 'Error:' + r.errors[0];
+        }
+        
       }, function(err){
-        let e = err;
+        self.errMsg = err;
       });
   }
 
