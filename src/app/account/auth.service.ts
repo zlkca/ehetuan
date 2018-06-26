@@ -113,9 +113,9 @@ export class AuthService {
             formData.append('restaurant', restaurant);
             formData.append('phone', phone);
             formData.append('image', image? image.file:'');
-            
+
             if(address){
-                formData.append('street', address.street);
+                formData.append('street', address.street_number + ' ' + address.street_name);
                 formData.append('sub_locality', address.sub_locality);
                 formData.append('postal_code', address.postal_code);
                 formData.append('province', address.province);
