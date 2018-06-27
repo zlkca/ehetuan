@@ -6,7 +6,6 @@ import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
 import { environment } from '../../environments/environment';
 import { Restaurant,Category,Color,Style,PriceRange,Product,Picture,Cart,CartItem,Order,OrderItem,FavoriteProduct } from './commerce';
 
@@ -340,12 +339,14 @@ export class CommerceService {
             formData.append('id', d.id? d.id:'');
             formData.append('name', d.name);
             formData.append('description', d.description);
-            formData.append('address_id', d.address.id);
-            formData.append('street', d.address.street);
-            formData.append('sub_locality', d.address.sub_locality);
-            formData.append('postal_code', d.address.postal_code);
-            formData.append('province_id', d.address.province.id);
-            formData.append('city_id', d.address.city.id);
+            if(d.address){
+                formData.append('address_id', d.address.id);
+                formData.append('street', d.address.street);
+                formData.append('sub_locality', d.address.sub_locality);
+                formData.append('postal_code', d.address.postal_code);
+                formData.append('province', d.address.province);
+                formData.append('city', d.address.city);
+            }
             formData.append('categories', Array.from(d.categories, x => x.id).join(','));
             formData.append('lat', d.address.lat);
             formData.append('lng', d.address.lng);

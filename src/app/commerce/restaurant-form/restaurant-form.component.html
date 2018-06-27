@@ -4,15 +4,15 @@
         <div class="row">
             <div class="label-sm">Name:</div>
             <input name="name" formControlName="name"/>
-            <div *ngIf="name.touched && name.invalid" class="alert alert-danger">
+<!--             <div *ngIf="name.touched && name.invalid" class="alert alert-danger">
                 <div *ngIf="name.errors.required">Restaurant Name is required</div>
                 <div *ngIf="name.errors.minlength">Restaurant Name should be minimum 3 characters.</div>
-            </div>
+            </div> -->
         </div>
         <div class="row">
             <div class="label-sm">Description</div>
             <textarea name="description" formControlName="description"></textarea>
-            <div *ngIf="description.touched && description.invalid" class="alert alert-danger">Max Manufacory Description is 500 chars.</div>
+            <!-- <div *ngIf="description.touched && description.invalid" class="alert alert-danger">Max Manufacory Description is 500 chars.</div> -->
         </div>
 
 <!--         <div class="row">
@@ -24,6 +24,8 @@
                 </div>
             </div>
         </div> -->
+
+        <div formGroupName="address">
             <div class="row">
                 <div class="label-sm">Street:</div>
                 <input name="street" formControlName="street"/>
@@ -32,38 +34,13 @@
                     <div *ngIf="street.errors.minlength">Street should be minimum 3 characters.</div>
                 </div> -->
             </div>
+
             <div class="row">
                 <div class="label-sm">Postal Code:</div>
                 <input name="postal_code" formControlName="postal_code"/>
             </div>
-<!--             <div class="row">
-                <div class="label-sm">City</div>
-                <select name="city" formControlName="city">
-                    <option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</option>
-                </select>
-            </div> -->
-        <div class="row">
-            <div class="label-sm">Street:</div>
-            <input name="street" formControlName="street"/>
-            <div *ngIf="street.touched && street.invalid" class="alert alert-danger">
-                <div *ngIf="street.errors.required">Street is required</div>
-                <div *ngIf="street.errors.minlength">Street should be minimum 3 characters.</div>
-            </div>
         </div>
 
-<!--         <div class="row">
-            <div class="label-sm">Province</div>
-            <select name="province" formControlName="province_id">
-                <option *ngFor="let province of provinceList" [value]="province.id">{{province.name}}</option>
-            </select>
-        </div>
-
-        <div class="row">
-            <div class="label-sm">City</div>
-            <select name="city" formControlName="city_id">
-                <option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</option>
-            </select>
-        </div> -->
         <multi-image-uploader [data]="pictures" #uploader></multi-image-uploader>
 
         <button (click)="save()">Save</button>

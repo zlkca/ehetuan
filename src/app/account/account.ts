@@ -1,11 +1,11 @@
 export class User{
-  public id:string;
-  public username:string;
-  public email:string;
-  public first_name:string;
-  public last_name:string;
-  public portrait:string;
-  public type:string;
+  id:string;
+  username:string;
+  email:string;
+  first_name:string;
+  last_name:string;
+  portrait:string;
+  type:string;
     constructor(o?:any){
         if(o){
           this.id = o.id;
@@ -19,48 +19,13 @@ export class User{
   }
 }
 
-export class Country{
-    public id:string;
-    public name:string;
-
-    constructor(o?:any){
-        if(o){
-            this.name = o.name;
-            this.id = o.id;
-        }
-    }
-}
-
-export class Province{
-  id:string;
-  name:string;
-  constructor(o?:any){
-    if(o){
-      this.id = o.id;
-      this.name = o.name;
-    }
-  }
-}
-
-export class City{
-  id:string;
-  name:string;
-  province:Province;
-  constructor(o?:any){
-    if(o){
-      this.id = o.id;
-      this.name = o.name;
-      this.province = o.province;
-    }
-  }
-}
 
 export class Address{
   id:string;
   street:string;
   postal_code:string;
-  province:Province;
-  city:City;
+  province:string;
+  city:string;
   sub_locality:string;
   lat:string;
   lng:string;
