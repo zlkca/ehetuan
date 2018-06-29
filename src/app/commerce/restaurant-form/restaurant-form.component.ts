@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@ang
 import { CommerceService } from '../commerce.service';
 import { Restaurant, Category, Picture } from '../commerce';
 import { Address } from '../../account/account';
-import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
+import { MultiImageUploaderComponent } from '../../shared/multi-image-uploader/multi-image-uploader.component';
 
 @Component({
   selector: 'app-restaurant-form',
@@ -20,7 +20,7 @@ export class RestaurantFormComponent implements OnInit {
 	form:FormGroup;
 
 	@Input() data:any;
-	@ViewChild(ImageUploaderComponent) uploader:any;
+	@ViewChild(MultiImageUploaderComponent) uploader:any;
 	
 	createForm(){
 		return this.fb.group({
@@ -44,7 +44,6 @@ export class RestaurantFormComponent implements OnInit {
 
 	ngOnInit() {
 		let self = this;
-		let addr = this.data.address;
 		this.form.patchValue(this.data);
 
         //self.route.params.subscribe((params:any)=>{
@@ -113,10 +112,11 @@ export class RestaurantFormComponent implements OnInit {
         // });
 	}
 
+
+
 	save(){
 		let self = this;
 		let v = this.form.value;
-		let picture = self.uploader.data[0]
 		let addr = null;
 		// hardcode Toronto as default
 		if(self.restaurant && self.restaurant.address){
@@ -127,8 +127,12 @@ export class RestaurantFormComponent implements OnInit {
 		}
 		let m = new Restaurant(this.form.value);
 
-		m.image = picture.image;
-		m.id = self.id;
+		if(self.uploader){
+			m.image = self.uploader.data[0].image;
+		}
+
+		m.id = self.data? self.data.id:null;
+		
 
 		let s = addr.street + ', Toronto, ' + v.address.postal_code;
 		this.commerceSvc.getLocation(s).subscribe(ret=>{

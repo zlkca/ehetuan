@@ -39,11 +39,7 @@ export class SignupComponent implements OnInit {
   onSignup(){
     let self = this;
     let v = this.form.value;
-    let type = 'user';
-
-    if(v.username === 'admin'){
-      type = 'super';
-    }
+    let type = (v.username.toLowerCase() === 'admin')? 'super':'user';
 
   	this.authServ.signup(v.username, v.email, v.password, type).subscribe(user=>{
         self.rx.dispatch({type:AccountActions.LOGIN, payload:user});
