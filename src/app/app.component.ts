@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
     // }else{
     //   self.toPage('restaurants');
     // }
+
     self.authServ.hasLoggedIn().subscribe(
       (r:any)=>{
         self.isLogin = r? true : false;

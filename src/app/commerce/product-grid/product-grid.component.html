@@ -1,3 +1,23 @@
-<p>
-  product-grid works!
-</p>
+<div class="product-list">
+	<div class="product" *ngFor="let p of data; let i = index;">
+		<div class="body" (click)="onClick(p)">
+			<div class="image-frame">
+          		<img [src]="getImageSrc(p)" alt="{{p.name}}" />
+			</div>
+			<div class="text-block">
+				<div class="title-sm">{{p.name}}</div>
+			  	<!-- <div class="text-sm">{{p.dimension}}</div> -->
+				<div class="text-sm">CAD {{p.price}}</div>
+				<!-- <div class="text-sm">{{p.description}}</div> -->
+			</div>
+		</div>
+		<div class="item-operation pull-right">
+			<i class="fa fa-2x fa-plus-circle" (click)="addToCart(p)"></i>
+			<i class="fa fa-2x fa-minus-circle" (click)="removeFromCart(p)"></i>
+		</div>
+<!-- 		<div class="btn-holder">
+			<div *ngIf="mode!='edit'" class="btn btn-xs pull-right" (click)="addToCart(p)">Add</div>
+			<div *ngIf="mode!='edit'" class="btn btn-xs pull-right" (click)="removeFromCart(p)">Remove</div>
+		</div> -->
+	</div>
+</div>
