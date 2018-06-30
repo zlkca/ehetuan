@@ -5,13 +5,13 @@
 			<div class="card-body" (click)="onClick(p)">
 				<p class="text-left text-sm mb-0">
 					<span class="text-dark">{{p.name}}</span><br>
-					<span>CAD {{p.price}}</span>
+					<span>CAD {{p.price | currency}}</span>
 				</p>
 			</div>
-			<div class="card-footer text-muted">
+			<div class="card-footer">
 				<div class="pull-right">
-					<i class="fa fa-2x fa-plus-circle text-primary" (click)="addToCart(p)"></i>
-					<i class="fa fa-2x fa-minus-circle ml-2 text-danger" (click)="removeFromCart(p)"></i>
+					<i class="fa fa-2x fa-minus-circle text-danger" (click)="removeFromCart(p)"></i>
+					<i class="fa fa-2x fa-plus-circle ml-2 text-primary" (click)="addToCart(p)"></i>
 				</div>
 			</div>
 		</div>

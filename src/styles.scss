@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/bootstrap/scss/bootstrap.scss"; 
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
 $fa-font-path: "../node_modules/font-awesome/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
 
@@ -44,7 +44,7 @@ $navbar-m-height:80px;
       font-family: "Microsoft Yahei", "Roboto", Helvetica, Arial, sans-serif;
       font-size: 28px;
       font-weight: 500;
-      color: #7c7c7c;    
+      color: #7c7c7c;
   }
 
   .title-bg{
@@ -113,7 +113,7 @@ $navbar-m-height:80px;
    color:rgb(50,50,50);
    font-family: Roboto, sans-serif;
    font-size:16px;
-   font-weight:300; 
+   font-weight:300;
 }
 
 .text-bg{
@@ -126,7 +126,7 @@ $navbar-m-height:80px;
    color:#585858;
    font-family: Roboto, sans-serif;
    font-size:24px;
-   font-weight:300; 
+   font-weight:300;
 }
 
 body{
@@ -140,12 +140,12 @@ body{
   //   width:100%;
   //   min-width: 150px;
   //   height:$item-height;
-  //   border:1px solid $border-color; 
+  //   border:1px solid $border-color;
   //   font-weight:400;
   //   text-align:center;
-     border-radius: 0;
-     -webkit-border-radius: 0;
-     -moz-border-radius: 0;
+     // border-radius: 0;
+     // -webkit-border-radius: 0;
+     // -moz-border-radius: 0;
   }
 
   .btn-light{
@@ -213,8 +213,8 @@ body{
 
       background: transparent;
       outline: none;
-      
-      margin: 0;      
+
+      margin: 0;
       font-weight: 400;
       font-family: "Roboto", Helvetica, Arial, sans-serif;
       font-size: 14px;
@@ -247,7 +247,7 @@ body{
       padding-right: 12px;
     }
   }
-  
+
   form{
     .label-sm{
       width:100%;
@@ -291,7 +291,7 @@ body{
       .upload-input{
           display:none;
       }
-      
+
       .ngb-tp{
         input.form-control{
           width:60px;
@@ -360,7 +360,7 @@ body{
       margin:0px;
       padding:10px;
     }
-    
+
     .title{
       padding-bottom:0px;
     }
