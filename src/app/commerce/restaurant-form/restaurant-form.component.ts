@@ -46,6 +46,8 @@ export class RestaurantFormComponent implements OnInit {
 		let self = this;
 		this.form.patchValue(this.data);
 
+		self.pictures = [{index:0, name:'', image:this.data.image}];
+		
         //self.route.params.subscribe((params:any)=>{
             // self.commerceServ.getRestaurant(params.id).subscribe(
             //     (r:Restaurant) => {
