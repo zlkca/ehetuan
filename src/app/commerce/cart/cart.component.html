@@ -1,8 +1,31 @@
 <div class="cart" *ngIf="cart.items.length>0">
 	<!-- <div class="cart-title title-xs">Shopping Cart</div> -->
-	
-	<div class="cart-body">
-		<div class="text-sm" *ngFor="let item of cart.items">
+
+	<ul class="list-group mb-3">
+	  <li *ngFor="let item of cart.items" class="list-group-item align-items-start">
+	    {{item.name}}
+			<div class="d-flex w-100 justify-content-between">
+				<div class="input-group input-group-sm">
+			    <span class="input-group-prepend">
+			        <button type="button" (click)="removeFromCart(item)" class="btn btn-danger btn-sm" data-type="minus" data-field="num">
+								<i class="fa fa-minus-circle"></i>
+							</button>
+			    </span>
+			    <input type="text" name="num" class="form-control" [(ngModel)]="item.quantity">
+			    <span class="input-group-append">
+			        <button type="button" (click)="addToCart(item)" class="btn btn-primary btn-sm" data-type="plus" data-field="num">
+								<i class="fa fa-plus-circle"></i>
+							</button>
+			    </span>
+				</div>
+	      <!-- <small class="text-muted">{{item.quantity}} 份</small> -->
+				<small>{{item.price * item.quantity | currency}}</small>
+	    </div>
+	  </li>
+	</ul>
+
+	<!-- <div class="cart-body">
+		<div class="text-sm">
 			<div class="cart-item">
 				<div class="row">
 					<div class="row item-info">
@@ -17,13 +40,14 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row cart-bottom">
-		<div class="col-5 cart-total title-sm">Total:${{total}}</div>
-		<div class="col-7 btn-holder">
-			<div class="btn btn-xs btn-secondary pull-right" (click)="clearCart()">Cancel</div>
-			<div class="btn btn-xs btn-primary pull-right" (click)="checkout()">Check out</div>
-			
+	</div> -->
+	<div class="row">
+		<div class="col-12">
+			<p class="title-sm">Total:{{total | currency}}</p>
+		</div>
+		<div class="col-12">
+			<button type="button" class="btn btn-xs btn-secondary pull-left" (click)="clearCart()">Cancel</button>
+			<button type="button" class="btn btn-xs btn-primary pull-right" (click)="checkout()">Check out</button>
 		</div>
 	</div>
 </div>
