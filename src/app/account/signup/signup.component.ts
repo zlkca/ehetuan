@@ -43,8 +43,12 @@ export class SignupComponent implements OnInit {
 
   	this.authServ.signup(v.username, v.email, v.password, type).subscribe(user=>{
         self.rx.dispatch({type:AccountActions.LOGIN, payload:user});
-        self.router.navigate(['home']);
-    	},
+        if(user.type ==='super'){
+          self.router.navigate(["admin"]);
+        }else{
+          self.router.navigate(['home']);
+        }
+      },
       err=>{
     		self.errMsg = 'Create Account Failed';
     	})

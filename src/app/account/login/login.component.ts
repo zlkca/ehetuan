@@ -85,7 +85,9 @@ export class LoginComponent implements OnInit {
                   //self.sharedServ.emitMsg({name:'OnUpdateHeader'});
                   this.ngRedux.dispatch({type:AccountActions.LOGIN, payload:user});
                   self.user = user;
-                  if(user.type=='business'){
+                  if(user.type === 'super'){
+                    self.router.navigate(['admin']);
+                  }else if(user.type=='business'){
                     self.router.navigate(['dashboard']);
                   }else{
                     self.router.navigate(['home']);
