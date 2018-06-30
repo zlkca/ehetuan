@@ -19,6 +19,7 @@ import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BlogComponent } from './blog/blog.component';
 import { CommentComponent } from './comment/comment.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { CommentComponent } from './comment/comment.component';
     RestaurantGridComponent,
     DashboardComponent,
     BlogComponent,
-    CommentComponent
+    CommentComponent,
+    AdminComponent
   ],
   providers:[CommerceService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
