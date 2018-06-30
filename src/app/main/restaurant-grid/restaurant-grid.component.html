@@ -1,16 +1,18 @@
 <div class="page">
 	<div class="row">
-		<div class="col-sm-12 col-md-3">
-			<div class="input-group search-box">
-<!-- 				<input type="text" class="form-control" [(ngModel)]="keyword" placeholder="Search by Keyword" aria-describedby="basic-addon2">
-				<span class="input-group-addon" (click)="searchByKeyword(keyword)"><i class="fa fa-search"></i></span>
- -->			</div>
-			<!-- <app-product-filter></app-product-filter> -->
-		</div>
-		<div class="col-sm-12 col-md-9 map-col">
+		<div class="col-sm-12 map-col">
 			<div class="map-area">
 				<app-map [center]="center" [zoom]="14" [places]="places"></app-map>
 			</div>
+		</div>
+		<!-- <div class="col-sm-12 col-md-3">
+			<div class="input-group search-box">
+ 				<input type="text" class="form-control" [(ngModel)]="keyword" placeholder="Search by Keyword" aria-describedby="basic-addon2">
+				<span class="input-group-addon" (click)="searchByKeyword(keyword)"><i class="fa fa-search"></i></span>
+ 			</div>
+			 <app-product-filter></app-product-filter>
+		</div> -->
+		<div class="col-sm-12">
 			<app-restaurant-list [data]="restaurantList"></app-restaurant-list>
 		</div>
 	</div>
