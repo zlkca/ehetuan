@@ -5,10 +5,8 @@
                 <img [src]="getImageSrc(pic.image)" />
             </div>
             <div class="row">
-                <div class="btn" (click)="onLoadImage()">
-                    Change
-                </div>
-                <div class="btn" (click)="onDeleteImage()">Delete</div>
+                <div class="col-sm-6" (click)="onLoadImage()"><i class="fa fa-2x fa-edit" ></i></div>
+                <div class="col-sm-6" (click)="onDeleteImage()"><i class="fa fa-2x fa-trash" ></i></div>
             </div>
         </div>
 

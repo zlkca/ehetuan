@@ -166,6 +166,7 @@ export class Product{
               for(let i=0; i<MAX_N_PICTURES; i++){
                 let pic = new Picture();
                 pic.index = i;
+                pic.product = {id:o.id};
                 ps.push(pic);
               }
               this.pictures = ps;

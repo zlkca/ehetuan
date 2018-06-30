@@ -1,3 +1,9 @@
+
+$mobile: "(max-width: 767px)";
+$tablet: "(min-width: 768px) and (max-width: 1199px)";
+$desktop: "(min-width: 1200px)";
+
+
 .product-list-editor{
 	.list-body{
 		.row{
@@ -23,4 +29,17 @@
 			margin-left:15px;
 		}
 	}
+
+
+
+
+	@media #{$mobile}{
+		.list-header{
+			display:none;
+		}
+		[name='id']{
+			display:none;
+		}
+	}
 }
+
