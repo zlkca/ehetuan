@@ -40,14 +40,19 @@ export class CartComponent implements OnInit {
 	}
 
 	addToCart(item:ICartItem){
-      this.rx.dispatch({type:CartActions.ADD_TO_CART, 
+      this.rx.dispatch({type:CartActions.ADD_TO_CART,
       	payload:{pid:item.pid, name:item.name, price:item.price, restaurant_id:item.rid}});
     }
 
     removeFromCart(item:ICartItem){
-      this.rx.dispatch({type:CartActions.REMOVE_FROM_CART, 
+      this.rx.dispatch({type:CartActions.REMOVE_FROM_CART,
       	payload:{pid:item.pid, name:item.name, price:item.price, restaurant_id:item.rid}});
     }
+
+  updateQuantity(item){
+    this.rx.dispatch({type:CartActions.UPDATE_QUANTITY,
+      payload:{pid:item.pid, name:item.name, price:item.price, restaurant_id:item.rid, quantity:parseInt(item.quantity)}});
+  }
 
 	checkout(){
 		let self = this;
