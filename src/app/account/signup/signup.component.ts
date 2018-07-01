@@ -5,6 +5,8 @@ import { NgRedux } from '@angular-redux/store';
 import { AuthService } from '../auth.service';
 import { AccountActions, IAccount } from '../account.actions';
 
+import { SharedService } from '../../shared/shared.service';
+
 @Component({
   providers: [AuthService],
   selector: 'app-signup',
@@ -19,7 +21,8 @@ export class SignupComponent implements OnInit {
   constructor(private fb:FormBuilder, 
     private authServ:AuthService,
     private router:Router,
-    private rx:NgRedux<IAccount>) { 
+    private rx:NgRedux<IAccount>,
+    private sharedServ:SharedService) { 
 
     this.form = this.fb.group({
       username:['', Validators.required],
@@ -42,7 +45,8 @@ export class SignupComponent implements OnInit {
     let type = (v.username.toLowerCase() === 'admin')? 'super':'user';
 
   	this.authServ.signup(v.username, v.email, v.password, type).subscribe(user=>{
-        self.rx.dispatch({type:AccountActions.LOGIN, payload:user});
+      self.sharedServ.emitMsg({name:'updateLogin'});
+      self.rx.dispatch({type:AccountActions.LOGIN, payload:user});
         if(user.type ==='super'){
           self.router.navigate(["admin"]);
         }else{
