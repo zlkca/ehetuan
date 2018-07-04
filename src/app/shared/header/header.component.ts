@@ -73,6 +73,12 @@ export class HeaderComponent implements OnInit {
                 //   },(err)=>{
                 //     self.isLogin = false;
                 //   });
+
+                self.sharedServ.getMsg().subscribe(msg => {
+                    if(msg.name === 'updateLogin'){
+                        self.isLogin = !this.isLogin;
+                    }
+                });
             }
         });
 

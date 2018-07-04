@@ -11,7 +11,7 @@
 								<i class="fa fa-minus-circle"></i>
 							</button>
 			    </span>
-			    <input type="text" name="num" class="form-control" [(ngModel)]="item.quantity">
+			    <input type="text" name="num" class="form-control" [(ngModel)]="item.quantity" (change)="updateQuantity(item)">
 			    <span class="input-group-append">
 			        <button type="button" (click)="addToCart(item)" class="btn btn-primary btn-sm" data-type="plus" data-field="num">
 								<i class="fa fa-plus-circle"></i>

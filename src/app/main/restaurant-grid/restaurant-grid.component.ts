@@ -32,10 +32,11 @@ export class RestaurantGridComponent implements OnInit {
     //     });
     // }
   }
+
   ngAfterViewInit() {
     let self = this;
-
   }
+
   constructor(private commerceServ: CommerceService, private sharedServ: SharedService) {
     let self = this;
 

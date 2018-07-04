@@ -38,7 +38,7 @@ export function pictureReducer(state:IPicture[]=[], action:any){
 				return []
 		}
 	}
-	
+
 	return state;
 }
 
@@ -83,10 +83,23 @@ export function cartReducer(state:ICart={items:[]}, action:any){
 				}else{
 					return state;
 				}
+			case CartActions.UPDATE_QUANTITY:
+				if(item){
+					let newItems = state.items.map(x=>{
+						if(x.pid == payload.pid){
+							x.quantity = payload.quantity;
+						}
+						return x;
+					});
+
+					return { ...state, items:newItems.filter(x=>x.quantity>0) }
+				}else{
+					return state;
+				}
 			case CartActions.CLEAR_CART:
 				return { ...state, items:[] }
 		}
 	}
-	
+
 	return state;
 }

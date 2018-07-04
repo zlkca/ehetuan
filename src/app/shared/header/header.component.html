@@ -18,14 +18,14 @@
                 <li class="nav-item" *ngIf="!isLogin">
                     <a class="nav-link" (click)="toPage('login')" data-toggle="collapse">Login</a>
                 </li>
+                <li class="nav-item" *ngIf="isLogin">
+                    <a class="nav-link" (click)="logout()" data-toggle="collapse">Logout</a>
+                </li>
 <!--                 <li class="nav-item" *ngIf="isLogin">
                     <a class="nav-link" (click)="toPage('home')" data-toggle="collapse">Dashbord</a>
                 </li> -->
                 <li class="nav-item">
                     <a class="nav-link" (click)="changeAddress()" data-toggle="collapse">{{locality}}:Change Address</a>
-                </li>
-                <li class="nav-item" *ngIf="isLogin">
-                    <a class="nav-link" (click)="logout()" data-toggle="collapse">Logout</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" (click)="toBusinessCenter()" data-toggle="collapse">Business Center</a>

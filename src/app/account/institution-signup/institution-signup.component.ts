@@ -6,6 +6,8 @@ import { IAccount, AccountActions } from '../account.actions';
 import { AuthService } from '../auth.service';
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
+import { SharedService } from '../../shared/shared.service';
+
 @Component({
   selector: 'app-institution-signup',
   templateUrl: './institution-signup.component.html',
@@ -19,8 +21,12 @@ export class InstitutionSignupComponent implements OnInit {
   @ViewChild(ImageUploaderComponent)
   uploader:any;
 
-  constructor(private fb:FormBuilder, private authServ:AuthService, 
-    private rx:NgRedux<IAccount>, private router:Router) {
+  constructor(
+    private fb:FormBuilder, 
+    private authServ:AuthService, 
+    private rx:NgRedux<IAccount>, 
+    private router:Router,
+    private sharedServ:SharedService) {
 
     this.formGroup = this.fb.group({
       username:['', Validators.required],
@@ -57,6 +63,7 @@ export class InstitutionSignupComponent implements OnInit {
     this.authServ.institutionSignup(v.username, v.email, v.password,
       this.address, v.restaurant, v.phone, pic.image ).subscribe((r:any)=>{
         if(r.token){
+          self.sharedServ.emitMsg({name:'updateLogin'});
           self.rx.dispatch({type:AccountActions.LOGIN, payload:r.user}); //r.error
           self.router.navigate(["/dashboard"]);
         }else{
