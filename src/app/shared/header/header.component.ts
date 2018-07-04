@@ -27,9 +27,10 @@ export class HeaderComponent implements OnInit {
     keyword:string;
     term$ = new Subject<string>();
     locality = '';
+    unsubscribeAccount:any;
 
-    constructor(private router:Router, private authServ:AuthService, private commerceServ:CommerceService, 
-        private sharedServ:SharedService, private ngRedux: NgRedux<IAccount>) {
+    constructor(private router:Router, private authSvc:AuthService, private commerceSvc:CommerceService, 
+        private rx:NgRedux<IAccount>, private sharedSvc:SharedService, private ngRedux: NgRedux<IAccount>) {
 
         let self = this;
 
@@ -45,12 +46,20 @@ export class HeaderComponent implements OnInit {
         if(addr){
             self.locality = addr.sub_locality;
         }
-        
+
+        this.unsubscribeAccount = this.rx.select<IAccount>('account').subscribe(
+            account=>{
+                self.user = account;
+            })
+    }
+
+    ngOnDestroy(){
+        this.unsubscribeAccount();
     }
 
     ngOnInit() {
         let self = this;
-        this.sharedServ.getMsg().subscribe(msg => {
+        this.sharedSvc.getMsg().subscribe(msg => {
             if('OnUpdateHeader' === msg.name){
                 if(msg && msg.locality){
                     self.locality = msg.locality;
@@ -77,7 +86,7 @@ export class HeaderComponent implements OnInit {
 
     search(keyword){
         let self = this;
-        self.sharedServ.emitMsg({name:'OnSearch', query:{'keyword':keyword}})
+        self.sharedSvc.emitMsg({name:'OnSearch', query:{'keyword':keyword}})
     }
 
     closeNavMenu(){
@@ -106,17 +115,31 @@ export class HeaderComponent implements OnInit {
         this.ngRedux.dispatch({type:AccountActions.LOGOUT});
         this.closeNavMenu();
         if(flag){
-          self.authServ.logout();
+          self.authSvc.logout();
           self.isLogin = false;
           this.router.navigate(['home'])
         }
+    }
+
+    toHome(){
+        if(this.user){
+            if(this.user.type === 'super'){
+                this.router.navigate(['admin']);
+            }else if(this.user.type === 'business'){
+                this.router.navigate(['dashboard']);
+            }else{
+                this.router.navigate(['home']);
+            }
+        }    
     }
 
     toBusinessCenter(){
         // if login and user is business, redirect to business center, otherwise redirect to business signup
         let self = this;
         this.closeNavMenu();
-        this.authServ.hasLoggedIn().subscribe(
+
+        // check from token
+        this.authSvc.hasLoggedIn().subscribe(
             (r:any)=>{
                 self.isLogin = r? true : false;
                 if(self.isLogin){
@@ -124,7 +147,7 @@ export class HeaderComponent implements OnInit {
                     if(r.type=='business'){
                         self.router.navigate(['dashboard']);
                     }else{
-                        self.authServ.logout();  
+                        self.authSvc.logout();  
                         self.router.navigate(['institution-signup']);
                     }
                 }else{

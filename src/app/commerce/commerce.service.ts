@@ -75,6 +75,32 @@ export class CommerceService {
         }));
     }
 
+    sendFormData(url, formData, token, resolve, reject){
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function (e) {
+          if (xhr.readyState === 4) { // done
+            if (xhr.status === 200) { // ok
+                resolve(JSON.parse(xhr.response));
+                //console.log(xhr.responseText);
+            } else {
+                reject(xhr.response);
+                //console.error(xhr.statusText);
+            }
+          }
+        };
+
+        xhr.onerror = function (e) {
+            reject(xhr.response);
+            //console.error(xhr.statusText);
+        };
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("authorization", "Bearer " + btoa(token));
+        xhr.send(formData);
+    }
+
+
     getRestaurantList(query?:string):Observable<Restaurant[]>{
         const url = API_URL + 'restaurants' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -204,131 +230,6 @@ export class CommerceService {
         }),);
     }
 
-    getColorList(query?:string):Observable<Color[]>{
-        const url = this.API_URL + 'colors' + (query ? query:'');
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
-            let a:Color[] = [];
-            let d = res.data;
-            if( d && d.length > 0){
-                for(var i=0; i<d.length; i++){
-                    a.push(new Color(d[i]));
-                }
-            }
-            return a;
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
-
-    getColor(id:number):Observable<Color>{
-        const url = this.API_URL + 'colors/' + id;
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
-            return new Color(res.data);
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
-
-    saveColor(d:Color):Observable<Color>{
-        const url = this.API_URL + 'colors';
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        let data = {
-          'id': d.id? d.id:'',
-          'name': d.name,
-          'description': d.description
-          // 'status': d.status,
-        }
-        return this.http.post(url, data, {'headers': headers}).pipe(map((res:any) => {
-            return new Color(res.data);
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
-
-    rmColor(id:number):Observable<Color[]>{
-        const url = this.API_URL + 'colors/' + id;
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.delete(url, {'headers': headers}).pipe(map((res:any) => {
-            let a:Color[] = [];
-            let d = res.data;
-            if( d && d.length > 0){
-                for(var i=0; i<d.length; i++){
-                    a.push(new Color(d[i]));
-                }
-            }
-            return a;
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
-
-    getStyleList(query?:string):Observable<Style[]>{
-        const url = this.API_URL + 'styles' + (query ? query:'');
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
-            let a:Style[] = [];
-            if( res.data && res.data.length > 0){
-                for(let b of res.data){
-                    a.push(new Style(b));
-                }
-            }
-            return a;
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
-
-    getStyle(id:number):Observable<Style>{
-        const url = this.API_URL + 'style/' + id;
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
-            return new Style(res.data);
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
-
-    saveStyle(d:Style):Observable<Style>{
-        const url = this.API_URL + 'style';
-        let data = {
-            'id': (d.id? d.id:''),
-          'name': d.name,
-          'description': d.description,
-          'status': d.status,
-          'created': d.created,
-          'updated': d.updated,
-        }
-        return this.http.post(url, data).pipe(map((res:any) => {
-            return new Style(res.data);
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
-
-    rmStyle(id:number):Observable<Style[]>{
-        const url = this.API_URL + 'style/' + id;
-        return this.http.get(url).pipe(map((res:any) => {
-            let a:Style[] = [];
-            if( res.data && res.data.length > 0){
-                for(let b of res.data){
-                    a.push(new Style(b));
-                }
-            }
-            return a;
-        }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }),);
-    }
 
     saveRestaurant(d:Restaurant){
         let token = localStorage.getItem('token-' + this.APP);
@@ -363,27 +264,50 @@ export class CommerceService {
                 }
             }
 
-            var xhr = new XMLHttpRequest();
-
-            xhr.onreadystatechange = function (e) {
-              if (xhr.readyState === 4) { // done
-                if (xhr.status === 200) { // ok
-                    resolve(JSON.parse(xhr.response));
-                } else {
-                    reject(xhr.response);
-                }
-              }
-            };
-
-            xhr.onerror = function (e) {
-                reject(xhr.response);
-            };
-
-            xhr.open("POST", API_URL + 'restaurants', true);
-            xhr.setRequestHeader("authorization", "Bearer " + btoa(token));
-            xhr.send(formData);
+            self.sendFormData(API_URL + 'restaurants', formData, token, resolve, reject);
         }));
     }
+
+
+    saveMultiRestaurants(a:any[]){
+        let token = localStorage.getItem('token-' + this.APP);
+        let self = this;
+
+        return fromPromise(new Promise((resolve, reject)=>{
+            let formData = new FormData();
+            let i = 0;
+            for(let d of a){
+                let pic = d.pictures? d.pictures[0]:null;
+                let product = {id:d.id? d.id:'',
+                    name: d.name, 
+                    description:d.description,
+                    address_id:d.address.id,
+                    street:d.address.street,
+                    sub_locality:d.address.sub_locality,
+                    postal_code:d.address.postal_code,
+                    province:d.address.province,
+                    city:d.address.city,
+                    image_status: (pic && pic.status)? pic.status: 'unchange'
+                }
+
+                formData.append('info_'+i, JSON.stringify(product));
+
+
+                //formData.append('name'+i, d.pictures[i].name);
+                if(pic){
+                    let image = d.pictures? d.pictures[0].image:null;
+                    if(image){
+                        formData.append('image'+i, image.file);
+                    }
+                }
+
+                i = i + 1;    
+            }
+
+            self.sendFormData(API_URL + 'products', formData, token, resolve, reject);
+        }));
+    }
+
 
     saveProduct(d:Product){
         let token = localStorage.getItem('token-' + this.APP);
@@ -419,28 +343,8 @@ export class CommerceService {
                 }
             }
 
-            var xhr = new XMLHttpRequest();
-
-            xhr.onreadystatechange = function (e) {
-              if (xhr.readyState === 4) { // done
-                if (xhr.status === 200) { // ok
-                    resolve(JSON.parse(xhr.response));
-                    //console.log(xhr.responseText);
-                } else {
-                    reject(xhr.response);
-                    //console.error(xhr.statusText);
-                }
-              }
-            };
-
-            xhr.onerror = function (e) {
-                reject(xhr.response);
-                //console.error(xhr.statusText);
-            };
-
-            xhr.open("POST", this.API_URL + 'product', true);
-            xhr.setRequestHeader("authorization", "Bearer " + btoa(token));
-            xhr.send(formData);
+            self.sendFormData(API_URL + 'product', formData, token, resolve, reject);
+            
         }));
     }
 
@@ -478,29 +382,8 @@ export class CommerceService {
 
                 i = i + 1;    
             }
-
-            var xhr = new XMLHttpRequest();
-
-            xhr.onreadystatechange = function (e) {
-              if (xhr.readyState === 4) { // done
-                if (xhr.status === 200) { // ok
-                    resolve(JSON.parse(xhr.response));
-                    //console.log(xhr.responseText);
-                } else {
-                    reject(xhr.response);
-                    //console.error(xhr.statusText);
-                }
-              }
-            };
-
-            xhr.onerror = function (e) {
-                reject(xhr.response);
-                //console.error(xhr.statusText);
-            };
-
-            xhr.open("POST", this.API_URL + 'products', true);
-            xhr.setRequestHeader("authorization", "Bearer " + btoa(token));
-            xhr.send(formData);
+            self.sendFormData(API_URL + 'products', formData, token, resolve, reject);
+            
         }));
     }
 
@@ -1001,6 +884,134 @@ export class CommerceService {
             if( res.data && res.data.length > 0){
                 for(let b of res.data){
                     a.push(new FavoriteProduct(b));
+                }
+            }
+            return a;
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+
+
+    getColorList(query?:string):Observable<Color[]>{
+        const url = this.API_URL + 'colors' + (query ? query:'');
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
+            let a:Color[] = [];
+            let d = res.data;
+            if( d && d.length > 0){
+                for(var i=0; i<d.length; i++){
+                    a.push(new Color(d[i]));
+                }
+            }
+            return a;
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+    getColor(id:number):Observable<Color>{
+        const url = this.API_URL + 'colors/' + id;
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
+            return new Color(res.data);
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+    saveColor(d:Color):Observable<Color>{
+        const url = this.API_URL + 'colors';
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        let data = {
+          'id': d.id? d.id:'',
+          'name': d.name,
+          'description': d.description
+          // 'status': d.status,
+        }
+        return this.http.post(url, data, {'headers': headers}).pipe(map((res:any) => {
+            return new Color(res.data);
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+    rmColor(id:number):Observable<Color[]>{
+        const url = this.API_URL + 'colors/' + id;
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.delete(url, {'headers': headers}).pipe(map((res:any) => {
+            let a:Color[] = [];
+            let d = res.data;
+            if( d && d.length > 0){
+                for(var i=0; i<d.length; i++){
+                    a.push(new Color(d[i]));
+                }
+            }
+            return a;
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+    getStyleList(query?:string):Observable<Style[]>{
+        const url = this.API_URL + 'styles' + (query ? query:'');
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
+            let a:Style[] = [];
+            if( res.data && res.data.length > 0){
+                for(let b of res.data){
+                    a.push(new Style(b));
+                }
+            }
+            return a;
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+    getStyle(id:number):Observable<Style>{
+        const url = this.API_URL + 'style/' + id;
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
+            return new Style(res.data);
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+    saveStyle(d:Style):Observable<Style>{
+        const url = this.API_URL + 'style';
+        let data = {
+            'id': (d.id? d.id:''),
+          'name': d.name,
+          'description': d.description,
+          'status': d.status,
+          'created': d.created,
+          'updated': d.updated,
+        }
+        return this.http.post(url, data).pipe(map((res:any) => {
+            return new Style(res.data);
+        }),
+        catchError((err) => {
+            return observableThrowError(err.message || err);
+        }),);
+    }
+
+    rmStyle(id:number):Observable<Style[]>{
+        const url = this.API_URL + 'style/' + id;
+        return this.http.get(url).pipe(map((res:any) => {
+            let a:Style[] = [];
+            if( res.data && res.data.length > 0){
+                for(let b of res.data){
+                    a.push(new Style(b));
                 }
             }
             return a;

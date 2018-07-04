@@ -12,12 +12,14 @@ export interface IAppState{
   cart:ICart;
   account:IAccount;
   changed_pictures:IPicture[];
+  restaurant_pictures:IPicture[];
 }
 
 export const INITIAL_STATE: IAppState = {
 	cart: {items:[]},
 	account: DEFAULT_ACCOUNT,
-	changed_pictures:[]
+	changed_pictures:[],
+	restaurant_pictures:[]
 }
 
 // export function rootReducer(last:IAppState, action:Action):IAppState{
@@ -33,5 +35,6 @@ export const INITIAL_STATE: IAppState = {
 export const rootReducer = combineReducers({
 	cart: cartReducer, 
 	account:accountReducer,
-	changed_pictures:pictureReducer
+	changed_pictures:pictureReducer,
+	restaurant_pictures:pictureReducer
 });

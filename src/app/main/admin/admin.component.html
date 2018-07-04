@@ -1,24 +1,20 @@
-<div *ngIf="isAdminLogin">
-    <app-header></app-header>
+<div *ngIf="isAdminLogin" class="page">
+    <!-- <app-header></app-header> -->
 
-    <div class="page admin-layout">
-        <div class="row">
-            <div class="col-md-3 left-side">
-                <!-- <div class="menu-item title-md" (click)="toPage('admin/users')">Manage User</div> -->
-                <div class="menu-item title-md" (click)="toPage('admin/restaurants')">Manage Restaurant</div>
-                <div class="menu-item title-md" (click)="toPage('admin/categories')">Manage Category</div>
-                <!-- <div class="menu-item title-md" (click)="toPage('admin/colors')">Manage Color</div> -->
-                <!-- <div class="menu-item title-md" (click)="toPage('admin/patterns')">Manage Pattern</div> -->
-                <!-- <div class="menu-item title-md" (click)="toPage('admin/documents')">Manage Document</div> -->
-                <div class="menu-item title-md" (click)="toPage('admin/products')">Manage Product</div>
-          <!--       <div class="menu-item title-md" (click)="toPage('admin/posts')">Manage Post</div>
-                <div class="menu-item title-md" (click)="toPage('admin/comments')">Manage Comment</div> -->
-            </div>
-            <div class="col-md-9 right-side">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
+    <div class="container">
+        <ngb-tabset>
+<!--           <ngb-tab title="Orders">
+            <ng-template ngbTabContent>
+              <app-order-list [orders]="orders"></app-order-list>
+            </ng-template>
+          </ngb-tab> -->
+          <ngb-tab title="Restaurants">
+            <ng-template ngbTabContent>
+              <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
     </div>
 
-    <app-footer></app-footer>
+    <!-- <app-footer></app-footer> -->
 </div>

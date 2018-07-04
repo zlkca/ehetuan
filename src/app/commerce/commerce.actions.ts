@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action } from 'redux';
 
+export class LocationActions{
+	static UPDATE_LOCATION = 'UPLOAD_LOCATION';
+}
+
 export class CartActions{
 	static ADD_TO_CART = 'ADD_TO_CART';
 	static REMOVE_FROM_CART = 'REMOVE_FROM_CART';
@@ -11,6 +15,13 @@ export class PictureActions{
 	static ADD_PICTURE = 'ADD_PICTURE';
 	static CHANGE_PICTURE = 'CHANGE_PICTURE';
 	static REMOVE_PICTURE = 'REMOVE_PICTURE';
+}
+
+export interface ILocation{
+	street:string;
+	sub_locality:string;
+	lat:number;
+	lng:number;
 }
 
 export interface ICartItem{
@@ -35,6 +46,13 @@ export interface IPicture{
   height:number;
   product:{id:string};
   status:string;
+}
+
+export const DEFAULT_LOCATION = {
+	street:'',
+	sub_locality:'Toronto',
+	lat:0,
+	lng:0
 }
 
 export const DEFAULT_PICTURE = {

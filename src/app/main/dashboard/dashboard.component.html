@@ -19,10 +19,6 @@
 
 
 <div class="page dashboard-page">
-
-
-
-
   <div class="container">
     <ngb-tabset>
       <ngb-tab title="Orders">
@@ -37,7 +33,7 @@
       </ngb-tab>
       <ngb-tab title="Products">
         <ng-template ngbTabContent>
-          <multi-product-editor [products]="products" [rid]="restaurant.id"></multi-product-editor>
+          <multi-product-form [products]="products" [rid]="restaurant.id"></multi-product-form>
         </ng-template>
       </ngb-tab>
     </ngb-tabset>

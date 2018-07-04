@@ -1,10 +1,24 @@
-import { PictureActions, CartActions } from './commerce.actions';
-import { IPicture, DEFAULT_PICTURE, ICart, ICartItem } from './commerce.actions';
+import { LocationActions, PictureActions, CartActions } from './commerce.actions';
+import { ILocation, IPicture, ICart, ICartItem } from './commerce.actions';
+import { DEFAULT_LOCATION, DEFAULT_PICTURE } from './commerce.actions';
 
 // export interface ICartAction{
 // 	type:string,
 // 	payload:any
 // }
+
+export function locationReducer(state:ILocation, action:any){
+	if(action.payload){
+		let payload = action.payload;
+		
+		switch(action.type){
+			case LocationActions.UPDATE_LOCATION:
+				return {...state, ...payload};
+		}
+	}
+	
+	return state;
+}
 
 export function pictureReducer(state:IPicture[]=[], action:any){
 	if(action.payload){

@@ -5,6 +5,8 @@ import { AuthService } from '../../account/auth.service';
 import { SharedService } from '../../shared/shared.service';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
+import { CommerceService } from '../../commerce/commerce.service';
+import { Restaurant } from '../../commerce/commerce';
 
 @Component({
   selector: 'app-admin',
@@ -14,9 +16,19 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 export class AdminComponent implements OnInit {
 
 	isAdminLogin:boolean = true;
-  
-  constructor(private router:Router, private sharedServ:SharedService, private authServ: AuthService) {
-  
+  restaurants:Restaurant[] = null;
+
+  constructor(private router:Router, private sharedServ:SharedService, 
+    private commerceSvc:CommerceService, private authServ: AuthService) {
+      let self = this;
+      self.commerceSvc.getRestaurantList().subscribe(
+      (ps: Restaurant[]) => {
+        self.restaurants = ps;
+      },
+      (err: any) => {
+        self.restaurants = [];
+      }
+    );
   }
 
   ngOnInit() {
