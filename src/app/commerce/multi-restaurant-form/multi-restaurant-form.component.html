@@ -1,0 +1,48 @@
+<div class="page multi-restaurant-form">
+    <form [formGroup]="form">
+	    <div class="list-body" *ngIf="restaurants">
+	    	<div class="row list-header">
+	    		<div class="col" *ngFor="let field of fields">{{field}}</div>
+	    	</div>
+
+	        <div formArrayName="items" *ngFor="let ctrl of items.controls; let i=index;">
+	        	<div [formGroupName]="i" class="row">
+		            <!-- <img [src]="MEDIA_URL+c.pictures[0].image.data" /> -->
+	                <input name="id" formControlName="id" readonly="true" />
+		            <div class="col col-pic">
+		            	<image-uploader [data]="pictures[i]" #uploader></image-uploader>
+		            </div>
+		            <div class="col">
+		            	<input name="name" formControlName="name"/>
+		            </div>
+		           	<div class="col">
+		            	<input name="description" formControlName="description"/>
+		            </div>
+
+			        <div formGroupName="address">
+			            <div class="row">
+			                <div class="label-sm">Street:</div>
+			                <input name="street" formControlName="street"/>
+			               <!--  <div *ngIf="street.touched && street.invalid" class="alert alert-danger">
+			                    <div *ngIf="street.errors.required">Street is required</div>
+			                    <div *ngIf="street.errors.minlength">Street should be minimum 3 characters.</div>
+			                </div> -->
+			            </div>
+
+			            <div class="row">
+			                <div class="label-sm">Postal Code:</div>
+			                <input name="postal_code" formControlName="postal_code"/>
+			            </div>
+			        </div>
+			        
+		        </div>
+
+	       		<div class="col">
+	                <div class="btn" (click)="add()">Edit Products</div>
+	            </div>
+	        </div>
+	        <div (click)="save()">Save</div>
+	    </div>
+	</form>
+</div>
+

@@ -3,6 +3,16 @@
    height: 100%;
    background-color: grey;
  }
+ 
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
 
 $cellphone: "(max-width: 575px)";
 $mobile: "(min-width:576px) and (max-width: 767px)";
