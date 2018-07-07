@@ -37,10 +37,9 @@ export class AppComponent implements OnInit {
     self.authServ.hasLoggedIn().subscribe(
       (r:any)=>{
         self.isLogin = r? true : false;
+        self.ngRedux.dispatch({type:AccountActions.LOGIN, payload:r});
         if(self.isLogin){
-          self.ngRedux.dispatch({type:AccountActions.LOGIN, payload:r});
-
-          self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
+          //self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
           if(r.type==='super'){
             self.toPage("admin");
           }else if(r.type==='business'){

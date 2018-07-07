@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit {
         this.unsubscribeAccount = this.rx.select<IAccount>('account').subscribe(
             account=>{
                 self.user = account;
+                self.isLogin = account.username? true:false;
             })
     }
 
@@ -123,7 +124,7 @@ export class HeaderComponent implements OnInit {
         if(flag){
           self.authSvc.logout();
           self.isLogin = false;
-          this.router.navigate(['home'])
+          this.router.navigate(['restaurants'])
         }
     }
 
