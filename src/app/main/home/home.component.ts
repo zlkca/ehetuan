@@ -41,28 +41,10 @@ export class HomeComponent implements OnInit {
     //         self.restaurantList = [];
     //     });
 
-    // if(window.navigator.geolocation){
-    //     window.navigator.geolocation.getCurrentPosition(pos=>{
-    //       let c = pos.coords;
-    //       self.center = {lat:c.latitude, lng:c.longitude};
-    //     }, 
-    //     err=>{
-    //       self.center = {lat: 43.7823332, lng: -79.392994};
-    //     });
-    // }
 
-    let lat;
-    let lng;
-    if (navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        lat = +pos.coords.latitude;
-        lng = +pos.coords.longitude;
-        if (lat && lng !== 'undefind') this.router.navigate(['restaurants']);
-      });
-    }
+    
 
-    /*
-    let s = localStorage.getItem('location-' + APP);
+    /*    
     if (s) {
       this.router.navigate(['restaurants']);
     } else {
