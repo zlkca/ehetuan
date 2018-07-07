@@ -145,7 +145,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  search(e) {
+  search(e?) {
     if(e && e.addr) {
       localStorage.setItem('location-' + APP, JSON.stringify(e.addr));
       this.sharedServ.emitMsg({name: 'OnUpdateAddress'});
