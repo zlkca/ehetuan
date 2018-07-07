@@ -20,6 +20,7 @@ export class RestaurantGridComponent implements OnInit {
   restaurantList: Restaurant[];
   places: any[] = [];
   center: any = { lat: 43.761539, lng: -79.411079 };
+  MEDIA_URL = environment.MEDIA_URL;
 
   ngOnInit() {
     let self = this;
@@ -78,6 +79,18 @@ export class RestaurantGridComponent implements OnInit {
     self.doSearchRestaurants(query);
   }
 
+
+    getImageSrc(image:any){
+      if(image.file){
+        return image.data;
+      }else{
+        if(image.data){
+            return this.MEDIA_URL + image.data;
+        }else{
+            return 'http://placehold.it/400x300';
+        }
+      }
+    }
 
   getFilter(query?: any) {
     let qs = [];
