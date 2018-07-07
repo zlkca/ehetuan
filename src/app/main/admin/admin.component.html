@@ -8,11 +8,19 @@
               <app-order-list [orders]="orders"></app-order-list>
             </ng-template>
           </ngb-tab> -->
+
+          <ngb-tab title="Business Users">
+            <ng-template ngbTabContent>
+              <multi-user-form [users]="businessUsers"></multi-user-form>
+            </ng-template>
+          </ngb-tab>
+
           <ngb-tab title="Restaurants">
             <ng-template ngbTabContent>
               <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form>
             </ng-template>
           </ngb-tab>
+
         </ngb-tabset>
     </div>
 

@@ -31,6 +31,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './commerce.service';
 
+import { MultiUserFormComponent } from './multi-user-form/multi-user-form.component';
 import { MultiProductFormComponent } from './multi-product-form/multi-product-form.component';
 import { MultiRestaurantFormComponent } from './multi-restaurant-form/multi-restaurant-form.component';
 
@@ -62,10 +63,10 @@ import { SharedModule } from '../shared/shared.module';
    exports:[CategoryListComponent,CategoryFormComponent,
      ProductGridComponent, ProductListComponent,ProductFormComponent,ProductFilterComponent, 
      RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, 
-     MultiProductFormComponent, MultiRestaurantFormComponent],
+     MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent],
    declarations:[CategoryListComponent,CategoryFormComponent,
      ProductGridComponent, ProductListComponent, ProductFormComponent, ProductFilterComponent, 
      RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, ProductGridComponent, 
-     MultiProductFormComponent, MultiRestaurantFormComponent]
+     MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent]
 })
 export class CommerceModule { }

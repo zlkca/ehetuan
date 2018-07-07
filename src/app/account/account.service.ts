@@ -7,6 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from './account';
 
+const API_URL = environment.API_URL;
+
 @Injectable()
 export class AccountService {
     private API_URL = environment.API_URL;
@@ -14,7 +16,7 @@ export class AccountService {
     constructor(private http:HttpClient){ }
 
     getUserList(query?:string):Observable<User[]>{
-        const url = this.API_URL + 'user' + query ? query:'';
+        const url = API_URL + 'users' + (query ? query:'');
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.get(url, {'headers': headers}).pipe(map((res:any) => {
             let a:User[] = [];

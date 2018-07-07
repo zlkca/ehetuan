@@ -309,6 +309,40 @@ export class CommerceService {
     }
 
 
+    saveMultiUsers(a:any[]){
+        let token = localStorage.getItem('token-' + this.APP);
+        let self = this;
+
+        return fromPromise(new Promise((resolve, reject)=>{
+            let formData = new FormData();
+            let i = 0;
+            for(let d of a){
+                // let pic = d.pictures? d.pictures[0]:null;
+                let product = {id:d.id? d.id:'',
+                    name: d.name, 
+                    email:d.email,
+                    password:d.password
+                    // image_status: (pic && pic.status)? pic.status: 'unchange'
+                }
+
+                formData.append('info_'+i, JSON.stringify(product));
+
+
+                //formData.append('name'+i, d.pictures[i].name);
+                // if(pic){
+                //     let image = d.pictures? d.pictures[0].image:null;
+                //     if(image){
+                //         formData.append('image'+i, image.file);
+                //     }
+                // }
+
+                i = i + 1;    
+            }
+
+            self.sendFormData(API_URL + 'users', formData, token, resolve, reject);
+        }));
+    }
+
     saveProduct(d:Product){
         let token = localStorage.getItem('token-' + this.APP);
         let self = this;

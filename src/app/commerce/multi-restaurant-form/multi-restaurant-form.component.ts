@@ -67,7 +67,7 @@ export class MultiRestaurantFormComponent implements OnInit {
 		    address: this.fb.group({
 				street:['',[Validators.required]],
 				postal_code:['', [Validators.required]]
-			}),
+			})
 		});
 	}
 
@@ -133,8 +133,6 @@ export class MultiRestaurantFormComponent implements OnInit {
 
 	}
 
-	toViewProducts(){
-		
-	}
+	toViewProducts(){}
 
 }

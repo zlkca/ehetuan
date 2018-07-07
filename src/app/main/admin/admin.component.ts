@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../account/auth.service';
+import { AccountService } from '../../account/account.service';
 import { SharedService } from '../../shared/shared.service';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { CommerceService } from '../../commerce/commerce.service';
 import { Restaurant } from '../../commerce/commerce';
+import { User } from '../../account/account';
 
 @Component({
   selector: 'app-admin',
@@ -17,17 +19,23 @@ export class AdminComponent implements OnInit {
 
 	isAdminLogin:boolean = true;
   restaurants:Restaurant[] = null;
+  businessUsers:User[]= null;
 
-  constructor(private router:Router, private sharedServ:SharedService, 
+  constructor(private router:Router, private sharedServ:SharedService, private accountSvc:AccountService, 
     private commerceSvc:CommerceService, private authServ: AuthService) {
       let self = this;
-      self.commerceSvc.getRestaurantList().subscribe(
-      (ps: Restaurant[]) => {
-        self.restaurants = ps;
-      },
-      (err: any) => {
-        self.restaurants = [];
-      }
+
+      // self.accountSvc.getUserList('?type=business').subscribe(users=> {
+      //   self.businessUsers = users;
+      // });
+
+      // self.commerceSvc.getRestaurantList().subscribe(
+      // (ps: Restaurant[]) => {
+      //   self.restaurants = ps;
+      // },
+      // (err: any) => {
+      //   self.restaurants = [];
+      // }
     );
   }
 
