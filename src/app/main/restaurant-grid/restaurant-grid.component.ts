@@ -32,6 +32,7 @@ export class RestaurantGridComponent implements OnInit {
     }else{
       if (navigator) {
         navigator.geolocation.getCurrentPosition(pos => {
+          console.log(pos);
           let lat = pos.coords.latitude;
           let lng = pos.coords.longitude;
           if (lat && lng) {

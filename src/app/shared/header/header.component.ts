@@ -42,11 +42,7 @@ export class HeaderComponent implements OnInit {
         //     });
 
 
-        let s = localStorage.getItem('location-'+APP);
-        let addr = JSON.parse(s);
-        if(addr){
-            self.locality = addr.sub_locality;
-        }
+
 
 
     }
@@ -68,29 +64,14 @@ export class HeaderComponent implements OnInit {
                 this.isLogin = false;
               }
 
-                this.initMenu();
+                // this.initMenu();
+                this.loadLocality();
+
             });
 
         this.sharedSvc.getMsg().subscribe(msg => {
-            if('OnUpdateHeader' === msg.name){
-                if(msg && msg.locality){
-                    self.locality = msg.locality;
-                }else{
-                    self.locality = '';
-                }
-
-                // self.authServ.hasLoggedIn().subscribe(
-                //   (r)=>{
-                //     self.isLogin = r;
-                //   },(err)=>{
-                //     self.isLogin = false;
-                //   });
-
-                // self.sharedSvc.getMsg().subscribe(msg => {
-                //     if(msg.name === 'updateLogin'){
-                //         self.isLogin = !this.isLogin;
-                //     }
-                // });
+            if('OnUpdateAddress' === msg.name){
+              this.loadLocality();
             }
         });
 
@@ -108,7 +89,7 @@ export class HeaderComponent implements OnInit {
     }
 
     closeNavMenu(){
-      // $('.navbar-collapse').removeClass('show');
+      $('.navbar-collapse').removeClass('show');
     }
 
     toPage(url){
@@ -127,8 +108,14 @@ export class HeaderComponent implements OnInit {
       }
     }
 
+    loadLocality() {
+      let s = localStorage.getItem('location-'+APP);
+      let addr = JSON.parse(s);
+      this.locality = addr && (addr.sub_locality || addr.city);
+    }
+
     changeAddress(){
-        // this.closeNavMenu();
+        this.closeNavMenu();
         localStorage.removeItem('location-'+APP);
         // this.router.navigate(['home']);
     }

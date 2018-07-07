@@ -23,10 +23,6 @@ $desktop: "(min-width: 1200px)";
 
 	.search-bar{
 		margin-top:180px;
-		margin-left:auto;
-		margin-right:auto;
-		width:510px;
-		height:40px;
 
 		#userlocationinput{ //input.form-control
 		  outline:none;
@@ -35,9 +31,10 @@ $desktop: "(min-width: 1200px)";
 		}
 
 		.btn-search{
-			height:40px;
-			float:left;
-		}	
+		}
+	}
+	address-input {
+		width: 75%;
 	}
 
 
@@ -62,4 +59,3 @@ $desktop: "(min-width: 1200px)";
 		}
 	}
 }
-

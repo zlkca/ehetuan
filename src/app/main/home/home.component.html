@@ -1,10 +1,14 @@
 <div class="page home-page">
-		
-		<!-- <div class="input-group location-box"> -->
 
-			<div class="row search-bar">
-				<input #div type="text" id="userlocationinput" placeholder="Search by Street or Postal Code"/>
-				<div class="btn btn-primary btn-search" (click)="search()">Search</div>
+		<!-- <div class="input-group location-box"> -->
+			<div class="col-sm-10 col-md-8 col-lg-6 offset-sm-1 offset-md-2 offset-lg-3">
+				<div class="input-group search-bar">
+					<address-input (addrChange)="search($event)"></address-input>
+					<!-- <input #div type="text" id="userlocationinput" placeholder="Search by Street or Postal Code"/> -->
+					<div class="input-group-append">
+						<button type="button" name="button" class="btn btn-primary btn-search" (click)="search()">Search</button>
+					</div>
+				</div>
 			</div>
 
 			<!-- <input #div type="text" id="userlocationinput" class="form-control" placeholder="Street or Postal Code" aria-describedby="basic-addon2">
@@ -26,9 +30,9 @@
 
 	        <app-product-filter></app-product-filter>
 	    </div>
-	    
+
 	    <div class="col-sm-12 col-md-9 right-side">
-	        
+
 	    </div>
 	</div>
 </div> -->
