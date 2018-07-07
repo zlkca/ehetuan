@@ -17,7 +17,7 @@ export class MultiImageUploaderComponent implements OnInit {
 
 	@Input() data : any[];
 	_data:any;
-  	currPic:any = {index:0, data:'', file:''};
+  currPic:any = {index:0, data:'', file:''};
 
 	MEDIA_ROOT = environment.MEDIA_URL;
 
@@ -28,13 +28,15 @@ export class MultiImageUploaderComponent implements OnInit {
 	}
 
 	ngOnChanges() {
-		let t = this.data;
 		let ret = this.sharedServ.resizeImage(FRAME_W,FRAME_H,100, 200);
 		if(!this.data || this.data.length == 0){
-		  this.currPic = {index:0, data:ADD_IMAGE, file:''};
+		  this.data[0] = {index:0, name:"", image:{index:0, data:'add_photo.png', file:''}};
 		}else{
-		  this.currPic = {index:this.data.length, data:ADD_IMAGE, file:''};
-		}
+      let t = this.data[0].image;
+      if(!t.data && !t.file){
+        this.data[0] = {index:0, name:"", image:{index:0, data:'add_photo.png', file:''}};
+      }
+    }
 	}
 
   // ngOnInit() {
@@ -105,7 +107,7 @@ export class MultiImageUploaderComponent implements OnInit {
     }
 
     onLoadImage(i:number){
-      $('[name="image'+ i +'"]').click();
+      $('[name="image0"]').click();
     }
 
     onDeleteImage(i:number){
@@ -122,12 +124,12 @@ export class MultiImageUploaderComponent implements OnInit {
           let file = event.target.files[0];
           reader.readAsDataURL(file);
           reader.onload = () => {
-              if(i>=self.data.length){
-                self.data.push({index:i, name:"", image:{data: reader.result, file: event.target.files[0]}});
-                self.currPic = {index:i+1, data:ADD_IMAGE, file:''};
-              }else{
-                self.data[i].image = {data: reader.result, file: event.target.files[0]};
-              }//.split(',')[1];
+              // if(i >= self.data.length){
+              self.data[0] = {index:0, name:"", image:{data: reader.result, file: event.target.files[0]}};
+              // }else{
+              //   self.data[0].image = {data: reader.result, file: event.target.files[0]};
+              // }
+              //.split(',')[1];
               //self.wechatgroup.logo = event.target.files[0];
           //   this.form.get('avatar').setValue({
           //     filename: file.name,

@@ -12,14 +12,14 @@ import { MultiImageUploaderComponent } from '../../shared/multi-image-uploader/m
   styleUrls: ['./restaurant-form.component.scss']
 })
 export class RestaurantFormComponent implements OnInit {
-	restaurant:Restaurant;
+
 	id:string = '';
 	categoryList:Category[] = [];
 	pictures:any[] = [];
 	
 	form:FormGroup;
 
-	@Input() data:any;
+	@Input() restaurant:Restaurant;
 	@ViewChild(MultiImageUploaderComponent) uploader:any;
 	
 	createForm(){
@@ -44,9 +44,9 @@ export class RestaurantFormComponent implements OnInit {
 
 	ngOnInit() {
 		let self = this;
-		this.form.patchValue(this.data);
+		this.form.patchValue(this.restaurant);
 
-		self.pictures = [{index:0, name:'', image:this.data.image}];
+		self.pictures = [{index:0, name:'', image:this.restaurant.image}];
 		
         //self.route.params.subscribe((params:any)=>{
             // self.commerceServ.getRestaurant(params.id).subscribe(
@@ -115,7 +115,6 @@ export class RestaurantFormComponent implements OnInit {
 	}
 
 
-
 	save(){
 		let self = this;
 		let v = this.form.value;
@@ -125,7 +124,10 @@ export class RestaurantFormComponent implements OnInit {
 			addr = self.restaurant.address;
 			addr.street = v.address.street;
 		}else{
-			addr = new Address({id:'', city:'Toronto', province:'ON', street:v.address.street});
+			addr = new Address({id:'', city:'Toronto', 
+				province:'ON', 
+				street:v.address.street, 
+				postal_code:v.address.postal_code});
 		}
 		let m = new Restaurant(this.form.value);
 
@@ -133,7 +135,7 @@ export class RestaurantFormComponent implements OnInit {
 			m.image = self.uploader.data[0].image;
 		}
 
-		m.id = self.data? self.data.id:null;
+		m.id = self.restaurant? self.restaurant.id:null;
 		
 
 		let s = addr.street + ', Toronto, ' + v.address.postal_code;

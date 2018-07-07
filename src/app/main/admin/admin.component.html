@@ -3,11 +3,11 @@
 
     <div class="container">
         <ngb-tabset>
-<!--           <ngb-tab title="Orders">
+          <ngb-tab title="Orders">
             <ng-template ngbTabContent>
               <app-order-list [orders]="orders"></app-order-list>
             </ng-template>
-          </ngb-tab> -->
+          </ngb-tab>
 
           <ngb-tab title="Business Users">
             <ng-template ngbTabContent>
@@ -18,6 +18,7 @@
           <ngb-tab title="Restaurants">
             <ng-template ngbTabContent>
               <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form>
+              <app-restaurant-list [restaurants]="restaurants"></app-restaurant-list>
             </ng-template>
           </ngb-tab>
 

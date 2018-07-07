@@ -29,14 +29,9 @@ export class AdminComponent implements OnInit {
       //   self.businessUsers = users;
       // });
 
-      // self.commerceSvc.getRestaurantList().subscribe(
-      // (ps: Restaurant[]) => {
-      //   self.restaurants = ps;
-      // },
-      // (err: any) => {
-      //   self.restaurants = [];
-      // }
-    // );
+      self.commerceSvc.getRestaurantList().subscribe((ps: Restaurant[]) => {
+        self.restaurants = ps;
+      });
   }
 
   ngOnInit() {

@@ -27,10 +27,13 @@ import { OrderListComponent } from './commerce/order-list/order-list.component';
 // import { ChangePasswordComponent } from './users/change-password/change-password.component';
 // import { PaymentComponent } from './products/payment/payment.component';
 import { DashboardComponent } from './main/dashboard/dashboard.component';
+
 import { RestaurantFormComponent } from './commerce/restaurant-form/restaurant-form.component';
+
 import { RestaurantGridComponent } from './main/restaurant-grid/restaurant-grid.component';
-import { RestaurantListComponent } from './commerce/restaurant-list/restaurant-list.component';
+import { RestaurantListComponent } from './main/restaurant-list/restaurant-list.component';
 import { RestaurantDetailComponent } from './main/restaurant-detail/restaurant-detail.component';
+import { EditRestaurantComponent } from './main/edit-restaurant/edit-restaurant.component';
 
 import { ProductFormComponent } from './commerce/product-form/product-form.component';
 import { ProductListComponent } from './commerce/product-list/product-list.component';
@@ -82,20 +85,18 @@ const appRoutes: Routes = [
           {path: 'products', component:ProductListComponent}
         ]
       },  
-      {
-        path:'admin', component:AdminComponent,
-        children:[
-          { path: 'restaurants', component:RestaurantListComponent },
-          { path: 'restaurant/:id', component:RestaurantFormComponent },
-          { path: 'restaurant', component:RestaurantFormComponent },
-          { path: 'categories', component:CategoryListComponent },
-          { path: 'category/:id', component:CategoryFormComponent },
-          { path: 'category', component:CategoryFormComponent },
-          { path: 'products', component:ProductListComponent},
-          { path: 'product/:id', component:ProductFormComponent },
-          { path: 'product', component:ProductFormComponent},
-        ]
-      },
+
+      { path: 'admin', component:RestaurantListComponent },
+      { path: 'admin/restaurants', component:RestaurantListComponent },
+      { path: 'admin/restaurant/:id', component:EditRestaurantComponent },
+      { path: 'admin/restaurant', component:RestaurantFormComponent },
+      { path: 'admin/categories', component:CategoryListComponent },
+      { path: 'admin/category/:id', component:CategoryFormComponent },
+      { path: 'admin/category', component:CategoryFormComponent },
+      { path: 'admin/products', component:ProductListComponent},
+      { path: 'admin/product/:id', component:ProductFormComponent },
+      { path: 'admin/product', component:ProductFormComponent},
+
         { path: 'restaurants', component:RestaurantGridComponent },
         { path: 'restaurant-detail/:id', component:RestaurantDetailComponent },
         { path: 'products', component:ProductListComponent },

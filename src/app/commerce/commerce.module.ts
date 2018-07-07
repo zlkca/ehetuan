@@ -13,8 +13,6 @@ import { ProductFormComponent } from './product-form/product-form.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductGridComponent } from './product-grid/product-grid.component';
 
-
-import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { CartComponent } from './cart/cart.component';
 import { RestaurantFormComponent } from './restaurant-form/restaurant-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
@@ -62,11 +60,11 @@ import { SharedModule } from '../shared/shared.module';
     }],
    exports:[CategoryListComponent,CategoryFormComponent,
      ProductGridComponent, ProductListComponent,ProductFormComponent,ProductFilterComponent, 
-     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, 
+     RestaurantFormComponent, CartComponent, OrderListComponent, 
      MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent],
    declarations:[CategoryListComponent,CategoryFormComponent,
      ProductGridComponent, ProductListComponent, ProductFormComponent, ProductFilterComponent, 
-     RestaurantListComponent, RestaurantFormComponent, CartComponent, OrderListComponent, ProductGridComponent, 
+     RestaurantFormComponent, CartComponent, OrderListComponent, ProductGridComponent, 
      MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent]
 })
 export class CommerceModule { }
