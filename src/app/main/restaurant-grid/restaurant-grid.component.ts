@@ -22,15 +22,27 @@ export class RestaurantGridComponent implements OnInit {
   center: any = { lat: 43.761539, lng: -79.411079 };
 
   ngOnInit() {
-    // if(window.navigator.geolocation){
-    //     window.navigator.geolocation.getCurrentPosition(pos=>{
-    //       let c = pos.coords;
-    //       self.center = {lat:c.latitude, lng:c.longitude};
-    //     }, 
-    //     err=>{
-    //       self.center = {lat: 43.7823332, lng: -79.392994};
-    //     });
-    // }
+    let self = this;
+    //get user's location
+    let s = localStorage.getItem('location-' + APP);
+
+    if(s){
+      // self.router.navigate(['restaurants']);
+      this.center =JSON.parse(s);
+    }else{
+      if (navigator) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          let lat = pos.coords.latitude;
+          let lng = pos.coords.longitude;
+          if (lat && lng) {
+            self.center = { lat: lat, lng: lng };
+            localStorage.setItem('location-'+APP, JSON.stringify(self.center));
+          } else {
+            self.center = { lat: 43.761539, lng: -79.411079 }; // default
+          }
+        });
+      }
+    }
   }
 
   ngAfterViewInit() {
@@ -40,31 +52,7 @@ export class RestaurantGridComponent implements OnInit {
   constructor(private commerceServ: CommerceService, private sharedServ: SharedService) {
     let self = this;
 
-    //get user's location
-    let lat;
-    let lng;
-    if (navigator) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        lat = +pos.coords.latitude;
-        lng = +pos.coords.longitude;
-        if (lat && lng !== 'undefind') {
-          self.center = { lat: lat, lng: lng };
-        } else {
-          self.center = { lat: 43.761539, lng: -79.411079 }; // default
-        }
-      });
-    }
-
-    /*
-    let s:string = localStorage.getItem('location-'+APP);
-    let loc = JSON.parse(s);
-    
-    if(loc){
-      self.center = {lat:loc.lat, lng:loc.lng};
-    }else{
-      self.center = {lat:43.761539,lng:-79.411079}; // default
-    }
-    */
+    // self.center = JSON.parse(localStorage.getItem('location-' + APP));
 
     // setup event listener
     this.sharedServ.getMsg().subscribe(msg => {

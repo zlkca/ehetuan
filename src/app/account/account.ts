@@ -6,6 +6,7 @@ export class User{
   last_name:string;
   portrait:string;
   type:string;
+  password:string;
     constructor(o?:any){
         if(o){
           this.id = o.id;
@@ -15,6 +16,7 @@ export class User{
           this.last_name = o.last_name;
           this.portrait = o.portrait;
           this.type = o.type;
+          this.password = '';
       }
   }
 }

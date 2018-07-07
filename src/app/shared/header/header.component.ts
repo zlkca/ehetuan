@@ -146,7 +146,7 @@ export class HeaderComponent implements OnInit {
         if(flag){
           self.authSvc.logout();
           self.isLogin = false;
-          this.router.navigate(['home'])
+          this.router.navigate(['restaurants'])
         }
     }
 

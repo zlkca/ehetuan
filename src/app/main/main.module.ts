@@ -7,12 +7,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from '../shared/shared.module';
 import { CommerceModule } from '../commerce/commerce.module';
+import { AccountModule } from '../account/account.module';
 import { environment } from '../../environments/environment';
 
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { LayoutComponent } from './layout/layout.component';
+
 import { CommerceService } from '../commerce/commerce.service';
+import { AccountService } from '../account/account.service';
+ 
 import { ProductComponent } from './product/product.component';
 import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
 import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.component';
@@ -29,6 +33,7 @@ import { AdminComponent } from './admin/admin.component';
     NgbModule,
     SharedModule,
     CommerceModule,
+    AccountModule,
   ],
   declarations: [
     //HeaderComponent,
@@ -44,7 +49,7 @@ import { AdminComponent } from './admin/admin.component';
     CommentComponent,
     AdminComponent
   ],
-  providers:[CommerceService],
+  providers:[CommerceService, AccountService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   exports:[ //HeaderComponent, 
     //FooterComponent,

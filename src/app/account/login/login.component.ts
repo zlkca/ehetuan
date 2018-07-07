@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
           (user:any) => {
               if(user && user.username){
                   //self.sharedServ.emitMsg({name:'OnUpdateHeader'});
-                  self.sharedServ.emitMsg({name:'updateLogin'});
+                  //self.sharedServ.emitMsg({name:'updateLogin'});
                   this.ngRedux.dispatch({type:AccountActions.LOGIN, payload:user});
                   self.user = user;
                   if(user.type === 'super'){
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit {
                   }else if(user.type=='business'){
                     self.router.navigate(['dashboard']);
                   }else{
-                    self.router.navigate(['home']);
+                    self.router.navigate(['restaurants']);
                   }
                   
               }else{
