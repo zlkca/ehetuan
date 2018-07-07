@@ -21,7 +21,7 @@ export class AdminComponent implements OnInit {
   restaurants:Restaurant[] = null;
   businessUsers:User[]= null;
 
-  constructor(private router:Router, private sharedServ:SharedService, private accountSvc:AccountService, 
+  constructor(private router:Router, private sharedServ:SharedService, private accountSvc:AccountService,
     private commerceSvc:CommerceService, private authServ: AuthService) {
       let self = this;
 
@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
       // (err: any) => {
       //   self.restaurants = [];
       // }
-    );
+    // );
   }
 
   ngOnInit() {
