@@ -4,8 +4,10 @@ import { CommerceService } from '../commerce.service';
 import { Product } from '../commerce';
 import { environment } from '../../../environments/environment';
 import { NgRedux } from '@angular-redux/store';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IAppState } from '../../store';
 import { ICart, CartActions } from '../commerce.actions';
+import { ProductComponent } from '../../main/product/product.component';
 
 const ADD_IMAGE = 'add_photo.png';
 
@@ -35,8 +37,9 @@ export class ProductGridComponent implements OnInit {
         //     });
     }
 
-    constructor(private commerceServ:CommerceService, 
+    constructor(private commerceServ:CommerceService,
         private router:Router,
+				private modalService: NgbModal,
         private ngRedux:NgRedux<IAppState>//,
         // private actions: CartActions
         ) {
@@ -49,7 +52,8 @@ export class ProductGridComponent implements OnInit {
         if(this.mode == 'edit'){
 
         }else{
-            this.router.navigate(["product/"+p.id]);
+					// const modalRef = this.modalService.open(ProductComponent);
+          this.router.navigate(["product/"+p.id]);
         }
     }
 

@@ -23,13 +23,14 @@ const APP = environment.APP;
 })
 export class HeaderComponent implements OnInit {
     isLogin:boolean = false;
+    menu:any[];
     user:any;
     keyword:string;
     term$ = new Subject<string>();
     locality = '';
     unsubscribeAccount:any;
 
-    constructor(private router:Router, private authSvc:AuthService, private commerceSvc:CommerceService, 
+    constructor(private router:Router, private authSvc:AuthService, private commerceSvc:CommerceService,
         private rx:NgRedux<IAccount>, private sharedSvc:SharedService, private ngRedux: NgRedux<IAccount>) {
 
         let self = this;
@@ -47,10 +48,7 @@ export class HeaderComponent implements OnInit {
             self.locality = addr.sub_locality;
         }
 
-        this.unsubscribeAccount = this.rx.select<IAccount>('account').subscribe(
-            account=>{
-                self.user = account;
-            })
+
     }
 
     ngOnDestroy(){
@@ -59,6 +57,20 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         let self = this;
+        this.unsubscribeAccount = this.rx.select<IAccount>('account').subscribe(
+            account=>{
+              if (account && account.id) {
+                this.user = account;
+                this.isLogin = true;
+              }
+              else {
+                this.user = null;
+                this.isLogin = false;
+              }
+
+                this.initMenu();
+            });
+
         this.sharedSvc.getMsg().subscribe(msg => {
             if('OnUpdateHeader' === msg.name){
                 if(msg && msg.locality){
@@ -74,11 +86,11 @@ export class HeaderComponent implements OnInit {
                 //     self.isLogin = false;
                 //   });
 
-                self.sharedServ.getMsg().subscribe(msg => {
-                    if(msg.name === 'updateLogin'){
-                        self.isLogin = !this.isLogin;
-                    }
-                });
+                // self.sharedSvc.getMsg().subscribe(msg => {
+                //     if(msg.name === 'updateLogin'){
+                //         self.isLogin = !this.isLogin;
+                //     }
+                // });
             }
         });
 
@@ -96,7 +108,7 @@ export class HeaderComponent implements OnInit {
     }
 
     closeNavMenu(){
-      $('.navbar-collapse').removeClass('show');
+      // $('.navbar-collapse').removeClass('show');
     }
 
     toPage(url){
@@ -104,10 +116,21 @@ export class HeaderComponent implements OnInit {
       this.router.navigate([url]);
     }
 
+    initMenu() {
+      this.menu = [];
+      if(this.user && this.user.type === 'super'){
+        this.menu.push({text: 'Home', route: 'admin'});
+      }else if(this.user && this.user.type === 'business'){
+        this.menu.push({text: 'Home', route: 'dashboard'});
+      }else{
+        this.menu.push({text: 'Home', route: 'home'});
+      }
+    }
+
     changeAddress(){
-        this.closeNavMenu();
+        // this.closeNavMenu();
         localStorage.removeItem('location-'+APP);
-        this.router.navigate(['home']);
+        // this.router.navigate(['home']);
     }
 
     changeLanguage(code){
@@ -136,7 +159,7 @@ export class HeaderComponent implements OnInit {
             }else{
                 this.router.navigate(['home']);
             }
-        }    
+        }
     }
 
     toBusinessCenter(){
@@ -153,7 +176,7 @@ export class HeaderComponent implements OnInit {
                     if(r.type=='business'){
                         self.router.navigate(['dashboard']);
                     }else{
-                        self.authSvc.logout();  
+                        self.authSvc.logout();
                         self.router.navigate(['institution-signup']);
                     }
                 }else{

@@ -2,6 +2,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }   from '@angular/forms';
+import { RouterModule }  from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 
@@ -21,8 +22,8 @@ import { MultiImageUploaderComponent } from './multi-image-uploader/multi-image-
   imports: [
     CommonModule,
     HttpClientModule,
-    FormsModule//,
-    //PagesModule
+    FormsModule,
+    RouterModule
   ],
   declarations: [
     WizardComponent,
@@ -36,7 +37,7 @@ import { MultiImageUploaderComponent } from './multi-image-uploader/multi-image-
     MultiImageUploaderComponent
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  exports:[ WizardComponent, ImageViewerComponent, FeedbackComponent, MapComponent, HeaderComponent, FooterComponent, 
+  exports:[ WizardComponent, ImageViewerComponent, FeedbackComponent, MapComponent, HeaderComponent, FooterComponent,
   AddressInputComponent, ImageUploaderComponent, MultiImageUploaderComponent]
 })
 export class SharedModule { }
