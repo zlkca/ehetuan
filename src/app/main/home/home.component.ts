@@ -42,9 +42,9 @@ export class HomeComponent implements OnInit {
     //     });
 
 
-    
 
-    /*    
+
+    /*
     if (s) {
       this.router.navigate(['restaurants']);
     } else {
@@ -145,9 +145,12 @@ export class HomeComponent implements OnInit {
 
   }
 
-  search() {
-    let self = this;
-    self.router.navigate(['restaurants']);
+  search(e) {
+    if(e && e.addr) {
+      localStorage.setItem('location-' + APP, JSON.stringify(e.addr));
+      this.sharedServ.emitMsg({name: 'OnUpdateAddress'});
+    }
+    this.router.navigate(['restaurants']);
   }
 
   seachByLocation(keyword: string) {
