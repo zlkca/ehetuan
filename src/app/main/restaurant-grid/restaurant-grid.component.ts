@@ -51,7 +51,7 @@ export class RestaurantGridComponent implements OnInit {
     let self = this;
   }
 
-  constructor(private commerceServ: CommerceService, private sharedServ: SharedService) {
+  constructor(private commerceServ: CommerceService, private router:Router, private sharedServ: SharedService) {
     let self = this;
 
     // self.center = JSON.parse(localStorage.getItem('location-' + APP));
@@ -90,6 +90,10 @@ export class RestaurantGridComponent implements OnInit {
             return 'http://placehold.it/400x300';
         }
       }
+    }
+
+    toDetail(p){
+      this.router.navigate(["restaurant-detail/" + p.id]);
     }
 
   getFilter(query?: any) {
