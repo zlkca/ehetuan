@@ -13,7 +13,7 @@ export class MultiRestaurantFormComponent implements OnInit {
 
 	form:FormGroup = this.fb.group({items:this.fb.array([])});
     items:any = [];
-    fields:string[] = ['', 'Name', 'Description', 'Price'];
+    fields:string[] = ['', 'ID', 'Name', 'Description', 'Street', 'Postal Code'];
     nRows:number = 0;
     subscriptionPicture:any;
     pictures:any[] = [];
@@ -127,6 +127,14 @@ export class MultiRestaurantFormComponent implements OnInit {
 		this.commerceSvc.saveMultiRestaurants(a).subscribe(r=>{
 			let k = r;
 		})
+	}
+
+	toEditProducts(){
+
+	}
+
+	toViewProducts(){
+		
 	}
 
 }

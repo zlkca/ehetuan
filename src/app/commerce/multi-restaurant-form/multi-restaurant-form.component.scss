@@ -8,24 +8,36 @@ $desktop: "(min-width: 1200px)";
 	.list-body{
 		.row{
 			padding-top:0px;
+
+			input{
+				width:100%;
+				min-width:0px;
+				// width:160px;
+			}
+
+			.btn{
+				margin-right:10px;
+			}
 		}
 
-		input[name="id"]{
-			width:40px;
-		}
+		// input[name="id"]{
+		// 	width:40px;
+		// }
 		
 		.col{
 			input{
-				width:160px;
+				width:100%;
+				min-width:0px;
+				// width:160px;
 			}
 
-			input[name="description"]{
-				width:400px;
-			}
+			// input[name="description"]{
+			// 	width:400px;
+			// }
 
-			input[name="price"]{
-				width:100px;
-			}
+			// input[name="price"]{
+			// 	width:100px;
+			// }
 		}
 		.col-pic{
 			margin-left:15px;
