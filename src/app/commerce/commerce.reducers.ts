@@ -7,19 +7,6 @@ import { DEFAULT_LOCATION, DEFAULT_PICTURE } from './commerce.actions';
 // 	payload:any
 // }
 
-export function locationReducer(state:ILocation, action:any){
-	if(action.payload){
-		let payload = action.payload;
-		
-		switch(action.type){
-			case LocationActions.UPDATE_LOCATION:
-				return {...state, ...payload};
-		}
-	}
-	
-	return state;
-}
-
 export function pictureReducer(state:IPicture[]=[], action:any){
 	if(action.payload){
 		let payload = action.payload;

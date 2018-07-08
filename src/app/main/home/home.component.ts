@@ -5,6 +5,7 @@ import { Restaurant } from '../../commerce/commerce';
 import { SharedService } from '../../shared/shared.service';
 import { AuthService } from '../../account/auth.service';
 import { environment } from '../../../environments/environment';
+import { LocationService } from '../../shared/location/location.service';
 
 
 declare var google;
@@ -13,7 +14,7 @@ const APP = environment.APP;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  providers: [AuthService],
+  providers: [AuthService, LocationService],
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
@@ -128,7 +129,10 @@ export class HomeComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private commerceServ: CommerceService, private sharedServ: SharedService) {
+  constructor(private router: Router,
+    private commerceServ: CommerceService,
+    private sharedServ: SharedService,
+    private locationSvc: LocationService) {
     let self = this;
     // this.sharedServ.getMsg().subscribe(msg => {
     //     if('OnSearch' === msg.name){
@@ -146,9 +150,8 @@ export class HomeComponent implements OnInit {
   }
 
   search(e?) {
-    if(e && e.addr) {
-      localStorage.setItem('location-' + APP, JSON.stringify(e.addr));
-      this.sharedServ.emitMsg({name: 'OnUpdateAddress'});
+    if (e && e.addr) {
+      this.locationSvc.set(e.addr);
     }
     this.router.navigate(['restaurants']);
   }

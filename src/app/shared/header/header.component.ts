@@ -11,12 +11,14 @@ import {Subject} from 'rxjs';
 import {AccountActions, IAccount} from '../../account/account.actions';
 
 import { environment } from '../../../environments/environment';
+import { LocationService } from '../location/location.service';
+import { ILocation } from '../location/location.model';
 declare var $: any;
 
 const APP = environment.APP;
 
 @Component({
-    providers:[AuthService, CommerceService],
+    providers:[AuthService, CommerceService, LocationService],
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
@@ -31,6 +33,7 @@ export class HeaderComponent implements OnInit {
     unsubscribeAccount:any;
 
     constructor(private router:Router, private authSvc:AuthService, private commerceSvc:CommerceService,
+        private locationSvc: LocationService,
         private rx:NgRedux<IAccount>, private sharedSvc:SharedService, private ngRedux: NgRedux<IAccount>) {
 
         let self = this;
@@ -64,15 +67,10 @@ export class HeaderComponent implements OnInit {
                 this.isLogin = false;
               }
 
-                // this.initMenu();
-                this.loadLocality();
-
             });
 
-        this.sharedSvc.getMsg().subscribe(msg => {
-            if('OnUpdateAddress' === msg.name){
-              this.loadLocality();
-            }
+        this.locationSvc.get().subscribe((addr: ILocation) => {
+          this.locality = addr && (addr.sub_locality || addr.city);
         });
 
         // self.authServ.hasLoggedIn().subscribe(
@@ -108,15 +106,9 @@ export class HeaderComponent implements OnInit {
       }
     }
 
-    loadLocality() {
-      let s = localStorage.getItem('location-'+APP);
-      let addr = JSON.parse(s);
-      this.locality = addr && (addr.sub_locality || addr.city);
-    }
-
     changeAddress(){
         this.closeNavMenu();
-        localStorage.removeItem('location-'+APP);
+        this.locationSvc.clear();
         // this.router.navigate(['home']);
     }
 
