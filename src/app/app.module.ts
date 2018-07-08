@@ -83,7 +83,7 @@ const appRoutes: Routes = [
   // } 
 
       { path: 'admin', component:AdminComponent },
-      { path: 'admin/restaurants', component:RestaurantListComponent },
+      // { path: 'admin/restaurants', component:RestaurantListComponent },
       { path: 'admin/restaurant/:id', component:EditRestaurantComponent },
       { path: 'admin/restaurant', component:RestaurantFormComponent },
       { path: 'admin/categories', component:CategoryListComponent },
@@ -92,9 +92,9 @@ const appRoutes: Routes = [
       { path: 'admin/products', component:ProductListComponent},
       { path: 'admin/product/:id', component:ProductFormComponent },
       { path: 'admin/product', component:ProductFormComponent},
-      { path: 'business-center/orders', component:OrderListComponent},
-      { path: 'business-center/restaurants', component:RestaurantFormComponent},
-      { path: 'business-center/products', component:ProductListComponent},
+      // { path: 'business-center/orders', component:OrderListComponent},
+      // { path: 'business-center/restaurants', component:RestaurantFormComponent},
+      // { path: 'business-center/products', component:ProductListComponent},
 
 
       { path: 'restaurants', component:RestaurantGridComponent },
