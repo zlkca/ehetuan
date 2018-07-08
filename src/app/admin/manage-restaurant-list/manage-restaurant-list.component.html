@@ -1,0 +1,21 @@
+
+    <div class="container manage-restaurant-list">
+      <div *ngIf="restaurants.length==0">
+        <button (click)="toPage('admin/restaurant')">Add Restaurant</button>
+      </div>
+      <div class="list-body" *ngIf="restaurants.length>0">
+        <div class="row list-item" *ngFor="let m of restaurants">
+          <div class="col-md-1>">
+            <img [src]="getImageSrc(m.image)" />
+          </div>
+          <div class="col-md-3">{{m.name}}</div>
+          <div class="col-md-3">{{m.address.street}},{{m.address.sub_locality}}</div>
+          <div class="col-md-3">
+            <div class="btn" (click)="add()">Add</div>
+                  <div class="btn" (click)="change(m)">Change</div>
+                  <div class="btn" (click)="delete(m)">Delete</div>
+              </div>
+        </div>
+      </div>
+  
+    </div>

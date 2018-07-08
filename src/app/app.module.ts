@@ -31,8 +31,7 @@ import { RestaurantFormComponent } from './restaurant/restaurant-form/restaurant
 import { RestaurantGridComponent } from './restaurant/restaurant-grid/restaurant-grid.component';
 import { RestaurantListComponent } from './restaurant/restaurant-list/restaurant-list.component';
 import { RestaurantDetailComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
-
-import { EditRestaurantComponent } from './main/edit-restaurant/edit-restaurant.component';
+import { EditRestaurantComponent } from './admin/edit-restaurant/edit-restaurant.component';
 
 import { ProductFormComponent } from './product/product-form/product-form.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
@@ -83,7 +82,7 @@ const appRoutes: Routes = [
   // } 
 
       { path: 'admin', component:AdminComponent },
-      { path: 'admin/restaurants', component:RestaurantListComponent },
+      // { path: 'admin/restaurants', component:RestaurantListComponent },
       { path: 'admin/restaurant/:id', component:EditRestaurantComponent },
       { path: 'admin/restaurant', component:RestaurantFormComponent },
       { path: 'admin/categories', component:CategoryListComponent },
@@ -92,9 +91,9 @@ const appRoutes: Routes = [
       { path: 'admin/products', component:ProductListComponent},
       { path: 'admin/product/:id', component:ProductFormComponent },
       { path: 'admin/product', component:ProductFormComponent},
-      { path: 'business-center/orders', component:OrderListComponent},
-      { path: 'business-center/restaurants', component:RestaurantFormComponent},
-      { path: 'business-center/products', component:ProductListComponent},
+      // { path: 'business-center/orders', component:OrderListComponent},
+      // { path: 'business-center/restaurants', component:RestaurantFormComponent},
+      // { path: 'business-center/products', component:ProductListComponent},
 
 
       { path: 'restaurants', component:RestaurantGridComponent },

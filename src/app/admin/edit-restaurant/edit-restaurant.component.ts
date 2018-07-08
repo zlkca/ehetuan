@@ -12,20 +12,20 @@ export class EditRestaurantComponent implements OnInit {
 	
 	restaurant:any;
 
-  	constructor(private route:ActivatedRoute, private commerceSvc: CommerceService) { }
+	constructor(private route:ActivatedRoute, private commerceSvc: CommerceService) { }
 
-  	ngOnInit() {
-	  	let self = this;
-	  	this.route.params.subscribe(params=>{
-			let restaurant_id = params['id'];
-	        
-	        if(restaurant_id){
-	          self.commerceSvc.getRestaurant(restaurant_id).subscribe(r=>{
-	            if(r){
-	              self.restaurant = r;
-	            }    
-	          })
-	    	}
-	  	})
+	ngOnInit() {
+		let self = this;
+		this.route.params.subscribe(params=>{
+		let restaurant_id = params['id'];
+				
+				if(restaurant_id){
+					self.commerceSvc.getRestaurant(restaurant_id).subscribe(r=>{
+						if(r){
+							self.restaurant = r;
+						}    
+					})
+			}
+		})
 	}
 }
