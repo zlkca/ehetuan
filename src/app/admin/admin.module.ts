@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { CommerceModule } from '../commerce/commerce.module';
 import { RestaurantModule } from '../restaurant/restaurant.module';
 import { AccountModule } from '../account/account.module';
 import { ProductModule } from '../product/product.module';
@@ -13,7 +13,8 @@ import { AdminComponent } from './admin.component';
     NgbModule,
     RestaurantModule,
     AccountModule,
-    ProductModule
+    ProductModule,
+    CommerceModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   declarations: [AdminComponent],
