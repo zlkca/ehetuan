@@ -152,8 +152,13 @@ export class HomeComponent implements OnInit {
   search(e?) {
     if (e && e.addr) {
       this.locationSvc.set(e.addr);
+      this.router.navigate(['restaurants']);
+    } else {
+      this.locationSvc.getCurrentPosition()
+        .then(() => {
+          this.router.navigate(['restaurants']);
+        });
     }
-    this.router.navigate(['restaurants']);
   }
 
   seachByLocation(keyword: string) {

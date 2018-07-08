@@ -5,10 +5,12 @@ import { Restaurant } from '../../commerce/commerce';
 import { SharedService } from '../../shared/shared.service';
 import { AuthService } from '../../account/auth.service';
 import { environment } from '../../../environments/environment';
+import { LocationService } from '../../shared/location/location.service';
 
 const APP = environment.APP;
 
 @Component({
+  providers: [LocationService],
   selector: 'restaurant-grid',
   templateUrl: './restaurant-grid.component.html',
   styleUrls: ['./restaurant-grid.component.scss']
@@ -23,35 +25,19 @@ export class RestaurantGridComponent implements OnInit {
   MEDIA_URL = environment.MEDIA_URL;
 
   ngOnInit() {
-    let self = this;
-    //get user's location
-    let s = localStorage.getItem('location-' + APP);
-
-    if(s){
-      // self.router.navigate(['restaurants']);
-      this.center =JSON.parse(s);
-    }else{
-      if (navigator) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          console.log(pos);
-          let lat = pos.coords.latitude;
-          let lng = pos.coords.longitude;
-          if (lat && lng) {
-            self.center = { lat: lat, lng: lng };
-            localStorage.setItem('location-'+APP, JSON.stringify(self.center));
-          } else {
-            self.center = { lat: 43.761539, lng: -79.411079 }; // default
-          }
-        });
-      }
-    }
+    this.locationSvc.get().subscribe(pos => {
+      this.center = pos;
+    });
   }
 
   ngAfterViewInit() {
     let self = this;
   }
 
-  constructor(private commerceServ: CommerceService, private router:Router, private sharedServ: SharedService) {
+  constructor(private commerceServ: CommerceService,
+    private router: Router,
+    private sharedServ: SharedService,
+    private locationSvc: LocationService) {
     let self = this;
 
     // self.center = JSON.parse(localStorage.getItem('location-' + APP));
@@ -80,21 +66,21 @@ export class RestaurantGridComponent implements OnInit {
   }
 
 
-    getImageSrc(image:any){
-      if(image.file){
-        return image.data;
-      }else{
-        if(image.data){
-            return this.MEDIA_URL + image.data;
-        }else{
-            return 'http://placehold.it/400x300';
-        }
+  getImageSrc(image: any) {
+    if (image.file) {
+      return image.data;
+    } else {
+      if (image.data) {
+        return this.MEDIA_URL + image.data;
+      } else {
+        return 'http://placehold.it/400x300';
       }
     }
+  }
 
-    toDetail(p){
-      this.router.navigate(["restaurant-detail/" + p.id]);
-    }
+  toDetail(p) {
+    this.router.navigate(["restaurant-detail/" + p.id]);
+  }
 
   getFilter(query?: any) {
     let qs = [];
