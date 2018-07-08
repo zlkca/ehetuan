@@ -28,15 +28,16 @@ import { OrderListComponent } from './commerce/order-list/order-list.component';
 // import { PaymentComponent } from './products/payment/payment.component';
 import { DashboardComponent } from './main/dashboard/dashboard.component';
 
-import { RestaurantFormComponent } from './commerce/restaurant-form/restaurant-form.component';
+import { RestaurantFormComponent } from './restaurant/restaurant-form/restaurant-form.component';
 
-import { RestaurantGridComponent } from './main/restaurant-grid/restaurant-grid.component';
-import { RestaurantListComponent } from './main/restaurant-list/restaurant-list.component';
-import { RestaurantDetailComponent } from './main/restaurant-detail/restaurant-detail.component';
+import { RestaurantGridComponent } from './restaurant/restaurant-grid/restaurant-grid.component';
+import { RestaurantListComponent } from './restaurant/restaurant-list/restaurant-list.component';
+import { RestaurantDetailComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
+
 import { EditRestaurantComponent } from './main/edit-restaurant/edit-restaurant.component';
 
-import { ProductFormComponent } from './commerce/product-form/product-form.component';
-import { ProductListComponent } from './commerce/product-list/product-list.component';
+import { ProductFormComponent } from './product/product-form/product-form.component';
+import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductComponent } from './main/product/product.component';
 
 
@@ -46,10 +47,14 @@ import { CoreModule }    from './core/core.module';
 // import { ProductsModule } from './products/products.module';
 import { AccountModule } from './account/account.module';
 import { MainModule }    from './main/main.module';
+import { AdminModule } from './admin/admin.module';
+import { RestaurantModule } from './restaurant/restaurant.module';
+import { ProductModule } from './product/product.module';
+
 import { SharedModule } from './shared/shared.module';
 import { CommerceModule } from './commerce/commerce.module';
 
-import { AdminComponent } from './main/admin/admin.component';
+import { AdminComponent } from './admin/admin.component';
 import { LayoutComponent } from './main/layout/layout.component';
 
 import { CategoryListComponent } from './commerce/category-list/category-list.component';
@@ -86,7 +91,7 @@ const appRoutes: Routes = [
         ]
       },  
 
-      { path: 'admin', component:RestaurantListComponent },
+      { path: 'admin', component:AdminComponent },
       { path: 'admin/restaurants', component:RestaurantListComponent },
       { path: 'admin/restaurant/:id', component:EditRestaurantComponent },
       { path: 'admin/restaurant', component:RestaurantFormComponent },
@@ -97,16 +102,16 @@ const appRoutes: Routes = [
       { path: 'admin/product/:id', component:ProductFormComponent },
       { path: 'admin/product', component:ProductFormComponent},
 
-        { path: 'restaurants', component:RestaurantGridComponent },
-        { path: 'restaurant-detail/:id', component:RestaurantDetailComponent },
-        { path: 'products', component:ProductListComponent },
-        { path: 'product/:id', component:ProductComponent },
-        { path: 'forget-password', component:ForgetPasswordComponent },
-        { path: 'login', component:LoginComponent },
-        { path: 'institution-login', component:InstitutionLoginComponent },
-        { path: 'signup', component:SignupComponent },
-        { path: 'institution-signup', component:InstitutionSignupComponent },
-        { path: 'home', component:HomeComponent }
+      { path: 'restaurants', component:RestaurantGridComponent },
+      { path: 'restaurant-detail/:id', component:RestaurantDetailComponent },
+      { path: 'products', component:ProductListComponent },
+      { path: 'product/:id', component:ProductComponent },
+      { path: 'forget-password', component:ForgetPasswordComponent },
+      { path: 'login', component:LoginComponent },
+      { path: 'institution-login', component:InstitutionLoginComponent },
+      { path: 'signup', component:SignupComponent },
+      { path: 'institution-signup', component:InstitutionSignupComponent },
+      { path: 'home', component:HomeComponent }
 ];
 
 
@@ -129,7 +134,10 @@ const appRoutes: Routes = [
     SharedModule,
     AccountModule,
     CommerceModule,
-    MainModule
+    MainModule,
+    AdminModule,
+    RestaurantModule,
+    ProductModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   //providers: [MsgService],

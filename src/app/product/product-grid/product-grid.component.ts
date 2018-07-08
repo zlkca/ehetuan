@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommerceService } from '../commerce.service';
-import { Product } from '../commerce';
+import { CommerceService } from '../../commerce/commerce.service';
+import { Product } from '../../commerce/commerce';
 import { environment } from '../../../environments/environment';
 import { NgRedux } from '@angular-redux/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IAppState } from '../../store';
-import { ICart, CartActions } from '../commerce.actions';
+import { ICart, CartActions } from '../../commerce/commerce.actions';
 import { ProductComponent } from '../../main/product/product.component';
 
 const ADD_IMAGE = 'add_photo.png';

@@ -3,22 +3,20 @@
 
     <div class="container">
         <ngb-tabset>
-          <ngb-tab title="Orders">
-            <ng-template ngbTabContent>
-              <app-order-list [orders]="orders"></app-order-list>
-            </ng-template>
-          </ngb-tab>
-
           <ngb-tab title="Business Users">
             <ng-template ngbTabContent>
-              <multi-user-form [users]="businessUsers"></multi-user-form>
+              <!-- <app-order-list [orders]="orders"></app-order-list> -->
+              <div *ngIf="businessUsers">
+                <user-list [users]="businessUsers"></user-list>
+                <!-- <multi-user-form [users]="businessUsers"></multi-user-form> -->
+              </div>
             </ng-template>
           </ngb-tab>
 
           <ngb-tab title="Restaurants">
             <ng-template ngbTabContent>
-              <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form>
-              <app-restaurant-list [restaurants]="restaurants"></app-restaurant-list>
+              <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
+              <restaurant-list [restaurants]="restaurants"></restaurant-list>
             </ng-template>
           </ngb-tab>
 

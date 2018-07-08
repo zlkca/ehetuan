@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { CommerceService } from '../commerce.service';
-import { Product, Category, Restaurant, Color, Picture } from '../commerce';
+import { CommerceService } from '../../commerce/commerce.service';
+import { Product, Category, Restaurant, Color, Picture } from '../../commerce/commerce';
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
 @Component({

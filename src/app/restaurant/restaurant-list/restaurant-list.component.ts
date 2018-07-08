@@ -35,7 +35,7 @@ import { CommerceService } from '../../commerce/commerce.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-restaurant-list',
+  selector: 'restaurant-list',
   templateUrl: './restaurant-list.component.html',
   styleUrls: ['./restaurant-list.component.scss']
 })

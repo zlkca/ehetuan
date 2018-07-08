@@ -18,13 +18,9 @@ import { CommerceService } from '../commerce/commerce.service';
 import { AccountService } from '../account/account.service';
 
 import { ProductComponent } from './product/product.component';
-import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
-import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BlogComponent } from './blog/blog.component';
 import { CommentComponent } from './comment/comment.component';
-import { AdminComponent } from './admin/admin.component';
-import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
 
 @NgModule({
@@ -44,13 +40,9 @@ import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.compo
     ContactComponent,
     LayoutComponent,
     ProductComponent,
-    RestaurantDetailComponent,
-    RestaurantGridComponent,
     DashboardComponent,
     BlogComponent,
     CommentComponent,
-    AdminComponent,
-    RestaurantListComponent,
     EditRestaurantComponent
   ],
   providers:[CommerceService, AccountService],

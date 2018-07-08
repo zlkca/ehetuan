@@ -9,12 +9,8 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 
 import { ProductFilterComponent } from './product-filter/product-filter.component';
-import { ProductFormComponent } from './product-form/product-form.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductGridComponent } from './product-grid/product-grid.component';
 
 import { CartComponent } from './cart/cart.component';
-import { RestaurantFormComponent } from './restaurant-form/restaurant-form.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { SharedService } from '../shared/shared.service';
 
@@ -59,12 +55,12 @@ import { SharedModule } from '../shared/shared.module';
       multi: true
     }],
    exports:[CategoryListComponent,CategoryFormComponent,
-     ProductGridComponent, ProductListComponent,ProductFormComponent,ProductFilterComponent, 
-     RestaurantFormComponent, CartComponent, OrderListComponent, 
+     ProductFilterComponent, 
+      CartComponent, OrderListComponent, 
      MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent],
    declarations:[CategoryListComponent,CategoryFormComponent,
-     ProductGridComponent, ProductListComponent, ProductFormComponent, ProductFilterComponent, 
-     RestaurantFormComponent, CartComponent, OrderListComponent, ProductGridComponent, 
+     ProductFilterComponent, 
+      CartComponent, OrderListComponent,
      MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent]
 })
 export class CommerceModule { }
