@@ -28,7 +28,11 @@
       </ngb-tab>
       <ngb-tab title="Restaurant">
         <ng-template ngbTabContent>
-          <app-restaurant-form [data]="restaurant"></app-restaurant-form>
+          <div class="container" *ngIf="restaurant">
+            <div class="title-bg">Edit Restaurant</div>
+              <app-restaurant-form [restaurant]="restaurant"></app-restaurant-form>
+            </div>
+          <!-- <app-restaurant-form [data]="restaurant"></app-restaurant-form> -->
         </ng-template>
       </ngb-tab>
       <ngb-tab title="Products">
