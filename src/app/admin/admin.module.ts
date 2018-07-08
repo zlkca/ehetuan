@@ -8,6 +8,7 @@ import { ProductModule } from '../product/product.module';
 import { AdminComponent } from './admin.component';
 import { ManageProductListComponent } from './manage-product-list/manage-product-list.component';
 import { ManageRestaurantListComponent } from './manage-restaurant-list/manage-restaurant-list.component';
+import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { ManageRestaurantListComponent } from './manage-restaurant-list/manage-r
     CommerceModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  declarations: [AdminComponent, ManageProductListComponent, ManageRestaurantListComponent],
-  exports:[AdminComponent]
+  declarations: [AdminComponent, ManageProductListComponent, ManageRestaurantListComponent, EditRestaurantComponent],
+  exports:[AdminComponent, EditRestaurantComponent]
 })
 export class AdminModule { }

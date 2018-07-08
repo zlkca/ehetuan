@@ -20,7 +20,6 @@ import { AccountService } from '../account/account.service';
 import { ProductComponent } from './product/product.component';
 import { BlogComponent } from './blog/blog.component';
 import { CommentComponent } from './comment/comment.component';
-import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
 
 @NgModule({
   imports: [
@@ -40,8 +39,7 @@ import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.compo
     LayoutComponent,
     ProductComponent,
     BlogComponent,
-    CommentComponent,
-    EditRestaurantComponent
+    CommentComponent
   ],
   providers:[CommerceService, AccountService],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

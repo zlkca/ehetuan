@@ -31,8 +31,7 @@ import { RestaurantFormComponent } from './restaurant/restaurant-form/restaurant
 import { RestaurantGridComponent } from './restaurant/restaurant-grid/restaurant-grid.component';
 import { RestaurantListComponent } from './restaurant/restaurant-list/restaurant-list.component';
 import { RestaurantDetailComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
-
-import { EditRestaurantComponent } from './main/edit-restaurant/edit-restaurant.component';
+import { EditRestaurantComponent } from './admin/edit-restaurant/edit-restaurant.component';
 
 import { ProductFormComponent } from './product/product-form/product-form.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
