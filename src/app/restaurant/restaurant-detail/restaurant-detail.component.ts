@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-restaurant-detail',
+  selector: 'restaurant-detail',
   templateUrl: './restaurant-detail.component.html',
   providers: [AuthService, CommerceService],
   styleUrls: ['./restaurant-detail.component.scss']

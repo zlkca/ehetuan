@@ -46,7 +46,7 @@ export class InstitutionLoginComponent implements OnInit {
                   this.ngRedux.dispatch({type:AccountActions.LOGIN, payload:user});
 
                   if(user.type=='business'){
-                    self.router.navigate(['dashboard']);
+                    self.router.navigate(['admin']);
                   }else{
                     self.router.navigate(['home']);
                   }

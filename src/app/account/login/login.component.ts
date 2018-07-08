@@ -82,18 +82,13 @@ export class LoginComponent implements OnInit {
       this.authServ.login(v.account, v.password).subscribe(
           (user:any) => {
               if(user && user.username){
-                  //self.sharedServ.emitMsg({name:'OnUpdateHeader'});
-                  //self.sharedServ.emitMsg({name:'updateLogin'});
                   this.ngRedux.dispatch({type:AccountActions.LOGIN, payload:user});
                   self.user = user;
-                  if(user.type === 'super'){
+                  if(user.type === 'super'||user.type === 'business'){
                     self.router.navigate(['admin']);
-                  }else if(user.type=='business'){
-                    self.router.navigate(['dashboard']);
                   }else{
                     self.router.navigate(['restaurants']);
                   }
-                  
               }else{
                 self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";          
               }

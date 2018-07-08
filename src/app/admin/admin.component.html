@@ -3,17 +3,37 @@
 
     <div class="container">
         <ngb-tabset>
-          <ngb-tab title="Business Users">
+          <ngb-tab title="Orders" *ngIf="orders">
             <ng-template ngbTabContent>
               <!-- <app-order-list [orders]="orders"></app-order-list> -->
-              <div *ngIf="businessUsers">
-                <user-list [users]="businessUsers"></user-list>
+                <user-list [orders]="orders"></user-list>
                 <!-- <multi-user-form [users]="businessUsers"></multi-user-form> -->
-              </div>
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab title="Restaurants">
+          <ngb-tab title="Restaurant" *ngIf="restaurant">
+            <ng-template ngbTabContent>
+              <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
+              <restaurant-form [restaurant]="restaurant"></restaurant-form>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Products" *ngIf="products">
+            <ng-template ngbTabContent>
+              <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
+              <product-list [products]="products"></product-list>
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Business Users" *ngIf="businessUsers">
+            <ng-template ngbTabContent>
+              <!-- <app-order-list [orders]="orders"></app-order-list> -->
+                <user-list [users]="businessUsers"></user-list>
+                <!-- <multi-user-form [users]="businessUsers"></multi-user-form> -->
+            </ng-template>
+          </ngb-tab>
+
+          <ngb-tab title="Restaurants" *ngIf="restaurants">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
               <restaurant-list [restaurants]="restaurants"></restaurant-list>

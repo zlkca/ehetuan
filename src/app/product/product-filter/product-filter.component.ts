@@ -10,7 +10,7 @@ import { Product, Category, Restaurant, Color, Picture } from '../../commerce/co
 
 @Component({
   //providers:[UserService],
-  selector: 'app-product-filter',
+  selector: 'product-filter',
   templateUrl: './product-filter.component.html',
   styleUrls: ['./product-filter.component.scss']
 })

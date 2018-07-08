@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommerceService } from '../commerce.service';
 
 @Component({
-  selector: 'app-order-list',
+  selector: 'order-list',
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.scss']
 })

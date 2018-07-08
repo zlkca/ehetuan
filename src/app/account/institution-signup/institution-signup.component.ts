@@ -65,7 +65,7 @@ export class InstitutionSignupComponent implements OnInit {
         if(r.token){
           self.sharedServ.emitMsg({name:'updateLogin'});
           self.rx.dispatch({type:AccountActions.LOGIN, payload:r.user}); //r.error
-          self.router.navigate(["/dashboard"]);
+          self.router.navigate(["/admin"]);
         }else{
           self.errMsg = 'Error:' + r.errors[0];
         }

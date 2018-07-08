@@ -13,7 +13,7 @@ const ADD_IMAGE = 'add_photo.png';
 
 @Component({
 	providers:[CommerceService],
-  selector: 'app-product-grid',
+  selector: 'product-grid',
   templateUrl: './product-grid.component.html',
   styleUrls: ['./product-grid.component.scss']
 })

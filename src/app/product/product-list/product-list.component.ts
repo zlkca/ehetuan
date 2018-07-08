@@ -11,7 +11,7 @@ const ADD_IMAGE = 'add_photo.png';
 
 @Component({
     providers:[CommerceService],
-    selector: 'app-product-list',
+    selector: 'product-list',
     templateUrl: './product-list.component.html',
     styleUrls: ['./product-list.component.scss']
 })
@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
     subscription:any;
     cart:any;
 
-    @Input() data: Product[];
+    @Input() products: Product[];
     @Input() mode: string;
 
     ngOnInit(){

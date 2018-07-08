@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 const APP = environment.APP;
 
 @Component({
-  selector: 'app-restaurant-grid',
+  selector: 'restaurant-grid',
   templateUrl: './restaurant-grid.component.html',
   styleUrls: ['./restaurant-grid.component.scss']
 })

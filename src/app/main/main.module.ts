@@ -18,7 +18,6 @@ import { CommerceService } from '../commerce/commerce.service';
 import { AccountService } from '../account/account.service';
 
 import { ProductComponent } from './product/product.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { BlogComponent } from './blog/blog.component';
 import { CommentComponent } from './comment/comment.component';
 import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
@@ -40,7 +39,6 @@ import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.compo
     ContactComponent,
     LayoutComponent,
     ProductComponent,
-    DashboardComponent,
     BlogComponent,
     CommentComponent,
     EditRestaurantComponent

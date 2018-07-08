@@ -7,7 +7,7 @@ import { Address } from '../../account/account';
 import { MultiImageUploaderComponent } from '../../shared/multi-image-uploader/multi-image-uploader.component';
 
 @Component({
-  selector: 'app-restaurant-form',
+  selector: 'restaurant-form',
   templateUrl: './restaurant-form.component.html',
   styleUrls: ['./restaurant-form.component.scss']
 })

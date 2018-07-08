@@ -7,7 +7,7 @@ import { Product, Category, Restaurant, Color, Picture } from '../../commerce/co
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
 @Component({
-  selector: 'app-product-form',
+  selector: 'product-form',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
