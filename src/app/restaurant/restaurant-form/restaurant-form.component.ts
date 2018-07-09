@@ -5,6 +5,9 @@ import { CommerceService } from '../../commerce/commerce.service';
 import { Restaurant, Category, Picture } from '../../commerce/commerce';
 import { Address } from '../../account/account';
 import { MultiImageUploaderComponent } from '../../shared/multi-image-uploader/multi-image-uploader.component';
+import { environment } from '../../../environments/environment';
+
+const APP = environment.APP;
 
 @Component({
   selector: 'restaurant-form',
@@ -44,10 +47,11 @@ export class RestaurantFormComponent implements OnInit {
 
 	ngOnInit() {
 		let self = this;
-		this.form.patchValue(this.restaurant);
 
+		this.form.patchValue(this.restaurant);
+		localStorage.setItem('restaurant_info-' + APP, JSON.stringify(self.restaurant));
 		self.pictures = [{index:0, name:'', image:this.restaurant.image}];
-		
+
         //self.route.params.subscribe((params:any)=>{
             // self.commerceServ.getRestaurant(params.id).subscribe(
             //     (r:Restaurant) => {
@@ -150,5 +154,17 @@ export class RestaurantFormComponent implements OnInit {
 			});
 		})
 
+	}
+
+	cancel(){
+		let self = this;
+
+		let c = localStorage.getItem('restaurant_info-' + APP);
+		let r = JSON.parse(c);
+
+		self.form.patchValue(r);
+		self.pictures = [{index:0, name:'', image:r.image}];
+
+		localStorage.removeItem('restaurant_info-' + APP);
 	}
 }
