@@ -153,7 +153,7 @@ export class HeaderComponent implements OnInit {
                 if(self.isLogin){
                     //self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
                     if(r.type=='business'){
-                        self.router.navigate(['dashboard']);
+                        self.router.navigate(['admin']);
                     }else{
                         self.authSvc.logout();
                         self.router.navigate(['institution-signup']);

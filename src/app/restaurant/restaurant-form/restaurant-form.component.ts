@@ -150,7 +150,7 @@ export class RestaurantFormComponent implements OnInit {
 			addr.postal_code = ret.postal_code;
 			m.address = addr;
 			self.commerceSvc.saveRestaurant(m).subscribe( (r:any) => {
-				self.router.navigate(['admin/restaurants']);
+				self.router.navigate(['admin']);
 			});
 		})
 
@@ -166,5 +166,7 @@ export class RestaurantFormComponent implements OnInit {
 		self.pictures = [{index:0, name:'', image:r.image}];
 
 		localStorage.removeItem('restaurant_info-' + APP);
+		
+		self.router.navigate(['admin']);
 	}
 }
