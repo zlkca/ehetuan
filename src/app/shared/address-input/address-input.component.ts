@@ -36,11 +36,13 @@ export class AddressInputComponent implements OnInit {
             //   new google.maps.LatLng(43.494848, -79.133542));
 
             var options = {
+                // strictBounds to GTA area
                 bounds: new google.maps.LatLngBounds(
-                    new google.maps.LatLng(56.928353, -95.153214),
-                    new google.maps.LatLng(41.676955, -74384575),
+                    new google.maps.LatLng(43.468068, -79.963410),
+                    new google.maps.LatLng(44.301441, -78.730195)
                 ),
-                componentRestrictions: { country: "ca" }
+                componentRestrictions: { country: "ca" },
+                strictBounds: true
             };
 
             if (this.div) {
