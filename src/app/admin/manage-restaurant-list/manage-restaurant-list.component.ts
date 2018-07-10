@@ -46,7 +46,7 @@ export class ManageRestaurantListComponent implements OnInit {
         this.router.navigate(["admin/restaurant"]);
     }
 
-    delete(r){
+    delete(restaurant){
         let self = this;
         // this.commerceSvc.rmRestaurant(r.id).subscribe(
         //     (r:Restaurant[]) => {
@@ -61,5 +61,13 @@ export class ManageRestaurantListComponent implements OnInit {
                 
         //     }
         // )
+    }
+
+    viewProducts(restaurant){
+      this.router.navigate(["admin/products"]);
+    }
+
+    editMultiProducts(restaurant){
+      this.router.navigate(["admin/edit-products"]);
     }
 }

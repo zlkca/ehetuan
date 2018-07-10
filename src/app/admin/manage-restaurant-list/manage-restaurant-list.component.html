@@ -8,13 +8,15 @@
           <div class="col-md-1>">
             <img [src]="getImageSrc(m.image)" />
           </div>
-          <div class="col-md-3">{{m.name}}</div>
+          <div class="col-md-2">{{m.name}}</div>
           <div class="col-md-3">{{m.address.street}},{{m.address.sub_locality}}</div>
-          <div class="col-md-3">
-            <div class="btn" (click)="add()">Add</div>
-                  <div class="btn" (click)="change(m)">Change</div>
-                  <div class="btn" (click)="delete(m)">Delete</div>
-              </div>
+          <div class="col-md-6">
+              <div class="btn btn-sm btn-secondary" (click)="add()">Add</div>
+              <div class="btn btn-sm btn-secondary" (click)="change(m)">Change</div>
+              <div class="btn btn-sm btn-secondary" (click)="delete(m)">Delete</div>
+              <div class="btn btn-sm btn-secondary" (click)="viewProducts(m)">View Products</div>
+              <div class="btn btn-sm btn-secondary" (click)="editMultiProducts(m)">Edit Multi-Products</div>
+            </div>
         </div>
       </div>
   

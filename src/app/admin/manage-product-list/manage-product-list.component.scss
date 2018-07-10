@@ -5,27 +5,9 @@ $block-h-m:230px;
 $frame-h-m:160px;
 
 .manage-product-list{
-	.product{
-		border:1px solid #eee;
-		padding:10px;
-		margin:10px 5px;
-		float:left;
-
-		.image-frame{
-			height:150px;
-        }
-        
-		.text-block{
-			padding-left:10px;
-		}
-
-		.fa-2x{
-    		margin-right:10px;
-        }
-        
-        .btn{
-            float:left;
-        }
+	.list-item{
+        border-top:1px solid #eee;
+        padding: 3px;
 	}
 }
 

@@ -56,6 +56,7 @@ import { LayoutComponent } from './main/layout/layout.component';
 
 import { CategoryListComponent } from './commerce/category-list/category-list.component';
 import { CategoryFormComponent } from './commerce/category-form/category-form.component';
+import { MultiProductFormComponent } from './commerce/multi-product-form/multi-product-form.component';
 
 const appRoutes: Routes = [
   // { path: 'login', component:LoginComponent },
@@ -90,6 +91,7 @@ const appRoutes: Routes = [
       { path: 'admin/category', component:CategoryFormComponent },
       { path: 'admin/products', component:ProductListComponent},
       { path: 'admin/product/:id', component:ProductFormComponent },
+      { path: 'admin/edit-products', component:MultiProductFormComponent},
       { path: 'admin/product', component:ProductFormComponent},
       // { path: 'business-center/orders', component:OrderListComponent},
       // { path: 'business-center/restaurants', component:RestaurantFormComponent},
