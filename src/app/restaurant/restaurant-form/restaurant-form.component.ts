@@ -10,103 +10,103 @@ import { environment } from '../../../environments/environment';
 const APP = environment.APP;
 
 @Component({
-  selector: 'restaurant-form',
-  templateUrl: './restaurant-form.component.html',
-  styleUrls: ['./restaurant-form.component.scss']
+    selector: 'app-restaurant-form',
+    templateUrl: './restaurant-form.component.html',
+    styleUrls: ['./restaurant-form.component.scss']
 })
 export class RestaurantFormComponent implements OnInit {
 
-	id:string = '';
-	categoryList:Category[] = [];
-	pictures:any[] = [];
-	
-	form:FormGroup;
+    id: string = '';
+    categoryList: Category[] = [];
+    pictures: any[] = [];
 
-	@Input() restaurant:Restaurant;
-	@ViewChild(MultiImageUploaderComponent) uploader:any;
-	
-	createForm(){
-		return this.fb.group({
-			name: ['', [Validators.required, Validators.minLength(3)]],
-			description: ['', Validators.maxLength(750)],
-		      // street: ['', Validators.required],
-		      // postal_code:['', Validators.required]
-			address: this.fb.group({
-				street:['',[Validators.required]],
-				postal_code:['', [Validators.required]]
-			}),
-			// categories: this.fb.array([]),
-			// delivery_fee: ''
-		});
-	}
+    form: FormGroup;
 
-	constructor(private fb:FormBuilder, private commerceSvc:CommerceService,
-    private router:Router, private route:ActivatedRoute) {
-      this.form = this.createForm();
+    @Input() restaurant: Restaurant;
+    @ViewChild(MultiImageUploaderComponent) uploader: any;
+
+    createForm() {
+        return this.fb.group({
+            name: ['', [Validators.required, Validators.minLength(3)]],
+            description: ['', Validators.maxLength(750)],
+            // street: ['', Validators.required],
+            // postal_code:['', Validators.required]
+            address: this.fb.group({
+                street: ['', [Validators.required]],
+                postal_code: ['', [Validators.required]]
+            }),
+            // categories: this.fb.array([]),
+            // delivery_fee: ''
+        });
     }
 
-	ngOnInit() {
-		let self = this;
+    constructor(private fb: FormBuilder, private commerceSvc: CommerceService,
+        private router: Router, private route: ActivatedRoute) {
+        this.form = this.createForm();
+    }
 
-		this.form.patchValue(this.restaurant);
-		localStorage.setItem('restaurant_info-' + APP, JSON.stringify(self.restaurant));
-		self.pictures = [{index:0, name:'', image:this.restaurant.image}];
+    ngOnInit() {
+        let self = this;
+
+        this.form.patchValue(this.restaurant);
+        //localStorage.setItem('restaurant_info-' + APP, JSON.stringify(self.restaurant));
+        self.pictures = [{ index: 0, name: '', image: this.restaurant.image }];
 
         //self.route.params.subscribe((params:any)=>{
-            // self.commerceServ.getRestaurant(params.id).subscribe(
-            //     (r:Restaurant) => {
-            //     	self.restaurant = r;
-            //     	self.id = r.id;
-            //         self.form.patchValue(r);
-            //         self.street.patchValue(r.address.street);
+        // self.commerceServ.getRestaurant(params.id).subscribe(
+        //     (r:Restaurant) => {
+        //     	self.restaurant = r;
+        //     	self.id = r.id;
+        //         self.form.patchValue(r);
+        //         self.street.patchValue(r.address.street);
 
-            //         if(r.image && r.image.data){
-            //         	self.pictures = [{index:0, name:"", image:r.image}];
-            //         }else{
-            //         	self.pictures = [];
-            //         }
+        //         if(r.image && r.image.data){
+        //         	self.pictures = [{index:0, name:"", image:r.image}];
+        //         }else{
+        //         	self.pictures = [];
+        //         }
 
-            //         self.commerceServ.getCategoryList().subscribe(catList=>{
-		          //       self.categoryList = catList;
-		          //       for(let cat of catList){
-		          //           let c = r.categories.find(x=> x.id==cat.id );
-		          //           if(c){
-		          //               self.categories.push(new FormControl(true));
-		          //           }else{
-		          //               self.categories.push(new FormControl(false));
-		          //           }
-		          //           //self.categories.push(new FormControl(s.id));
-		          //       }
-		          //   })
-            //     },
-            //     (err:any) => {
-            //     });
+        //         self.commerceServ.getCategoryList().subscribe(catList=>{
+        //       self.categoryList = catList;
+        //       for(let cat of catList){
+        //           let c = r.categories.find(x=> x.id==cat.id );
+        //           if(c){
+        //               self.categories.push(new FormControl(true));
+        //           }else{
+        //               self.categories.push(new FormControl(false));
+        //           }
+        //           //self.categories.push(new FormControl(s.id));
+        //       }
+        //   })
+        //     },
+        //     (err:any) => {
+        //     });
 
-            // self.commerceServ.getCategoryList().subscribe(catList=>{
-            //     self.categoryList = catList;
-            //     for(let cat of catList){
-            //         let c = p.categories.find(x=> x.id==cat.id );
-            //         if(c){
-            //             self.categories.push(new FormControl(true));
-            //         }else{
-            //             self.categories.push(new FormControl(false));
-            //         }
-            //         //self.categories.push(new FormControl(s.id));
-            //     }
-            // })
+        // self.commerceServ.getCategoryList().subscribe(catList=>{
+        //     self.categoryList = catList;
+        //     for(let cat of catList){
+        //         let c = p.categories.find(x=> x.id==cat.id );
+        //         if(c){
+        //             self.categories.push(new FormControl(true));
+        //         }else{
+        //             self.categories.push(new FormControl(false));
+        //         }
+        //         //self.categories.push(new FormControl(s.id));
+        //     }
+        // })
 
-            // self.commerceServ.getCategoryList().subscribe(catList=>{
-            //     self.categoryList = catList;
-            //     for(let cat of catList){
-            //         let c = p.categories.find(x=> x.id==cat.id );
-            //         if(c){
-            //             self.categories.push(new FormControl(true));
-            //         }else{
-            //             self.categories.push(new FormControl(false));
-            //         }
-            //         //self.categories.push(new FormControl(s.id));
-            //     }
-            // })
+        // self.commerceServ.getCategoryList().subscribe(catList=>{
+        //     self.categoryList = catList;
+        //     for(let cat of catList){
+        //         let c = p.categories.find(x=> x.id==cat.id );
+        //         if(c){
+        //             self.categories.push(new FormControl(true));
+        //         }else{
+        //             self.categories.push(new FormControl(false));
+        //         }
+        //         //self.categories.push(new FormControl(s.id));
+        //     }
+        // })
         //});
 
         //create new
@@ -116,57 +116,60 @@ export class RestaurantFormComponent implements OnInit {
         //         self.categories.push(new FormControl(false));
         //     }
         // });
-	}
+    }
 
 
-	save(){
-		let self = this;
-		let v = this.form.value;
-		let addr = null;
-		// hardcode Toronto as default
-		if(self.restaurant && self.restaurant.address){
-			addr = self.restaurant.address;
-			addr.street = v.address.street;
-		}else{
-			addr = new Address({id:'', city:'Toronto', 
-				province:'ON', 
-				street:v.address.street, 
-				postal_code:v.address.postal_code});
-		}
-		let m = new Restaurant(this.form.value);
+    save() {
+        const self = this;
+        const v = this.form.value;
+        const m = new Restaurant(this.form.value);
 
-		if(self.uploader){
-			m.image = self.uploader.data[0].image;
-		}
+        let addr = null;
+        // hardcode Toronto as default
+        if (self.restaurant && self.restaurant.address) {
+            addr = self.restaurant.address;
+            addr.street = v.address.street;
+        } else {
+            addr = new Address({
+                id: '', city: 'Toronto',
+                province: 'ON',
+                street: v.address.street,
+                postal_code: v.address.postal_code
+            });
+        }
 
-		m.id = self.restaurant? self.restaurant.id:null;
-		
 
-		let s = addr.street + ', Toronto, ' + v.address.postal_code;
-		this.commerceSvc.getLocation(s).subscribe(ret=>{
-			addr.lat = ret.lat;
-			addr.lng = ret.lng;
-			addr.sub_locality = ret.sub_locality;
-			addr.postal_code = ret.postal_code;
-			m.address = addr;
-			self.commerceSvc.saveRestaurant(m).subscribe( (r:any) => {
-				self.router.navigate(['admin']);
-			});
-		})
+        if (self.uploader) {
+            m.image = self.uploader.data[0].image;
+        }
 
-	}
+        m.id = self.restaurant ? self.restaurant.id : null;
 
-	cancel(){
-		let self = this;
+        const s = addr.street + ', Toronto, ' + v.address.postal_code;
+        this.commerceSvc.getLocation(s).subscribe(ret => {
+            addr.lat = ret.lat;
+            addr.lng = ret.lng;
+            addr.sub_locality = ret.sub_locality;
+            addr.postal_code = ret.postal_code;
+            m.address = addr;
+            self.commerceSvc.saveRestaurant(m).subscribe((r: any) => {
+                self.router.navigate(['admin']);
+            });
+        });
 
-		let c = localStorage.getItem('restaurant_info-' + APP);
-		let r = JSON.parse(c);
+    }
 
-		self.form.patchValue(r);
-		self.pictures = [{index:0, name:'', image:r.image}];
+    cancel() {
+        const self = this;
 
-		localStorage.removeItem('restaurant_info-' + APP);
-		
-		self.router.navigate(['admin']);
-	}
+        // const c = localStorage.getItem('restaurant_info-' + APP);
+        // const r = JSON.parse(c);
+
+        self.form.patchValue(this.restaurant);
+        self.pictures = [{ index: 0, name: '', image: this.restaurant.image }];
+
+        // localStorage.removeItem('restaurant_info-' + APP);
+
+        self.router.navigate(['admin']);
+    }
 }

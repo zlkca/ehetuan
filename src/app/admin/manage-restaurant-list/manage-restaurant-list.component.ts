@@ -5,48 +5,48 @@ import { Restaurant } from '../../commerce/commerce';
 import { CommerceService } from '../../commerce/commerce.service';
 import { environment } from '../../../environments/environment';
 @Component({
-  selector: 'manage-restaurant-list',
-  templateUrl: './manage-restaurant-list.component.html',
-  styleUrls: ['./manage-restaurant-list.component.scss']
+    selector: 'app-manage-restaurant-list',
+    templateUrl: './manage-restaurant-list.component.html',
+    styleUrls: ['./manage-restaurant-list.component.scss']
 })
 export class ManageRestaurantListComponent implements OnInit {
-    restaurants:Restaurant[] = [];
+    restaurants: Restaurant[] = [];
     MEDIA_URL = environment.MEDIA_URL;
 
-    constructor(private router:Router, private commerceSvc:CommerceService){}
+    constructor(private router: Router, private commerceSvc: CommerceService) { }
 
     ngOnInit() {
-        let self = this;
-        this.commerceSvc.getRestaurantList().subscribe((r:Restaurant[]) => {
+        const self = this;
+        this.commerceSvc.getRestaurantList().subscribe((r: Restaurant[]) => {
             self.restaurants = r;
         });
     }
 
-    toPage(url:string){
-      this.router.navigate([url]);
+    toPage(url: string) {
+        this.router.navigate([url]);
     }
 
-    getImageSrc(image:any){
-      if(image.file){
-        return image.data;
-      }else{
-        if(image.data){
-            return this.MEDIA_URL + image.data;
-        }else{
-            return this.MEDIA_URL + 'add_photo.png';
+    getImageSrc(image: any) {
+        if (image.file) {
+            return image.data;
+        } else {
+            if (image.data) {
+                return this.MEDIA_URL + image.data;
+            } else {
+                return this.MEDIA_URL + 'add_photo.png';
+            }
         }
-      }
     }
 
-    change(r){
+    change(r) {
         this.router.navigate(["admin/restaurant/" + r.id]);
     }
 
-    add(){
+    add() {
         this.router.navigate(["admin/restaurant"]);
     }
 
-    delete(restaurant){
+    delete(restaurant) {
         let self = this;
         // this.commerceSvc.rmRestaurant(r.id).subscribe(
         //     (r:Restaurant[]) => {
@@ -58,16 +58,16 @@ export class ManageRestaurantListComponent implements OnInit {
         //         }
         //     },
         //     (err)=>{
-                
+
         //     }
         // )
     }
 
-    viewProducts(restaurant){
-      this.router.navigate(["admin/products"]);
+    viewProducts(restaurant) {
+        this.router.navigate(["admin/products"]);
     }
 
-    editMultiProducts(restaurant){
-      this.router.navigate(["admin/edit-products"]);
+    editMultiProducts(restaurant) {
+        this.router.navigate(["admin/edit-products"]);
     }
 }

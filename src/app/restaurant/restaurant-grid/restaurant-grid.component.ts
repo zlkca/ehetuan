@@ -11,7 +11,7 @@ const APP = environment.APP;
 
 @Component({
   providers: [LocationService],
-  selector: 'restaurant-grid',
+  selector: 'app-restaurant-grid',
   templateUrl: './restaurant-grid.component.html',
   styleUrls: ['./restaurant-grid.component.scss']
 })
@@ -30,15 +30,11 @@ export class RestaurantGridComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-    let self = this;
-  }
-
   constructor(private commerceServ: CommerceService,
     private router: Router,
     private sharedServ: SharedService,
     private locationSvc: LocationService) {
-    let self = this;
+    const self = this;
 
     // self.center = JSON.parse(localStorage.getItem('location-' + APP));
 
@@ -47,7 +43,7 @@ export class RestaurantGridComponent implements OnInit {
       if ('OnSearch' === msg.name) {
         if (msg.query) {
           self.filter = msg.query;
-          let query = { ...self.filter, ...self.query };
+          const query = { ...self.filter, ...self.query };
           self.doSearchRestaurants(query);
         } else {
           self.doSearchRestaurants(self.query.keyword);

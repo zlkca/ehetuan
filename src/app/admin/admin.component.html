@@ -14,14 +14,14 @@
           <ngb-tab title="Restaurant" *ngIf="restaurant">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
-              <restaurant-form [restaurant]="restaurant"></restaurant-form>
+              <app-restaurant-form [restaurant]="restaurant"></app-restaurant-form>
             </ng-template>
           </ngb-tab>
 
           <ngb-tab title="Products" *ngIf="products">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
-              <manage-product-list [products]="products"></manage-product-list>
+              <app-manage-product-list [products]="products"></app-manage-product-list>
             </ng-template>
           </ngb-tab>
 
@@ -36,7 +36,7 @@
           <ngb-tab title="Restaurants" *ngIf="restaurants">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
-              <manage-restaurant-list [restaurants]="restaurants"></manage-restaurant-list>
+              <app-manage-restaurant-list [restaurants]="restaurants"></app-manage-restaurant-list>
             </ng-template>
           </ngb-tab>
 

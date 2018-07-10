@@ -8,43 +8,43 @@ import { ICart, CartActions } from '../../commerce/commerce.actions';
 
 
 const ADD_IMAGE = 'add_photo.png';
-const MEDIA_URL:string = environment.MEDIA_URL;
+const MEDIA_URL: string = environment.MEDIA_URL;
 
 @Component({
-  selector: 'manage-product-list',
-  templateUrl: './manage-product-list.component.html',
-  styleUrls: ['./manage-product-list.component.scss']
+    selector: 'app-manage-product-list',
+    templateUrl: './manage-product-list.component.html',
+    styleUrls: ['./manage-product-list.component.scss']
 })
 export class ManageProductListComponent implements OnInit {
-    productList:Product[] = [];
-    subscription:any;
-    cart:any;
+    productList: Product[] = [];
+    subscription: any;
+    cart: any;
 
     @Input() products: Product[];
     @Input() mode: string;
 
-    ngOnInit(){
-        
+    ngOnInit() {
+
     }
 
     constructor(
-        private router:Router,
-        private ngRedux:NgRedux<IAppState>) {
+        private router: Router,
+        private ngRedux: NgRedux<IAppState>) {
 
     }
 
-    onClick(p){
-        if(this.mode == 'edit'){
+    onClick(p) {
+        if (this.mode === 'edit') {
 
-        }else{
-            this.router.navigate(["product/"+p.id]);
+        } else {
+            this.router.navigate(["product/" + p.id]);
         }
     }
 
-    getImageSrc(p){
-        if(p.fpath){
+    getImageSrc(p) {
+        if (p.fpath) {
             return MEDIA_URL + p.fpath;
-        }else{
+        } else {
             return MEDIA_URL + ADD_IMAGE;
         }
     }
