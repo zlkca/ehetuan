@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
 import { Product } from '../../commerce/commerce';
 import { environment } from '../../../environments/environment';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
 import { ICart, CartActions } from '../../commerce/commerce.actions';
+import { CommerceService } from '../../commerce/commerce.service';
 
 
 const ADD_IMAGE = 'add_photo.png';
@@ -16,29 +18,26 @@ const MEDIA_URL: string = environment.MEDIA_URL;
     styleUrls: ['./manage-product-list.component.scss']
 })
 export class ManageProductListComponent implements OnInit {
-    productList: Product[] = [];
     subscription: any;
-    cart: any;
-
-    @Input() products: Product[];
-    @Input() mode: string;
-
+    @Input() products;
     ngOnInit() {
 
     }
 
     constructor(
-        private router: Router,
-        private ngRedux: NgRedux<IAppState>) {
+        private route: ActivatedRoute,
+        private commerceSvc: CommerceService,
+        private rx: NgRedux<IAppState>) {
+        const self = this;
 
     }
 
     onClick(p) {
-        if (this.mode === 'edit') {
+        // if (this.mode === 'edit') {
 
-        } else {
-            this.router.navigate(["product/" + p.id]);
-        }
+        // } else {
+        //     this.router.navigate(["product/" + p.id]);
+        // }
     }
 
     getImageSrc(p) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../account/auth.service';
@@ -16,95 +16,95 @@ import { IAccount } from '../account/account.actions';
 import { Product } from '../commerce/commerce';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+    selector: 'app-admin',
+    templateUrl: './admin.component.html',
+    styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
 
-	isAdminLogin:boolean = true;
-  subscrAccount;
-  account;
+    isAdminLogin = true;
+    subscrAccount;
+    account;
 
-  // for business center
-  orders = null;
-  restaurant = null;
-  products = null;
+    // for business center
+    orders = null;
+    restaurant = null;
+    products: Product[] = null;
 
-  // for super admin
-  businessUsers:User[]= null;
-  restaurants:Restaurant[] = null;
-  
+    // for super admin
+    businessUsers: User[] = null;
+    restaurants: Restaurant[] = null;
 
-  constructor(private router:Router, 
-    private sharedServ:SharedService, 
-    private accountSvc:AccountService,
-    private commerceSvc:CommerceService, 
-    private authServ: AuthService,
-    private rx:NgRedux<IAccount>) {
-    
-    let self = this;
-    this.subscrAccount = this.rx.select<IAccount>('account').subscribe(account => {
-      
-      if(account.type==='business'){
-          let restaurant_id = account? account.restaurant_id:null;
-          
-          if(restaurant_id){
-            self.commerceSvc.getOrderList('?restaurant_id=' + restaurant_id).subscribe(r=>{
-              self.orders = r;
-            });
 
-            self.commerceSvc.getProductList("?restaurant_id="+restaurant_id).subscribe(
-              (ps:Product[]) => {
-                  self.products = ps;
-              });  
-          }          
-          
-          self.commerceSvc.getRestaurantList('?admin_id=' + account.id).subscribe(r=>{
-            if(r){
-              self.restaurant = r[0];
+    constructor(private router: Router,
+        private sharedServ: SharedService,
+        private accountSvc: AccountService,
+        private commerceSvc: CommerceService,
+        private authServ: AuthService,
+        private rx: NgRedux<IAccount>) {
+
+        const self = this;
+        this.subscrAccount = this.rx.select<IAccount>('account').subscribe(account => {
+
+            if (account.type === 'business') {
+                const restaurant_id = account ? account.restaurant_id : null;
+
+                if (restaurant_id) {
+                    self.commerceSvc.getOrderList('?restaurant_id=' + restaurant_id).subscribe(
+                        r => {
+                            self.orders = r;
+                        });
+                    self.commerceSvc.getProductList('?restaurant_id=' + restaurant_id).subscribe(
+                        (ps: Product[]) => {
+                            self.products = ps;
+                        });
+                }
+
+                self.commerceSvc.getRestaurantList('?admin_id=' + account.id).subscribe(r => {
+                    if (r) {
+                        self.restaurant = r[0];
+                    }
+                });
+
+
+            } else if (account.type === 'super') {
+                self.accountSvc.getUserList('?type=business').subscribe(users => {
+                    self.businessUsers = users;
+                });
+
+                self.commerceSvc.getRestaurantList().subscribe((ps: Restaurant[]) => {
+                    self.restaurants = ps;
+                });
             }
-          });
-          
 
-      }else if(account.type==='super'){
-        self.accountSvc.getUserList('?type=business').subscribe(users=> {
-          self.businessUsers = users;
         });
 
-        self.commerceSvc.getRestaurantList().subscribe((ps: Restaurant[]) => {
-          self.restaurants = ps;
-        });
-      }
+    }
 
-    });
-      
-  }
+    ngOnInit() {
+        const self = this;
 
-  ngOnInit() {
-    let self = this;
+        // self.authServ.hasLoggedIn().subscribe(
+        //   (r:boolean)=>{
+        //     self.isLogin = r? true : false;
 
-    // self.authServ.hasLoggedIn().subscribe(
-    //   (r:boolean)=>{
-    //     self.isLogin = r? true : false;
+        //     if(self.isLogin){
+        //       self.sharedServ.emitMsg({name:'OnUpdateHeader'});
+        //       self.toPage("admin/users");
+        //     }else{
+        //       self.toPage("admin/login");
+        //     }
+        //   },(err:any)=>{
+        //     self.toPage("admin/login");
+        //   });
+    }
 
-    //     if(self.isLogin){
-    //       self.sharedServ.emitMsg({name:'OnUpdateHeader'});
-    //       self.toPage("admin/users");
-    //     }else{
-    //       self.toPage("admin/login");
-    //     }
-    //   },(err:any)=>{
-    //     self.toPage("admin/login");
-    //   });
-  }
-  
-  ngOnDestroy(){
-    this.subscrAccount.unsubscribe();
-  }
+    ngOnDestroy() {
+        this.subscrAccount.unsubscribe();
+    }
 
-  toPage(url:string){
-    this.router.navigate([url]);
-  }
+    toPage(url: string) {
+        this.router.navigate([url]);
+    }
 }
 

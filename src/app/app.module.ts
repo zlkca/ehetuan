@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { RouterModule, Routes }  from '@angular/router';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -38,12 +38,12 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { ProductComponent } from './main/product/product.component';
 
 
-import { CoreModule }    from './core/core.module';
+import { CoreModule } from './core/core.module';
 
 // import { MainModule } from './main/main.module';
 // import { ProductsModule } from './products/products.module';
 import { AccountModule } from './account/account.module';
-import { MainModule }    from './main/main.module';
+import { MainModule } from './main/main.module';
 import { AdminModule } from './admin/admin.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
 import { ProductModule } from './product/product.module';
@@ -52,6 +52,7 @@ import { SharedModule } from './shared/shared.module';
 import { CommerceModule } from './commerce/commerce.module';
 
 import { AdminComponent } from './admin/admin.component';
+import { ManageProductListPageComponent } from './admin/manage-product-list-page/manage-product-list-page.component';
 import { LayoutComponent } from './main/layout/layout.component';
 
 import { CategoryListComponent } from './commerce/category-list/category-list.component';
@@ -59,89 +60,89 @@ import { CategoryFormComponent } from './commerce/category-form/category-form.co
 import { MultiProductFormComponent } from './commerce/multi-product-form/multi-product-form.component';
 
 const appRoutes: Routes = [
-  // { path: 'login', component:LoginComponent },
-  
-  // { path: 'contact-us', component:ContactComponent },
-  // { path: 'product-list', component:ProductListComponent },
-  // { path: 'product/:id', component:ProductDetailComponent },
-  // { path: 'shopping-cart', component:ShoppingCartComponent },
-  
-  // { path: 'profiles', component:ProfileComponent },
-  // { path: 'profile-edit', component:ProfileEditComponent },
-  // { path: 'change-password', component:ChangePasswordComponent },
-  // { path: 'payment', component:PaymentComponent },
-  // { path: '', component:HomeComponent }
-  //{ path: 'admin/login', component:AdminLoginComponent },
+    // { path: 'login', component:LoginComponent },
 
-  // { path: '', component:LayoutComponent,
-  //     children:[
-  //       { path: 'products', component:ProductListComponent },
-  //       //{ path: 'product/:id', component:ProductComponent },
-  //       { path: 'login', component:LoginComponent },
-  //       { path: 'home', component:HomeComponent }
-  //     ]
-  // } 
+    // { path: 'contact-us', component:ContactComponent },
+    // { path: 'product-list', component:ProductListComponent },
+    // { path: 'product/:id', component:ProductDetailComponent },
+    // { path: 'shopping-cart', component:ShoppingCartComponent },
 
-      { path: 'admin', component:AdminComponent },
-      // { path: 'admin/restaurants', component:RestaurantListComponent },
-      { path: 'admin/restaurant/:id', component:EditRestaurantComponent },
-      { path: 'admin/restaurant', component:RestaurantFormComponent },
-      { path: 'admin/categories', component:CategoryListComponent },
-      { path: 'admin/category/:id', component:CategoryFormComponent },
-      { path: 'admin/category', component:CategoryFormComponent },
-      { path: 'admin/products', component:ProductListComponent},
-      { path: 'admin/product/:id', component:ProductFormComponent },
-      { path: 'admin/edit-products', component:MultiProductFormComponent},
-      { path: 'admin/product', component:ProductFormComponent},
-      // { path: 'business-center/orders', component:OrderListComponent},
-      // { path: 'business-center/restaurants', component:RestaurantFormComponent},
-      // { path: 'business-center/products', component:ProductListComponent},
+    // { path: 'profiles', component:ProfileComponent },
+    // { path: 'profile-edit', component:ProfileEditComponent },
+    // { path: 'change-password', component:ChangePasswordComponent },
+    // { path: 'payment', component:PaymentComponent },
+    // { path: '', component:HomeComponent }
+    //{ path: 'admin/login', component:AdminLoginComponent },
+
+    // { path: '', component:LayoutComponent,
+    //     children:[
+    //       { path: 'products', component:ProductListComponent },
+    //       //{ path: 'product/:id', component:ProductComponent },
+    //       { path: 'login', component:LoginComponent },
+    //       { path: 'home', component:HomeComponent }
+    //     ]
+    // } 
+
+    { path: 'admin', component: AdminComponent },
+    // { path: 'admin/restaurants', component:RestaurantListComponent },
+    { path: 'admin/restaurant/:id', component: EditRestaurantComponent },
+    { path: 'admin/restaurant', component: RestaurantFormComponent },
+    { path: 'admin/categories', component: CategoryListComponent },
+    { path: 'admin/category/:id', component: CategoryFormComponent },
+    { path: 'admin/category', component: CategoryFormComponent },
+    { path: 'admin/products', component: ManageProductListPageComponent },
+    { path: 'admin/product/:id', component: ProductFormComponent },
+    { path: 'admin/edit-products', component: MultiProductFormComponent },
+    { path: 'admin/product', component: ProductFormComponent },
+    // { path: 'business-center/orders', component:OrderListComponent},
+    // { path: 'business-center/restaurants', component:RestaurantFormComponent},
+    // { path: 'business-center/products', component:ProductListComponent},
 
 
-      { path: 'restaurants', component:RestaurantGridComponent },
-      { path: 'restaurant-detail/:id', component:RestaurantDetailComponent },
-      { path: 'products', component:ProductListComponent },
-      { path: 'product/:id', component:ProductComponent },
-      { path: 'forget-password', component:ForgetPasswordComponent },
-      { path: 'login', component:LoginComponent },
-      { path: 'institution-login', component:InstitutionLoginComponent },
-      { path: 'signup', component:SignupComponent },
-      { path: 'institution-signup', component:InstitutionSignupComponent },
-      { path: 'home', component:HomeComponent }
+    { path: 'restaurants', component: RestaurantGridComponent },
+    { path: 'restaurant-detail/:id', component: RestaurantDetailComponent },
+    { path: 'products', component: ProductListComponent },
+    { path: 'product/:id', component: ProductComponent },
+    { path: 'forget-password', component: ForgetPasswordComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'institution-login', component: InstitutionLoginComponent },
+    { path: 'signup', component: SignupComponent },
+    { path: 'institution-signup', component: InstitutionSignupComponent },
+    { path: 'home', component: HomeComponent }
 ];
 
 
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    CoreModule,
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot(
-      appRoutes,
-      // { enableTracing: true } // <-- debugging purposes only
-    ),
-    NgbModule.forRoot(),
-    NgReduxModule,
-    SharedModule,
-    AccountModule,
-    CommerceModule,
-    MainModule,
-    AdminModule,
-    RestaurantModule,
-    ProductModule
-  ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  //providers: [MsgService],
-  bootstrap: [AppComponent],
-  
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+        CoreModule,
+        HttpClientModule,
+        FormsModule,
+        RouterModule.forRoot(
+            appRoutes,
+            // { enableTracing: true } // <-- debugging purposes only
+        ),
+        NgbModule.forRoot(),
+        NgReduxModule,
+        SharedModule,
+        AccountModule,
+        CommerceModule,
+        MainModule,
+        AdminModule,
+        RestaurantModule,
+        ProductModule
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    //providers: [MsgService],
+    bootstrap: [AppComponent],
+
 })
-export class AppModule { 
-  constructor(ngRedux:NgRedux<any>){
-    ngRedux.configureStore(rootReducer, INITIAL_STATE);
-  }
+export class AppModule {
+    constructor(ngRedux: NgRedux<any>) {
+        ngRedux.configureStore(rootReducer, INITIAL_STATE);
+    }
 }

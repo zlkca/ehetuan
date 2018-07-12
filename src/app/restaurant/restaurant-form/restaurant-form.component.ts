@@ -46,7 +46,7 @@ export class RestaurantFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        let self = this;
+        const self = this;
 
         this.form.patchValue(this.restaurant);
         //localStorage.setItem('restaurant_info-' + APP, JSON.stringify(self.restaurant));

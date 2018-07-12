@@ -40,11 +40,11 @@ export class RestaurantListComponent implements OnInit {
     }
 
     change(r) {
-        this.router.navigate(["admin/restaurant/" + r.id]);
+        this.router.navigate(['admin/restaurant/' + r.id]);
     }
 
     add() {
-        this.router.navigate(["admin/restaurant"]);
+        this.router.navigate(['admin/restaurant']);
     }
 
     delete(r) {
