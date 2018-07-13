@@ -21,8 +21,8 @@ export class ManageProductListPageComponent implements OnInit {
         private rx: NgRedux<IAppState>) {
         const self = this;
 
-        this.route.params.subscribe(params => {
-            const restaurant_id = params['id'];
+        this.route.queryParams.subscribe(params => {
+            const restaurant_id = params['restaurant_id'];
             self.commerceSvc.getProductList('?restaurant_id=' + restaurant_id).subscribe(
                 (ps: Product[]) => {
                     self.products = ps;

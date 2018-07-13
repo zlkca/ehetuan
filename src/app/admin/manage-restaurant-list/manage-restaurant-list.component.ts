@@ -39,22 +39,22 @@ export class ManageRestaurantListComponent implements OnInit {
     }
 
     change(r) {
-        this.router.navigate(["admin/restaurant/" + r.id]);
+        this.router.navigate(['admin/restaurant/' + r.id]);
     }
 
     add() {
-        this.router.navigate(["admin/restaurant"]);
+        this.router.navigate(['admin/restaurant']);
     }
 
     delete(restaurant) {
-        let self = this;
+        const self = this;
         // this.commerceSvc.rmRestaurant(r.id).subscribe(
         //     (r:Restaurant[]) => {
         //         self.restaurantList = r;
         //         if(r.length){
         //             //
         //         }else{
-        //             self.router.navigate(["admin/restaurant"]);
+        //             self.router.navigate(['admin/restaurant']);
         //         }
         //     },
         //     (err)=>{
@@ -64,10 +64,10 @@ export class ManageRestaurantListComponent implements OnInit {
     }
 
     viewProducts(restaurant) {
-        this.router.navigate(["admin/products"]);
+        this.router.navigate(['admin/products'], { queryParams: { restaurant_id: restaurant.id } });
     }
 
     editMultiProducts(restaurant) {
-        this.router.navigate(["admin/edit-products"]);
+        this.router.navigate(['admin/edit-products']);
     }
 }
