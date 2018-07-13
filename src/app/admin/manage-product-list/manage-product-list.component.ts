@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Product } from '../../commerce/commerce';
 import { environment } from '../../../environments/environment';
@@ -26,6 +26,7 @@ export class ManageProductListComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private commerceSvc: CommerceService,
         private rx: NgRedux<IAppState>) {
         const self = this;
@@ -38,6 +39,10 @@ export class ManageProductListComponent implements OnInit {
         // } else {
         //     this.router.navigate(["product/" + p.id]);
         // }
+    }
+
+    change(p: Product) {
+        this.router.navigate(['admin/product/' + p.id]);
     }
 
     getImageSrc(p) {

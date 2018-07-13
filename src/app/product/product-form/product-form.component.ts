@@ -7,36 +7,37 @@ import { Product, Category, Restaurant, Color, Picture } from '../../commerce/co
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
 @Component({
-  selector: 'product-form',
-  templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.scss']
+    selector: 'app-product-form',
+    templateUrl: './product-form.component.html',
+    styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
-    product:Product = new Product();
-    categoryList:Category[] = [];
-    restaurantList:Restaurant[] = [];
+    categoryList: Category[] = [];
+    restaurantList: Restaurant[] = [];
     // colorList:Color[] = [];
-    id:string = '';
-    pictures:Picture[] = [];
+    id: string = '';
+    pictures: Picture[] = [];
+
+    @Input() product;
 
     @ViewChild(ImageUploaderComponent)
-    uploader:any;
+    uploader: any;
 
-    form:FormGroup = new FormGroup({
+    form: FormGroup = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        description: new FormControl('',[Validators.maxLength(980)]),
+        description: new FormControl('', [Validators.maxLength(980)]),
         // dimension: new FormControl(),
         price: new FormControl(),
         // categories: new FormArray([]),
-        restaurant_id:new FormControl(),
+        restaurant_id: new FormControl(),
         // color_id:new FormControl()
     });
 
-    get name(){
+    get name() {
         return this.form.get('name');
     }
 
-    get description(){
+    get description() {
         return this.form.get('description');
     }
 
@@ -44,15 +45,15 @@ export class ProductFormComponent implements OnInit {
     //     return this.form.get('dimension');
     // }
 
-    get price(){
+    get price() {
         return this.form.get('price');
     }
 
-    get categories(){
+    get categories() {
         return this.form.get('categories') as FormArray;
     }
 
-    get restaurant_id(){
+    get restaurant_id() {
         return this.form.get('restaurant_id');
     }
 
@@ -60,44 +61,36 @@ export class ProductFormComponent implements OnInit {
     //     return this.form.get('color_id');
     // }
 
-    constructor(private commerceServ:CommerceService, private route: ActivatedRoute, private router:Router){}
+    constructor(private commerceServ: CommerceService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
-        let self = this;
+        const self = this;
 
-        self.commerceServ.getRestaurantList().subscribe(r=>{
+        self.commerceServ.getRestaurantList().subscribe(r => {
             self.restaurantList = r;
-        })
-
-        self.route.params.subscribe((params:any)=>{
-            this.commerceServ.getProduct(params.id).subscribe(
-                (p:Product) => {
-                    self.id = p.id;
-                    self.pictures = p.pictures;
-                    self.form.patchValue(p);
-                    self.form.patchValue({restaurant_id:p.restaurant.id});
-                    // self.commerceServ.getCategoryList().subscribe(catList=>{
-                    //     self.categoryList = catList;
-                    //     for(let cat of catList){
-                    //         let c = p.categories.find(x=> x.id==cat.id );
-                    //         if(c){
-                    //             self.categories.push(new FormControl(true));
-                    //         }else{
-                    //             self.categories.push(new FormControl(false));
-                    //         } 
-                    //         //self.categories.push(new FormControl(s.id));      
-                    //     }
-                    // })
-
-
-                },
-                (err:any) => {
-                    // self.product = new Product();
-                });
         });
+
+        const p: Product = this.product;
+
+        self.id = p.id;
+        self.pictures = p.pictures;
+        self.form.patchValue(p);
+        self.form.patchValue({ restaurant_id: p.restaurant.id });
+        // self.commerceServ.getCategoryList().subscribe(catList=>{
+        //     self.categoryList = catList;
+        //     for(let cat of catList){
+        //         let c = p.categories.find(x=> x.id==cat.id );
+        //         if(c){
+        //             self.categories.push(new FormControl(true));
+        //         }else{
+        //             self.categories.push(new FormControl(false));
+        //         } 
+        //         //self.categories.push(new FormControl(s.id));
+        //     }
+        // })
     }
 
-    onToggleCategory(c:FormControl){
+    onToggleCategory(c: FormControl) {
         // let v = c.value;
         // if(c.value.checked){
         //     v.checked = false;
@@ -107,24 +100,24 @@ export class ProductFormComponent implements OnInit {
         // c.patchValue(v);
     }
 
-    onSelectRestaurant(id:string){
+    onSelectRestaurant(id: string) {
         //let obj = this.restaurantList.find( x => { return x.id == id });
         //this.restaurant.setValue(obj);
         // this.restaurant.patchValue(m);
         //this.restaurant.id;
     }
 
-    onSelectColor(id:string){
+    onSelectColor(id: string) {
         // let obj = this.colorList.find(x => {return x.id == id});
         // this.color.patchValue(obj);
         //this.color.patchValue({'id':id});
     }
 
-    getCheckedCategories(){
+    getCheckedCategories() {
         let cs = [];
-        for(let i=0; i<this.categoryList.length; i++){
+        for (let i = 0; i < this.categoryList.length; i++) {
             let c = this.categoryList[i];
-            if(this.categories.get(i.toString()).value){
+            if (this.categories.get(i.toString()).value) {
                 cs.push(c);
             }
         }
@@ -132,24 +125,25 @@ export class ProductFormComponent implements OnInit {
     }
 
     save() {
-        let self = this;
-        let newV = {...this.form.value, 
-            id: self.id, 
-            categories: [{id:1}],//self.getCheckedCategories(),
-            restaurant: {id:self.restaurant_id.value},
+        const self = this;
+        const newV = {
+            ...this.form.value,
+            id: self.id,
+            categories: [{ id: 1 }],//self.getCheckedCategories(),
+            restaurant: { id: self.restaurant_id.value },
             // color:{id:self.color_id.value},
             pictures: self.uploader.data
         };
 
-        let c = new Product(newV);
-        this.commerceServ.saveProduct(c).subscribe( (r:any) => {
+        const c = new Product(newV);
+        this.commerceServ.saveProduct(c).subscribe((r: any) => {
             self.router.navigate(['admin/products']);
         });
     }
 
     // ngOnInit() {
     //     let self = this;
-        
+
     //     self.commerceServ.getCategoryList().subscribe(
     //         (r:Category[]) => {
     //             self.categoryList = r;
@@ -184,7 +178,7 @@ export class ProductFormComponent implements OnInit {
     //             }
 
     //         },(err)=>{
-              
+
     //         });
 
 

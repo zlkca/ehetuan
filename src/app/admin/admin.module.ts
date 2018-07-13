@@ -7,6 +7,8 @@ import { AccountModule } from '../account/account.module';
 import { ProductModule } from '../product/product.module';
 import { AdminComponent } from './admin.component';
 import { ManageProductListComponent } from './manage-product-list/manage-product-list.component';
+import { ManageProductFormPageComponent } from './manage-product-form-page/manage-product-form-page.component';
+
 import { ManageRestaurantListComponent } from './manage-restaurant-list/manage-restaurant-list.component';
 import { ManageProductListPageComponent } from './manage-product-list-page/manage-product-list-page.component';
 import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
@@ -23,6 +25,7 @@ import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.compo
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     declarations: [AdminComponent, ManageProductListComponent, ManageRestaurantListComponent,
         ManageProductListPageComponent,
+        ManageProductFormPageComponent,
         EditRestaurantComponent],
     exports: [AdminComponent, EditRestaurantComponent]
 })

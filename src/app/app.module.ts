@@ -53,6 +53,8 @@ import { CommerceModule } from './commerce/commerce.module';
 
 import { AdminComponent } from './admin/admin.component';
 import { ManageProductListPageComponent } from './admin/manage-product-list-page/manage-product-list-page.component';
+import { ManageProductFormPageComponent } from './admin/manage-product-form-page/manage-product-form-page.component';
+
 import { LayoutComponent } from './main/layout/layout.component';
 
 import { CategoryListComponent } from './commerce/category-list/category-list.component';
@@ -91,7 +93,7 @@ const appRoutes: Routes = [
     { path: 'admin/category/:id', component: CategoryFormComponent },
     { path: 'admin/category', component: CategoryFormComponent },
     { path: 'admin/products', component: ManageProductListPageComponent },
-    { path: 'admin/product/:id', component: ProductFormComponent },
+    { path: 'admin/product/:id', component: ManageProductFormPageComponent },
     { path: 'admin/edit-products', component: MultiProductFormComponent },
     { path: 'admin/product', component: ProductFormComponent },
     // { path: 'business-center/orders', component:OrderListComponent},
