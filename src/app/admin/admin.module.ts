@@ -9,6 +9,7 @@ import { AdminComponent } from './admin.component';
 import { ManageProductListComponent } from './manage-product-list/manage-product-list.component';
 import { ManageProductFormPageComponent } from './manage-product-form-page/manage-product-form-page.component';
 
+import { ManageBusinessUserListComponent } from './manage-business-user-list/manage-business-user-list.component';
 import { ManageRestaurantListComponent } from './manage-restaurant-list/manage-restaurant-list.component';
 import { ManageProductListPageComponent } from './manage-product-list-page/manage-product-list-page.component';
 import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.component';
@@ -23,7 +24,10 @@ import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.compo
         CommerceModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    declarations: [AdminComponent, ManageProductListComponent, ManageRestaurantListComponent,
+    declarations: [AdminComponent,
+        ManageBusinessUserListComponent,
+        ManageProductListComponent,
+        ManageRestaurantListComponent,
         ManageProductListPageComponent,
         ManageProductFormPageComponent,
         EditRestaurantComponent],

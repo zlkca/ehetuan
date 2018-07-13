@@ -68,15 +68,10 @@ export class AdminComponent implements OnInit, OnDestroy {
 
 
             } else if (account.type === 'super') {
-                self.accountSvc.getUserList('?type=business').subscribe(users => {
-                    self.businessUsers = users;
-                });
-
                 self.commerceSvc.getRestaurantList().subscribe((ps: Restaurant[]) => {
                     self.restaurants = ps;
                 });
             }
-
         });
 
     }

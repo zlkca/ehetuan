@@ -25,15 +25,15 @@
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab title="Business Users" *ngIf="businessUsers">
+          <ngb-tab title="Business Users">
             <ng-template ngbTabContent>
               <!-- <app-order-list [orders]="orders"></app-order-list> -->
-                <user-list [users]="businessUsers"></user-list>
+                <app-manage-business-user-list></app-manage-business-user-list>
                 <!-- <multi-user-form [users]="businessUsers"></multi-user-form> -->
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab title="Restaurants" *ngIf="restaurants">
+          <ngb-tab title="Restaurants">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
               <app-manage-restaurant-list [restaurants]="restaurants"></app-manage-restaurant-list>
