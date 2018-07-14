@@ -3,7 +3,7 @@
 
     <div class="container">
         <ngb-tabset>
-          <ngb-tab title="Orders" *ngIf="orders">
+          <ngb-tab title="Orders" *ngIf="account && account.type === 'business' && orders">
             <ng-template ngbTabContent>
               <!-- <app-order-list [orders]="orders"></app-order-list> -->
                 <order-list [orders]="orders"></order-list>
@@ -11,21 +11,21 @@
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab title="Restaurant" *ngIf="restaurant">
+          <ngb-tab title="Restaurant" *ngIf="account && account.type === 'business' && restaurant">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
               <app-restaurant-form [restaurant]="restaurant"></app-restaurant-form>
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab title="Products" *ngIf="products">
+          <ngb-tab title="Products" *ngIf="account && account.type === 'business' && products">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
               <app-manage-product-list [products]="products"></app-manage-product-list>
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab title="Business Users">
+          <ngb-tab title="Business Users" *ngIf="account && account.type === 'super'">
             <ng-template ngbTabContent>
               <!-- <app-order-list [orders]="orders"></app-order-list> -->
                 <app-manage-business-user-list></app-manage-business-user-list>
@@ -33,7 +33,7 @@
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab title="Restaurants">
+          <ngb-tab title="Restaurants" *ngIf="account && account.type === 'super'">
             <ng-template ngbTabContent>
               <!-- <multi-restaurant-form [restaurants]="restaurants"></multi-restaurant-form> -->
               <app-manage-restaurant-list [restaurants]="restaurants"></app-manage-restaurant-list>

@@ -45,6 +45,8 @@ export class AdminComponent implements OnInit, OnDestroy {
 
         const self = this;
         this.subscrAccount = this.rx.select<IAccount>('account').subscribe(account => {
+            
+            self.account = account;
 
             if (account.type === 'business') {
                 const restaurant_id = account ? account.restaurant_id : null;
