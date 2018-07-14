@@ -10,7 +10,6 @@ import { CategoryFormComponent } from './category-form/category-form.component';
 
 import { ProductFilterComponent } from './product-filter/product-filter.component';
 
-import { CartComponent } from './cart/cart.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { SharedService } from '../shared/shared.service';
 
@@ -55,12 +54,10 @@ import { SharedModule } from '../shared/shared.module';
       multi: true
     }],
    exports:[CategoryListComponent,CategoryFormComponent,
-     ProductFilterComponent, 
-      CartComponent, OrderListComponent, 
+     ProductFilterComponent, OrderListComponent,
      MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent],
    declarations:[CategoryListComponent,CategoryFormComponent,
-     ProductFilterComponent, 
-      CartComponent, OrderListComponent,
+     ProductFilterComponent, OrderListComponent,
      MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent]
 })
 export class CommerceModule { }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ILocation } from './location.model';
-import { NgRedux } from '../../../../node_modules/@angular-redux/store';
+import { NgRedux } from '@angular-redux/store';
 import { environment } from '../../../environments/environment';
 import { LocationActions } from './location.actions';
 import { HttpClient } from '@angular/common/http';

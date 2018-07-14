@@ -6,8 +6,8 @@ import { environment } from '../../../environments/environment';
 import { NgRedux } from '@angular-redux/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IAppState } from '../../store';
-import { ICart, CartActions } from '../../commerce/commerce.actions';
 import { ProductComponent } from '../../main/product/product.component';
+import { CartActions } from '../../order/order.actions';
 
 const ADD_IMAGE = 'add_photo.png';
 

@@ -9,6 +9,7 @@ import { RestaurantFormComponent } from './restaurant-form/restaurant-form.compo
 import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.component';
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
+import { OrderModule } from '../order/order.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail
     FormsModule,
     ReactiveFormsModule,
     CommerceModule,
-    ProductModule
+    ProductModule,
+    OrderModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   declarations: [RestaurantFormComponent, RestaurantGridComponent, RestaurantListComponent, RestaurantDetailComponent],
