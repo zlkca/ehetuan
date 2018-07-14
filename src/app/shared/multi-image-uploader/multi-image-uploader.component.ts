@@ -9,39 +9,39 @@ const FRAME_H = 240;
 declare var $;
 
 @Component({
-  selector: 'multi-image-uploader',
-  templateUrl: './multi-image-uploader.component.html',
-  styleUrls: ['./multi-image-uploader.component.scss']
+    selector: 'app-multi-image-uploader',
+    templateUrl: './multi-image-uploader.component.html',
+    styleUrls: ['./multi-image-uploader.component.scss']
 })
 export class MultiImageUploaderComponent implements OnInit {
 
-	@Input() data : any[];
-	_data:any;
-  currPic:any = {index:0, data:'', file:''};
+    @Input() pictures: any[];
+    _data: any;
+    currPic: any = { index: 0, data: '', file: '' };
 
-	MEDIA_ROOT = environment.MEDIA_URL;
+    MEDIA_ROOT = environment.MEDIA_URL;
 
-	constructor(private sharedServ:SharedService) { }
+    constructor(private sharedServ: SharedService) { }
 
-	ngOnInit(){
+    ngOnInit() {
 
-	}
-
-	ngOnChanges() {
-		let ret = this.sharedServ.resizeImage(FRAME_W,FRAME_H,100, 200);
-		if(!this.data || this.data.length == 0){
-		  this.data[0] = {index:0, name:"", image:{index:0, data:'add_photo.png', file:''}};
-		}else{
-      let t = this.data[0].image;
-      if(!t.data && !t.file){
-        this.data[0] = {index:0, name:"", image:{index:0, data:'add_photo.png', file:''}};
-      }
     }
-	}
 
-  // ngOnInit() {
+    ngOnChanges() {
+        let ret = this.sharedServ.resizeImage(FRAME_W, FRAME_H, 100, 200);
+        if (!this.pictures || this.pictures.length == 0) {
+            this.pictures[0] = { index: 0, name: "", image: { index: 0, data: 'add_photo.png', file: '' } };
+        } else {
+            let t = this.pictures[0].image;
+            if (!t.data && !t.file) {
+                this.pictures[0] = { index: 0, name: "", image: { index: 0, data: 'add_photo.png', file: '' } };
+            }
+        }
+    }
+
+    // ngOnInit() {
     //     let self = this;
-        
+
     //     self.commerceServ.getCategoryList().subscribe(
     //         (r:Category[]) => {
     //             self.categoryList = r;
@@ -76,7 +76,7 @@ export class MultiImageUploaderComponent implements OnInit {
     //             }
 
     //         },(err)=>{
-              
+
     //         });
 
 
@@ -98,45 +98,45 @@ export class MultiImageUploaderComponent implements OnInit {
     //             self.router.navigate(["admin/wechatgroups"]);
     //         });
     // }
-    getImageSrc(image:any){
-      if(image.file){
-        return image.data;
-      }else{
-        return this.MEDIA_ROOT + image.data
-      }
+    getImageSrc(image: any) {
+        if (image.file) {
+            return image.data;
+        } else {
+            return this.MEDIA_ROOT + image.data
+        }
     }
 
-    onLoadImage(i:number){
-      $('[name="image0"]').click();
+    onLoadImage(i: number) {
+        $('[name="image0"]').click();
     }
 
-    onDeleteImage(i:number){
-        let pic = this.data[i];
+    onDeleteImage(i: number) {
+        const pic = this.pictures[i];
         pic.image.data = '';
         pic.image.file = '';
-        this.data[i] = pic;
+        this.pictures[i] = pic;
     }
 
-    onImageChange(event:any, i:number){
-        let self = this;
-        let reader = new FileReader();
-        if(event.target.files && event.target.files.length > 0) {
-          let file = event.target.files[0];
-          reader.readAsDataURL(file);
-          reader.onload = () => {
-              // if(i >= self.data.length){
-              self.data[0] = {index:0, name:"", image:{data: reader.result, file: event.target.files[0]}};
-              // }else{
-              //   self.data[0].image = {data: reader.result, file: event.target.files[0]};
-              // }
-              //.split(',')[1];
-              //self.wechatgroup.logo = event.target.files[0];
-          //   this.form.get('avatar').setValue({
-          //     filename: file.name,
-          //     filetype: file.type,
-          //     value: reader.result.split(',')[1]
-          //   })
-          }
+    onImageChange(event: any, i: number) {
+        const self = this;
+        const reader = new FileReader();
+        if (event.target.files && event.target.files.length > 0) {
+            const file = event.target.files[0];
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                // if(i >= self.data.length){
+                self.pictures[0] = { index: 0, name: "", image: { data: reader.result, file: event.target.files[0] } };
+                // }else{
+                //   self.data[0].image = {data: reader.result, file: event.target.files[0]};
+                // }
+                //.split(',')[1];
+                //self.wechatgroup.logo = event.target.files[0];
+                //   this.form.get('avatar').setValue({
+                //     filename: file.name,
+                //     filetype: file.type,
+                //     value: reader.result.split(',')[1]
+                //   })
+            }
         }
     }
 

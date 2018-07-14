@@ -92,6 +92,7 @@ const appRoutes: Routes = [
     { path: 'admin/categories', component: CategoryListComponent },
     { path: 'admin/category/:id', component: CategoryFormComponent },
     { path: 'admin/category', component: CategoryFormComponent },
+    { path: 'admin/product', component: ManageProductFormPageComponent },
     { path: 'admin/products', component: ManageProductListPageComponent },
     { path: 'admin/products/:id', component: ManageProductFormPageComponent },
     { path: 'admin/edit-products', component: MultiProductFormComponent },

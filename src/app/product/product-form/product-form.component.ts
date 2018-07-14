@@ -4,7 +4,7 @@ import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { CommerceService } from '../../commerce/commerce.service';
 import { Product, Category, Restaurant, Color, Picture } from '../../commerce/commerce';
-import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
+import { MultiImageUploaderComponent } from '../../shared/multi-image-uploader/multi-image-uploader.component';
 
 @Component({
     selector: 'app-product-form',
@@ -16,12 +16,12 @@ export class ProductFormComponent implements OnInit {
     restaurantList: Restaurant[] = [];
     // colorList:Color[] = [];
     id: string = '';
-    pictures: Picture[] = [];
+    pictures: any[] = [];
 
     @Input() product;
+    @ViewChild(MultiImageUploaderComponent) uploader: any;
 
-    @ViewChild(ImageUploaderComponent)
-    uploader: any;
+    // @ViewChild(ImageUploaderComponent) uploader: any;
 
     form: FormGroup = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -75,7 +75,8 @@ export class ProductFormComponent implements OnInit {
         self.id = p.id;
         self.pictures = p.pictures;
         self.form.patchValue(p);
-        self.form.patchValue({ restaurant_id: p.restaurant.id });
+        self.form.patchValue({ restaurant_id: p.restaurant ? p.restaurant.id : 1 });
+        self.pictures = [{ index: 0, name: '', image: this.product.image }];
         // self.commerceServ.getCategoryList().subscribe(catList=>{
         //     self.categoryList = catList;
         //     for(let cat of catList){
@@ -129,15 +130,15 @@ export class ProductFormComponent implements OnInit {
         const newV = {
             ...this.form.value,
             id: self.id,
-            categories: [{ id: 1 }],//self.getCheckedCategories(),
+            categories: [{ id: 1 }], // self.getCheckedCategories(),
             restaurant: { id: self.restaurant_id.value },
             // color:{id:self.color_id.value},
-            pictures: self.uploader.data
+            pictures: []// self.uploader.data
         };
 
         const c = new Product(newV);
         this.commerceServ.saveProduct(c).subscribe((r: any) => {
-            self.router.navigate(['admin/products']);
+            self.router.navigate(['admin']);
         });
     }
 

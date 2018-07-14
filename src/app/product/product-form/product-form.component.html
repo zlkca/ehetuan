@@ -51,8 +51,11 @@
             </div>
         </div> -->
 
-        <app-image-uploader [data]="pictures" #uploader></app-image-uploader>
-
+        <!-- <app-image-uploader [data]="pictures" #uploader></app-image-uploader> -->
+        <div *ngIf="pictures">
+            <app-multi-image-uploader [data]="pictures" #uploader></app-multi-image-uploader>
+        </div>
+        
         <button (click)="save()">Save</button>
     </form>
 </div>

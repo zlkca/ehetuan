@@ -22,10 +22,15 @@ export class ManageProductFormPageComponent implements OnInit {
         const self = this;
 
         self.route.params.subscribe((params: any) => {
-            this.commerceSvc.getProduct(params.id).subscribe(
-                (p: Product) => {
-                    self.product = p;
-                });
+            if (params.id) {
+                this.commerceSvc.getProduct(params.id).subscribe(
+                    (p: Product) => {
+                        self.product = p;
+                    });
+            } else {
+                self.product = new Product();
+                //self.product.pictures = [{image:{index:0, data:'add_photo.png', file:''}}];
+            }
         });
     }
 }

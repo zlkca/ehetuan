@@ -45,6 +45,10 @@ export class ManageProductListComponent implements OnInit {
         this.router.navigate(['admin/products/' + p.id]);
     }
 
+    add() {
+        this.router.navigate(['admin/product']);
+    }
+
     getImageSrc(p) {
         if (p.fpath) {
             return MEDIA_URL + p.fpath;

@@ -12,48 +12,47 @@ import { environment } from '../environments/environment';
 const APP = environment.APP;
 
 @Component({
-  providers: [AuthService],
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    providers: [AuthService],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit {
 
-  isLogin:boolean = false;
-  constructor(private router:Router, private sharedServ:SharedService, private authServ: AuthService,
-    private ngRedux: NgRedux<IAccount>){
-    
-    window.addEventListener("orientationchange", function() {
-        window.location.reload();
-    }, false);
-  }
+    isLogin: boolean = false;
+    constructor(private router: Router, private sharedServ: SharedService, private authServ: AuthService,
+        private ngRedux: NgRedux<IAccount>) {
 
-  ngOnInit() {
-    let self = this;
+        window.addEventListener("orientationchange", function () {
+            window.location.reload();
+        }, false);
+    }
 
-    let s = localStorage.getItem('location-'+APP);
+    ngOnInit() {
+        const self = this;
 
-    self.authServ.hasLoggedIn().subscribe(
-      (r:any)=>{
-        self.isLogin = r? true : false;
-        self.ngRedux.dispatch({type:AccountActions.LOGIN, payload:r});
-        if(self.isLogin){
-          //self.sharedServ.emitMsg({name:'OnUpdateHeader', type: r.type});
-          if(r.type==='super' || r.type==='business'){
-            self.toPage("admin");
-          }else{
-            self.toPage("restaurants");
-          }
-        }else{
-          self.toPage("restaurants");
-        }
-      },(err:any)=>{
-        self.toPage("login");
-      });
-  }
+        const s = localStorage.getItem('location-' + APP);
 
-  toPage(url:string){
-    this.router.navigate([url]);
-  }
+        self.authServ.hasLoggedIn().subscribe(
+            (r: any) => {
+                self.isLogin = r ? true : false;
+                self.ngRedux.dispatch({ type: AccountActions.LOGIN, payload: r });
+                if (self.isLogin) {
+                    if (r.type === 'super' || r.type === 'business') {
+                        self.toPage("admin");
+                    } else {
+                        self.toPage("restaurants");
+                    }
+                } else {
+                    self.toPage("restaurants");
+                }
+            }, (err: any) => {
+                self.toPage("login");
+            });
+    }
+
+    toPage(url: string) {
+        this.router.navigate([url]);
+    }
 }
