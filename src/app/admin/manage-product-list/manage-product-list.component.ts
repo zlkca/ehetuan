@@ -42,7 +42,7 @@ export class ManageProductListComponent implements OnInit {
     }
 
     change(p: Product) {
-        this.router.navigate(['admin/product/' + p.id]);
+        this.router.navigate(['admin/products/' + p.id]);
     }
 
     getImageSrc(p) {

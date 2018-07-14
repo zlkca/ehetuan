@@ -33,7 +33,6 @@ import { RestaurantListComponent } from './restaurant/restaurant-list/restaurant
 import { RestaurantDetailComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
 import { EditRestaurantComponent } from './admin/edit-restaurant/edit-restaurant.component';
 
-import { ProductFormComponent } from './product/product-form/product-form.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductComponent } from './main/product/product.component';
 
@@ -52,6 +51,8 @@ import { SharedModule } from './shared/shared.module';
 import { CommerceModule } from './commerce/commerce.module';
 
 import { AdminComponent } from './admin/admin.component';
+import { AdminBusinessUserFormPageComponent } from './admin/admin-business-user-form-page/admin-business-user-form-page.component';
+
 import { ManageProductListPageComponent } from './admin/manage-product-list-page/manage-product-list-page.component';
 import { ManageProductFormPageComponent } from './admin/manage-product-form-page/manage-product-form-page.component';
 
@@ -74,8 +75,6 @@ const appRoutes: Routes = [
     // { path: 'change-password', component:ChangePasswordComponent },
     // { path: 'payment', component:PaymentComponent },
     // { path: '', component:HomeComponent }
-    //{ path: 'admin/login', component:AdminLoginComponent },
-
     // { path: '', component:LayoutComponent,
     //     children:[
     //       { path: 'products', component:ProductListComponent },
@@ -83,7 +82,7 @@ const appRoutes: Routes = [
     //       { path: 'login', component:LoginComponent },
     //       { path: 'home', component:HomeComponent }
     //     ]
-    // } 
+    // }
 
     { path: 'admin', component: AdminComponent },
     // { path: 'admin/restaurants', component:RestaurantListComponent },
@@ -93,10 +92,9 @@ const appRoutes: Routes = [
     { path: 'admin/category/:id', component: CategoryFormComponent },
     { path: 'admin/category', component: CategoryFormComponent },
     { path: 'admin/products', component: ManageProductListPageComponent },
-    { path: 'admin/product/:id', component: ManageProductFormPageComponent },
+    { path: 'admin/products/:id', component: ManageProductFormPageComponent },
     { path: 'admin/edit-products', component: MultiProductFormComponent },
-    { path: 'admin/product', component: ProductFormComponent },
-    // { path: 'business-center/orders', component:OrderListComponent},
+    { path: 'admin/users/:id', component: AdminBusinessUserFormPageComponent },
     // { path: 'business-center/restaurants', component:RestaurantFormComponent},
     // { path: 'business-center/products', component:ProductListComponent},
 
@@ -139,7 +137,6 @@ const appRoutes: Routes = [
         ProductModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    //providers: [MsgService],
     bootstrap: [AppComponent],
 
 })

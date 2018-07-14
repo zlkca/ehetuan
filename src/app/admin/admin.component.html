@@ -26,7 +26,7 @@
 
           <ngb-tab title="Business Users" *ngIf="account && account.type === 'super'">
             <ng-template ngbTabContent>
-                <app-manage-business-user-list></app-manage-business-user-list>
+                <app-admin-business-user-list></app-admin-business-user-list>
                 <!-- <multi-user-form [users]="businessUsers"></multi-user-form> -->
             </ng-template>
           </ngb-tab>

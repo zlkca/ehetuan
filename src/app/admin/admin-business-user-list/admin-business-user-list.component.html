@@ -1,6 +1,6 @@
 
 	<div class="container user-list">
-		<div *ngIf="users && users.length==0">
+		<div *ngIf="users.length==0">
 			<button (click)="toPage('admin/users')">Add User</button>
 		</div>
 		<div class="list-body" *ngIf="users.length>0">
