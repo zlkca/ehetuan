@@ -61,6 +61,7 @@ import { LayoutComponent } from './main/layout/layout.component';
 import { CategoryListComponent } from './commerce/category-list/category-list.component';
 import { CategoryFormComponent } from './commerce/category-form/category-form.component';
 import { MultiProductFormComponent } from './commerce/multi-product-form/multi-product-form.component';
+import { OrderModule } from './order/order.module';
 
 const appRoutes: Routes = [
     // { path: 'login', component:LoginComponent },
@@ -134,7 +135,8 @@ const appRoutes: Routes = [
         MainModule,
         AdminModule,
         RestaurantModule,
-        ProductModule
+        ProductModule,
+        OrderModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent],
