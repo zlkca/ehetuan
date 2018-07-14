@@ -31,7 +31,7 @@ import { RestaurantFormComponent } from './restaurant/restaurant-form/restaurant
 import { RestaurantGridComponent } from './restaurant/restaurant-grid/restaurant-grid.component';
 import { RestaurantListComponent } from './restaurant/restaurant-list/restaurant-list.component';
 import { RestaurantDetailComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
-import { EditRestaurantComponent } from './admin/edit-restaurant/edit-restaurant.component';
+import { AdminRestaurantFormPageComponent } from './admin/admin-restaurant-form-page/admin-restaurant-form-page.component';
 
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductComponent } from './main/product/product.component';
@@ -87,8 +87,8 @@ const appRoutes: Routes = [
 
     { path: 'admin', component: AdminComponent },
     // { path: 'admin/restaurants', component:RestaurantListComponent },
-    { path: 'admin/restaurant/:id', component: EditRestaurantComponent },
-    { path: 'admin/restaurant', component: RestaurantFormComponent },
+    { path: 'admin/restaurant/:id', component: AdminRestaurantFormPageComponent },
+    { path: 'admin/restaurant', component: AdminRestaurantFormPageComponent },
     { path: 'admin/categories', component: CategoryListComponent },
     { path: 'admin/category/:id', component: CategoryFormComponent },
     { path: 'admin/category', component: CategoryFormComponent },

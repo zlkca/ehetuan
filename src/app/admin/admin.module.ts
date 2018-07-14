@@ -14,7 +14,7 @@ import { ManageProductFormPageComponent } from './manage-product-form-page/manag
 import { AdminBusinessUserFormComponent } from './admin-business-user-form/admin-business-user-form.component';
 import { AdminBusinessUserFormPageComponent } from './admin-business-user-form-page/admin-business-user-form-page.component';
 
-
+import { AdminRestaurantFormPageComponent } from './admin-restaurant-form-page/admin-restaurant-form-page.component';
 import { AdminBusinessUserListComponent } from './admin-business-user-list/admin-business-user-list.component';
 import { ManageRestaurantListComponent } from './manage-restaurant-list/manage-restaurant-list.component';
 import { ManageOrderListComponent } from './manage-order-list/manage-order-list.component';
@@ -37,6 +37,7 @@ import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.compo
         AdminBusinessUserListComponent,
         AdminBusinessUserFormComponent,
         AdminBusinessUserFormPageComponent,
+        AdminRestaurantFormPageComponent,
         ManageProductListComponent,
         ManageRestaurantListComponent,
         ManageOrderListComponent,

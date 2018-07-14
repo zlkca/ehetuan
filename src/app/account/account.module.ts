@@ -24,8 +24,9 @@ import { InstitutionLoginComponent } from './institution-login/institution-login
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     exports: [],
-    declarations: [LoginComponent, SignupComponent, ChangePasswordComponent, ForgetPasswordComponent, 
-       ProfileFormComponent,
+    declarations: [LoginComponent, SignupComponent, ChangePasswordComponent,
+        ForgetPasswordComponent,
+        ProfileFormComponent,
         InstitutionSignupComponent,
         InstitutionLoginComponent,
     ]
