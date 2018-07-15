@@ -41,7 +41,7 @@
         </button>
       </div>
       <div class="modal-body">
-          <app-order-detail></app-order-detail>
+          <app-order-detail [orderId]="orderId"></app-order-detail>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">OK</button>
