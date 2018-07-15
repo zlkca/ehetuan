@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
 import { IAccount } from '../account.actions';
 
-import { User } from '../account';
 import { AuthService } from '../auth.service';
 import { SharedService } from '../../shared/shared.service';
 import { AccountActions } from '../account.actions';
+import { Account } from '../../shared/lb-sdk/models/Account';
+import { AccountService } from '../account.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { AccountActions } from '../account.actions';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-    public user = new User();
+    public user;
     public account = '';
     public password = '';
 
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
         private authServ: AuthService,
         private router: Router,
         private sharedServ: SharedService,
+        private accountServ: AccountService,
         private ngRedux: NgRedux<IAccount>) {
 
         this.form = this.fb.group({
@@ -76,29 +78,25 @@ export class LoginComponent implements OnInit {
     }
 
     onLogin() {
-        let self = this;
-        let v = this.form.value;
+        const v = this.form.value;
         // if (this.form.valid) {
-        this.authServ.login(v.account, v.password).subscribe(
-            (user: any) => {
-                if (user && user.username) {
-                    this.ngRedux.dispatch({ type: AccountActions.LOGIN, payload: user });
-                    self.user = user;
-                    if (user.type === 'super' || user.type === 'business') {
-                        self.router.navigate(['admin']);
+        this.accountServ.login(v.account, v.password)
+        .subscribe((user: Account) => {
+            if (user && user.id) {
+                this.accountServ.getCurrent()
+                .subscribe((account: Account) => {
+                    if (account.restaurants.length) {
+                        this.router.navigate(['admin']);
                     } else {
-                        self.router.navigate(['restaurants']);
+                        this.router.navigate(['restaurants']);
                     }
-                } else {
-                    self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";
-                }
-            },
-            (error) => {
-                console.error('An error occurred', error);
-            });
-        // }else{
-        //   self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";
-        // }
+                });
+            }
+        },
+        (error) => {
+            this.errMsg = error.message || 'login failed.';
+            console.error('An error occurred', error);
+        });
     }
 
 

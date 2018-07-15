@@ -8,6 +8,8 @@ import { User } from '../account';
 import { AuthService } from '../auth.service';
 import { SharedService } from '../../shared/shared.service';
 import { AccountActions } from '../account.actions';
+import { AccountService } from '../account.service';
+import { Account } from '../../shared/lb-sdk/models/Account';
 
 @Component({
   selector: 'app-institution-login',
@@ -21,8 +23,9 @@ export class InstitutionLoginComponent implements OnInit {
 
   constructor(
     private fb:FormBuilder,
-    private authServ:AuthService, 
-    private router:Router, 
+    private authServ:AuthService,
+    private accountServ: AccountService,
+    private router:Router,
     private sharedServ:SharedService,
     private ngRedux: NgRedux<IAccount>) {
 
@@ -35,33 +38,26 @@ export class InstitutionLoginComponent implements OnInit {
   ngOnInit() {}
 
   onLogin() {
-    let self = this;
-    let v = this.form.value;
+    const v = this.form.value;
     // if (this.form.valid) {
-      this.authServ.login(v.account, v.password).subscribe(
-          (user:any) => {
-              if(user && user.username){
-                  //self.sharedServ.emitMsg({name:'OnUpdateHeader'});
-                  self.sharedServ.emitMsg({name:'updateLogin'});
-                  this.ngRedux.dispatch({type:AccountActions.LOGIN, payload:user});
-
-                  if(user.type=='business'){
-                    self.router.navigate(['admin']);
-                  }else{
-                    self.router.navigate(['home']);
-                  }
-                  
-              }else{
-                self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";          
-              }
-          }, 
-          (error) => {
-            console.error('An error occurred', error);
-          });
-      // }else{
-      //   self.errMsg = "INVALID_ACCOUNT_OR_PASSOWRD";
-      // }
-  }
+    this.accountServ.login(v.account, v.password)
+    .subscribe((user: Account) => {
+        if (user && user.id) {
+            this.accountServ.getCurrent()
+            .subscribe((account: Account) => {
+                if (account.restaurants.length) {
+                    this.router.navigate(['admin']);
+                } else {
+                    this.router.navigate(['restaurants']);
+                }
+            });
+        }
+    },
+    (error) => {
+        this.errMsg = error.message || 'login failed.';
+        console.error('An error occurred', error);
+    });
+}
 
 
   onForgetPassword(){

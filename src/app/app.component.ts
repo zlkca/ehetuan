@@ -30,26 +30,26 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        const self = this;
+        // const self = this;
 
-        const s = localStorage.getItem('location-' + APP);
+        // const s = localStorage.getItem('location-' + APP);
 
-        self.authServ.hasLoggedIn().subscribe(
-            (r: any) => {
-                self.isLogin = r ? true : false;
-                self.ngRedux.dispatch({ type: AccountActions.LOGIN, payload: r });
-                if (self.isLogin) {
-                    if (r.type === 'super' || r.type === 'business') {
-                        self.toPage("admin");
-                    } else {
-                        self.toPage("restaurants");
-                    }
-                } else {
-                    self.toPage("restaurants");
-                }
-            }, (err: any) => {
-                self.toPage("login");
-            });
+        // self.authServ.hasLoggedIn().subscribe(
+        //     (r: any) => {
+        //         self.isLogin = r ? true : false;
+        //         self.ngRedux.dispatch({ type: AccountActions.LOGIN, payload: r });
+        //         if (self.isLogin) {
+        //             if (r.type === 'super' || r.type === 'business') {
+        //                 self.toPage("admin");
+        //             } else {
+        //                 self.toPage("restaurants");
+        //             }
+        //         } else {
+        //             self.toPage("restaurants");
+        //         }
+        //     }, (err: any) => {
+        //         self.toPage("login");
+        //     });
     }
 
     toPage(url: string) {

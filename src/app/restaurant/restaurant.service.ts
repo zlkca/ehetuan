@@ -1,3 +1,39 @@
+import { Injectable } from '@angular/core';
+import { RestaurantApi, LoopBackFilter, Restaurant, GeoPoint } from '../shared/lb-sdk';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class RestaurantService {
+    constructor(
+        private restaurantApi: RestaurantApi
+    ) {}
+
+    findById(id: number, filter: LoopBackFilter = {}): Observable<Restaurant> {
+        return this.restaurantApi.findById(id, filter);
+    }
+
+    getNearby(location: GeoPoint, maxDistance: number = 20, limit: number = 0): Observable<Restaurant[]> {
+        return this.restaurantApi.find({
+            where: {
+                location: {
+                    near: location,
+                    maxDistance: maxDistance,
+                    unit: 'kilometers'
+                }
+            },
+            limit: limit
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
 // import {throwError as observableThrowError,  Observable } from 'rxjs';
 // import { fromPromise } from 'rxjs/observable/fromPromise';
 // import { catchError, map } from 'rxjs/operators';
@@ -17,7 +53,7 @@
 // export class TokenInterceptor implements HttpInterceptor {
 //   constructor() {}
 
-//   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {    
+//   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 //     let index = request.url.indexOf('maps.google.com/maps/api');
 
 //     if(index == -1){
@@ -48,7 +84,7 @@
 //     emptyImage = environment.APP_URL + '/media/empty.png';
 
 //     constructor(private http:HttpClient){ }
-    
+
 //     getLocation(addr:string):Observable<any>{
 //         let url = 'http://maps.google.com/maps/api/geocode/json?address=' + addr + 'CA&sensor=false'
 //         return this.http.get(url).pipe(map((res:any)=>{
@@ -132,4 +168,4 @@
 //     }
 // }
 
-//     
+//

@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 import { User } from './account';
+import { AccountApi } from '../shared/lb-sdk/services/custom/Account';
 
 const API_URL = environment.API_URL;
 
@@ -13,7 +14,7 @@ const API_URL = environment.API_URL;
 export class AccountService {
     private API_URL = environment.API_URL;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private accountApi: AccountApi) { }
 
     getUserList(query?: string): Observable<User[]> {
         const url = API_URL + 'users' + (query ? query : '');
@@ -60,6 +61,22 @@ export class AccountService {
         catchError((err) => {
             return observableThrowError(err.message || err);
         }), );
+    }
+
+    public login(username: string, password: string, rememberMe: boolean = true): Observable<any> {
+        const credentials = {
+            username: username,
+            password: password
+        };
+        return this.accountApi.login(credentials, null, rememberMe);
+    }
+
+    public getCurrent(): Observable<any> {
+        return this.accountApi.getCurrent({include: 'restaurants'});
+    }
+
+    public isAuthenticated(): boolean {
+        return this.accountApi.isAuthenticated();
     }
 
 }

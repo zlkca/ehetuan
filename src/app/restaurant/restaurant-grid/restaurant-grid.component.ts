@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommerceService } from '../../commerce/commerce.service';
-import { Restaurant } from '../../commerce/commerce';
 import { SharedService } from '../../shared/shared.service';
 import { AuthService } from '../../account/auth.service';
 import { environment } from '../../../environments/environment';
 import { LocationService } from '../../shared/location/location.service';
+import { RestaurantService } from '../restaurant.service';
+import { Restaurant, GeoPoint } from '../../shared/lb-sdk';
 
 const APP = environment.APP;
 
@@ -21,7 +22,7 @@ export class RestaurantGridComponent implements OnInit {
     filter: any;
     restaurantList: Restaurant[];
     places: any[] = [];
-    center: any = { lat: 43.761539, lng: -79.411079 };
+    center: GeoPoint = { lat: 43.761539, lng: -79.411079 };
     MEDIA_URL = environment.MEDIA_URL;
 
     ngOnInit() {
@@ -33,6 +34,7 @@ export class RestaurantGridComponent implements OnInit {
     constructor(private commerceServ: CommerceService,
         private router: Router,
         private sharedServ: SharedService,
+        private restaurantServ: RestaurantService,
         private locationSvc: LocationService) {
         const self = this;
 
@@ -119,14 +121,14 @@ export class RestaurantGridComponent implements OnInit {
             s = '?' + conditions.join('&');
         }
 
-        self.commerceServ.getRestaurantList(s).subscribe(
+        this.restaurantServ.getNearby(this.center).subscribe(
             (ps: Restaurant[]) => {
                 self.restaurantList = ps;//self.toProductGrid(data);
                 const a = [];
                 ps.map(restaurant => {
                     a.push({
-                        lat: parseFloat(restaurant.address.lat),
-                        lng: parseFloat(restaurant.address.lng),
+                        lat: parseFloat(restaurant.location.lat),
+                        lng: parseFloat(restaurant.location.lng),
                         name: restaurant.name
                     });
                 });

@@ -62,6 +62,7 @@ import { CategoryListComponent } from './commerce/category-list/category-list.co
 import { CategoryFormComponent } from './commerce/category-form/category-form.component';
 import { MultiProductFormComponent } from './commerce/multi-product-form/multi-product-form.component';
 import { OrderModule } from './order/order.module';
+import { SDKBrowserModule, LoopBackConfig } from './shared/lb-sdk';
 
 const appRoutes: Routes = [
     // { path: 'login', component:LoginComponent },
@@ -128,6 +129,7 @@ const appRoutes: Routes = [
             appRoutes,
             // { enableTracing: true } // <-- debugging purposes only
         ),
+        SDKBrowserModule.forRoot(),
         NgbModule.forRoot(),
         NgReduxModule,
         SharedModule,
@@ -146,5 +148,7 @@ const appRoutes: Routes = [
 export class AppModule {
     constructor(ngRedux: NgRedux<any>) {
         ngRedux.configureStore(rootReducer, INITIAL_STATE);
+        LoopBackConfig.setBaseURL('http://localhost:3000');
+        LoopBackConfig.setApiVersion('api');
     }
 }

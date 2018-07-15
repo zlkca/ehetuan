@@ -10,6 +10,7 @@ import { RestaurantGridComponent } from './restaurant-grid/restaurant-grid.compo
 import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { RestaurantDetailComponent } from './restaurant-detail/restaurant-detail.component';
 import { OrderModule } from '../order/order.module';
+import { RestaurantService } from './restaurant.service';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { OrderModule } from '../order/order.module';
     OrderModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  providers: [RestaurantService],
   declarations: [RestaurantFormComponent, RestaurantGridComponent, RestaurantListComponent, RestaurantDetailComponent],
   exports: [RestaurantFormComponent, RestaurantGridComponent, RestaurantListComponent, RestaurantDetailComponent]
 })
