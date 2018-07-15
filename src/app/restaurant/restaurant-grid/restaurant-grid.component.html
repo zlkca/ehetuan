@@ -23,8 +23,9 @@
 						<div class="card mb-3" (click)="toDetail(p)">
 						  <img class="card-img-top" [src]="getImageSrc(p.image)" [alt]="p.name">
 						  <div class="card-body">
-						    <h6 class="card-title text-left">{{p.name}}</h6>
-						    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								<h6 class="card-title text-left">{{p.name}}</h6>
+								<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								<h6 class="card-title text-right">{{getDistance(p)}} km</h6>
 						  </div>
 							<div class="card-footer text-muted">
 						    {{p.address.id}}
