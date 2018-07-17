@@ -54,7 +54,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminBusinessUserFormPageComponent } from './admin/admin-business-user-form-page/admin-business-user-form-page.component';
 
 import { ManageProductListPageComponent } from './admin/manage-product-list-page/manage-product-list-page.component';
-import { ManageProductFormPageComponent } from './admin/manage-product-form-page/manage-product-form-page.component';
+import { AdminProductFormPageComponent } from './admin/admin-product-form-page/admin-product-form-page.component';
 
 import { LayoutComponent } from './main/layout/layout.component';
 
@@ -92,9 +92,9 @@ const appRoutes: Routes = [
     { path: 'admin/categories', component: CategoryListComponent },
     { path: 'admin/category/:id', component: CategoryFormComponent },
     { path: 'admin/category', component: CategoryFormComponent },
-    { path: 'admin/product', component: ManageProductFormPageComponent },
+    { path: 'admin/product', component: AdminProductFormPageComponent },
     { path: 'admin/products', component: ManageProductListPageComponent },
-    { path: 'admin/products/:id', component: ManageProductFormPageComponent },
+    { path: 'admin/products/:id', component: AdminProductFormPageComponent },
     { path: 'admin/edit-products', component: MultiProductFormComponent },
     { path: 'admin/users/:id', component: AdminBusinessUserFormPageComponent },
     // { path: 'business-center/restaurants', component:RestaurantFormComponent},

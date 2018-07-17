@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { CommerceService } from '../../commerce/commerce.service';
@@ -6,6 +6,8 @@ import { Restaurant, Category, Picture } from '../../commerce/commerce';
 import { Address } from '../../account/account';
 import { MultiImageUploaderComponent } from '../../shared/multi-image-uploader/multi-image-uploader.component';
 import { environment } from '../../../environments/environment';
+import { NgRedux } from '@angular-redux/store';
+import { IPicture } from '../../commerce/commerce.actions';
 
 const APP = environment.APP;
 
@@ -14,12 +16,12 @@ const APP = environment.APP;
     templateUrl: './restaurant-form.component.html',
     styleUrls: ['./restaurant-form.component.scss']
 })
-export class RestaurantFormComponent implements OnInit {
+export class RestaurantFormComponent implements OnInit, OnDestroy {
 
     id: string = '';
     categoryList: Category[] = [];
-    pictures: any[] = [];
-
+    picture;
+    subscriptionPicture;
     form: FormGroup;
 
     @Input() restaurant: Restaurant;
@@ -41,7 +43,9 @@ export class RestaurantFormComponent implements OnInit {
     }
 
     constructor(private fb: FormBuilder, private commerceSvc: CommerceService,
-        private router: Router, private route: ActivatedRoute) {
+        private router: Router, private route: ActivatedRoute,
+        private rx: NgRedux<IPicture>) {
+
         this.form = this.createForm();
     }
 
@@ -50,7 +54,7 @@ export class RestaurantFormComponent implements OnInit {
 
         this.form.patchValue(this.restaurant);
         //localStorage.setItem('restaurant_info-' + APP, JSON.stringify(self.restaurant));
-        self.pictures = [{ index: 0, name: '', image: this.restaurant.image }];
+        //self.pictures = [{ index: 0, name: '', image: this.restaurant.image }];
 
         //self.route.params.subscribe((params:any)=>{
         // self.commerceServ.getRestaurant(params.id).subscribe(
@@ -116,8 +120,15 @@ export class RestaurantFormComponent implements OnInit {
         //         self.categories.push(new FormControl(false));
         //     }
         // });
+        this.subscriptionPicture = this.rx.select<IPicture>('picture').subscribe(
+            pic => {
+                self.picture = pic;
+            });
     }
 
+    ngOnDestroy() {
+        this.subscriptionPicture.unsubscribe();
+    }
 
     save() {
         const self = this;
@@ -139,8 +150,8 @@ export class RestaurantFormComponent implements OnInit {
         }
 
 
-        if (self.uploader) {
-            m.image = self.uploader.data[0].image;
+        if (self.picture) {
+            m.image = self.picture.image;
         }
 
         m.id = self.restaurant ? self.restaurant.id : null;
@@ -166,7 +177,7 @@ export class RestaurantFormComponent implements OnInit {
         // const r = JSON.parse(c);
 
         self.form.patchValue(this.restaurant);
-        self.pictures = [{ index: 0, name: '', image: this.restaurant.image }];
+        // self.pictures = [{ index: 0, name: '', image: this.restaurant.image }];
 
         // localStorage.removeItem('restaurant_info-' + APP);
 

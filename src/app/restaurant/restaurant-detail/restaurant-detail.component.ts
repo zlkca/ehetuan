@@ -1,11 +1,11 @@
 
-import {switchMap} from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
 
-import { CommerceService } from '../../commerce/commerce.service';
+import { ProductService } from '../../product/product.service';
 import { Product } from '../../commerce/commerce';
 import { SharedService } from '../../shared/shared.service';
 import { AuthService } from '../../account/auth.service';
@@ -13,47 +13,46 @@ import { environment } from '../../../environments/environment';
 
 
 @Component({
-  selector: 'app-restaurant-detail',
-  templateUrl: './restaurant-detail.component.html',
-  providers: [AuthService, CommerceService],
-  styleUrls: ['./restaurant-detail.component.scss']
+    selector: 'app-restaurant-detail',
+    templateUrl: './restaurant-detail.component.html',
+    providers: [AuthService, ProductService],
+    styleUrls: ['./restaurant-detail.component.scss']
 })
 export class RestaurantDetailComponent implements OnInit {
-	productList:any = [];
-  restaurant_id :string;
-	subscription;
-  cart;
+    productList: any = [];
+    restaurant_id: string;
+    subscription;
+    cart;
 
-  constructor(private commerceServ:CommerceService, 
-    private router:Router, 
-    private route: ActivatedRoute,
-    // private ngRedux:NgRedux<IAppState>,
-    // private actions: CartActions
+    constructor(private productSvc: ProductService,
+        private router: Router,
+        private route: ActivatedRoute,
+        // private ngRedux:NgRedux<IAppState>,
+        // private actions: CartActions
     ) {
 
-    // this.subscription = ngRedux.select<ICartItem[]>('cart').subscribe(
-    //   cart=> this.cart = cart);
-  
-  	let self = this;
-  }
+        // this.subscription = ngRedux.select<ICartItem[]>('cart').subscribe(
+        //   cart=> this.cart = cart);
 
-  ngOnInit() {
-    let self = this;
-    self.route.paramMap.pipe(switchMap((params: ParamMap) => 
-      // self.restaurant_id = params.get('id')
-      self.commerceServ.getProductList("?restaurant_id="+params.get('id'))))
-        .subscribe(
-          (ps:Product[]) => {
-              self.productList = ps;
-          },
-          (err:any) => {
-              self.productList = [];
-          }
-        );
+        // let self = this;
     }
 
+    ngOnInit() {
+        const self = this;
+        self.route.paramMap.pipe(switchMap((params: ParamMap) =>
+            // self.restaurant_id = params.get('id')
+            self.productSvc.getProductList('?restaurant_id=' + params.get('id'))))
+            .subscribe(
+                (ps: Product[]) => {
+                    self.productList = ps;
+                },
+                (err: any) => {
+                    self.productList = [];
+                }
+            );
+    }
 
-  }
+}
 
 
 
@@ -88,7 +87,7 @@ export class RestaurantDetailComponent implements OnInit {
 //             }
 //         });
 //     }
-  
+
 //     search(keyword:string){
 //       let self = this;
 //       this.query = {'keyword': keyword};
@@ -109,7 +108,7 @@ export class RestaurantDetailComponent implements OnInit {
 //     //         }
 //     //     });
 //     // }
-  
+
 //     // search(keyword:string){
 //     //   this.query = {keyword:keyword};
 //     //   this.msgServ.emit({name:'OnClearFilter'});

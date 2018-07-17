@@ -8,7 +8,7 @@ import { AccountModule } from '../account/account.module';
 import { ProductModule } from '../product/product.module';
 import { AdminComponent } from './admin.component';
 import { ManageProductListComponent } from './manage-product-list/manage-product-list.component';
-import { ManageProductFormPageComponent } from './manage-product-form-page/manage-product-form-page.component';
+import { AdminProductFormPageComponent } from './admin-product-form-page/admin-product-form-page.component';
 
 
 import { AdminBusinessUserFormComponent } from './admin-business-user-form/admin-business-user-form.component';
@@ -42,7 +42,7 @@ import { EditRestaurantComponent } from './edit-restaurant/edit-restaurant.compo
         ManageRestaurantListComponent,
         ManageOrderListComponent,
         ManageProductListPageComponent,
-        ManageProductFormPageComponent,
+        AdminProductFormPageComponent,
         EditRestaurantComponent],
     exports: [AdminComponent, EditRestaurantComponent]
 })

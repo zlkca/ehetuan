@@ -31,33 +31,33 @@ import { MultiRestaurantFormComponent } from './multi-restaurant-form/multi-rest
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-   imports:[
-      CommonModule,
-      FormsModule,
-      ReactiveFormsModule,
-      RouterModule,
-      HttpClientModule,
-    //   TranslateModule.forRoot({
-    //     loader: {
-    //         provide: TranslateLoader,
-    //         useFactory: HttpLoaderFactory,
-    //         deps: [HttpClient]
-    //     }
-    // }),
-      SharedModule
-   ],
-   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-   providers: [SharedService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    }],
-   exports:[CategoryListComponent,CategoryFormComponent,
-     ProductFilterComponent, OrderListComponent,
-     MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent],
-   declarations:[CategoryListComponent,CategoryFormComponent,
-     ProductFilterComponent, OrderListComponent,
-     MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        HttpClientModule,
+        //   TranslateModule.forRoot({
+        //     loader: {
+        //         provide: TranslateLoader,
+        //         useFactory: HttpLoaderFactory,
+        //         deps: [HttpClient]
+        //     }
+        // }),
+        SharedModule
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    providers: [SharedService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        }],
+    exports: [CategoryListComponent, CategoryFormComponent,
+        ProductFilterComponent, OrderListComponent,
+        MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent],
+    declarations: [CategoryListComponent, CategoryFormComponent,
+        ProductFilterComponent, OrderListComponent,
+        MultiUserFormComponent, MultiProductFormComponent, MultiRestaurantFormComponent]
 })
 export class CommerceModule { }

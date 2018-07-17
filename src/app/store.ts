@@ -6,22 +6,24 @@ import { pictureReducer } from './commerce/commerce.reducers';
 import { locationReducer } from './shared/location/location.reducer';
 import { ILocation } from './shared/location/location.model';
 import { ICart } from './order/order.actions';
-import { IPicture } from './commerce/commerce.actions';
+import { IPicture, DEFAULT_PICTURE } from './commerce/commerce.actions';
 import { cartReducer } from './order/order.reducers';
 
 export interface IAppState {
     cart: ICart;
     account: IAccount;
-    changed_pictures: IPicture[];
-    restaurant_pictures: IPicture[];
+    // product_pictures: IPicture[];
+    picture: IPicture;
+    // restaurant_pictures: IPicture[];
     location: ILocation;
 }
 
 export const INITIAL_STATE: IAppState = {
     cart: { items: [] },
     account: DEFAULT_ACCOUNT,
-    changed_pictures: [],
-    restaurant_pictures: [],
+    picture: DEFAULT_PICTURE,
+    // product_pictures: IPicture[],
+    // restaurant_pictures: [],
     location: null,
 };
 
@@ -38,7 +40,8 @@ export const INITIAL_STATE: IAppState = {
 export const rootReducer = combineReducers({
     cart: cartReducer,
     account: accountReducer,
-    changed_pictures: pictureReducer,
-    restaurant_pictures: pictureReducer,
+    picture: pictureReducer,
+    // product_pictures: pictureReducer,
+    // restaurant_pictures: pictureReducer,
     location: locationReducer
 });
