@@ -127,8 +127,8 @@ export class RestaurantGridComponent implements OnInit {
                 const a = [];
                 ps.map(restaurant => {
                     a.push({
-                        lat: parseFloat(restaurant.location.lat),
-                        lng: parseFloat(restaurant.location.lng),
+                        lat: restaurant.location.lat,
+                        lng: restaurant.location.lng,
                         name: restaurant.name
                     });
                 });

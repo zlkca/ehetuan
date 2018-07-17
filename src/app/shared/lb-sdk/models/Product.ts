@@ -12,7 +12,6 @@ export interface ProductInterface {
   "created"?: Date;
   "modified"?: Date;
   "id"?: number;
-  "productId"?: number;
   owner?: Restaurant;
 }
 
@@ -24,7 +23,6 @@ export class Product implements ProductInterface {
   "created": Date;
   "modified": Date;
   "id": number;
-  "productId": number;
   owner: Restaurant;
   constructor(data?: ProductInterface) {
     Object.assign(this, data);
@@ -86,10 +84,6 @@ export class Product implements ProductInterface {
         },
         "id": {
           name: 'id',
-          type: 'number'
-        },
-        "productId": {
-          name: 'productId',
           type: 'number'
         },
       },

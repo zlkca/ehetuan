@@ -103,9 +103,9 @@ export class OrderItem implements OrderItemInterface {
           name: 'product',
           type: 'Product',
           model: 'Product',
-          relationType: 'hasOne',
-                  keyFrom: 'id',
-          keyTo: 'productId'
+          relationType: 'belongsTo',
+                  keyFrom: 'productId',
+          keyTo: 'id'
         },
       }
     }

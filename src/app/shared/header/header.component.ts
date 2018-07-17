@@ -2,23 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../account/auth.service';
 import { SharedService } from '../shared.service';
-import { CommerceService } from '../../commerce/commerce.service';
 import { CategoryListComponent } from '../../commerce/category-list/category-list.component';
-
-import { NgRedux } from '@angular-redux/store';
-import { Subject } from 'rxjs';
-
-import { AccountActions, IAccount } from '../../account/account.actions';
 
 import { environment } from '../../../environments/environment';
 import { LocationService } from '../location/location.service';
 import { ILocation } from '../location/location.model';
+import { AccountService } from '../../account/account.service';
+import { Account } from '../lb-sdk';
 declare var $: any;
 
 const APP = environment.APP;
 
 @Component({
-    providers: [AuthService, CommerceService, LocationService],
+    providers: [AuthService, LocationService],
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
@@ -28,24 +24,15 @@ export class HeaderComponent implements OnInit {
     menu: any[];
     user: any;
     keyword: string;
-    term$ = new Subject<string>();
     locality = '';
     unsubscribeAccount: any;
 
-    constructor(private router: Router, private authSvc: AuthService, private commerceSvc: CommerceService,
+    constructor(private router: Router, private authSvc: AuthService,
         private locationSvc: LocationService,
-        private rx: NgRedux<IAccount>, private sharedSvc: SharedService, private ngRedux: NgRedux<IAccount>) {
+        private accountServ: AccountService,
+        private sharedSvc: SharedService) {
 
         let self = this;
-
-        // this.term$.debounceTime(800)
-        //     .distinctUntilChanged()
-        //     .subscribe((keyword:any) => {
-        //         self.search(keyword);
-        //     });
-
-
-
 
 
     }
@@ -55,9 +42,8 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        const self = this;
-        this.unsubscribeAccount = this.rx.select<IAccount>('account').subscribe(
-            account => {
+        this.accountServ.getCurrent().subscribe(
+            (account: Account) => {
                 if (account && account.id) {
                     this.user = account;
                     this.isLogin = true;
@@ -117,15 +103,13 @@ export class HeaderComponent implements OnInit {
     }
 
     logout() {
-        let self = this;
-        let flag = self.isLogin;
-        this.ngRedux.dispatch({ type: AccountActions.LOGOUT });
-        this.closeNavMenu();
-        if (flag) {
-            self.authSvc.logout();
-            self.isLogin = false;
-            this.router.navigate(['restaurants']);
-        }
+        this.accountServ.logout()
+            .subscribe((sad: any) => {
+                console.log(sad);
+                this.user = null;
+                this.isLogin = false;
+                this.router.navigate(['restaurants']);
+            });
     }
 
     toHome() {

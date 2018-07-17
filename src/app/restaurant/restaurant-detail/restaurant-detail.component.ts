@@ -10,6 +10,8 @@ import { Product } from '../../commerce/commerce';
 import { SharedService } from '../../shared/shared.service';
 import { AuthService } from '../../account/auth.service';
 import { environment } from '../../../environments/environment';
+import { RestaurantService } from '../restaurant.service';
+import { Restaurant } from '../../shared/lb-sdk';
 
 
 @Component({
@@ -24,8 +26,9 @@ export class RestaurantDetailComponent implements OnInit {
 	subscription;
   cart;
 
-  constructor(private commerceServ:CommerceService, 
-    private router:Router, 
+  constructor(private commerceServ:CommerceService,
+    private restaurantServ: RestaurantService,
+    private router:Router,
     private route: ActivatedRoute,
     // private ngRedux:NgRedux<IAppState>,
     // private actions: CartActions
@@ -33,18 +36,18 @@ export class RestaurantDetailComponent implements OnInit {
 
     // this.subscription = ngRedux.select<ICartItem[]>('cart').subscribe(
     //   cart=> this.cart = cart);
-  
+
   	let self = this;
   }
 
   ngOnInit() {
     let self = this;
-    self.route.paramMap.pipe(switchMap((params: ParamMap) => 
+    self.route.paramMap.pipe(switchMap((params: ParamMap) =>
       // self.restaurant_id = params.get('id')
-      self.commerceServ.getProductList("?restaurant_id="+params.get('id'))))
+      self.restaurantServ.findById(parseInt(params.get('id'), 10), {include: 'products'} )))
         .subscribe(
-          (ps:Product[]) => {
-              self.productList = ps;
+          (restaurant: Restaurant) => {
+              self.productList = restaurant.products;
           },
           (err:any) => {
               self.productList = [];
@@ -88,7 +91,7 @@ export class RestaurantDetailComponent implements OnInit {
 //             }
 //         });
 //     }
-  
+
 //     search(keyword:string){
 //       let self = this;
 //       this.query = {'keyword': keyword};
@@ -109,7 +112,7 @@ export class RestaurantDetailComponent implements OnInit {
 //     //         }
 //     //     });
 //     // }
-  
+
 //     // search(keyword:string){
 //     //   this.query = {keyword:keyword};
 //     //   this.msgServ.emit({name:'OnClearFilter'});

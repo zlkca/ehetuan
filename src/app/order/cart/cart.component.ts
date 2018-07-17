@@ -6,6 +6,8 @@ import { OrderService } from '../order.service';
 import { IAccount } from '../../account/account.actions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
+import { AccountService } from '../../account/account.service';
+import { Account, Order, OrderItem } from '../../shared/lb-sdk';
 
 @Component({
     selector: 'app-cart',
@@ -17,7 +19,7 @@ export class CartComponent implements OnInit, OnDestroy {
     subscription;
     subscriptionAccount;
     cart: any;
-    user;
+    user: Account;
     orderId: number;
 
     @ViewChild('orderDetailModal') orderDetailModal;
@@ -25,6 +27,7 @@ export class CartComponent implements OnInit, OnDestroy {
     constructor(
         private rx: NgRedux<IAppState>,
         private OrderServ: OrderService,
+        private accountServ: AccountService,
         private modalServ: NgbModal
     ) {
     }
@@ -39,9 +42,10 @@ export class CartComponent implements OnInit, OnDestroy {
                 });
             });
 
-        this.subscriptionAccount = this.rx.select<IAccount>('account').subscribe(
-            account => {
-                this.user = account;
+        this.subscriptionAccount = this.accountServ.getCurrent()
+            .subscribe((acc: Account) => {
+                console.log(acc);
+                this.user = acc;
             });
     }
 
@@ -68,14 +72,11 @@ export class CartComponent implements OnInit, OnDestroy {
 
     checkout() {
         const orders = this.createOrders(this.cart);
-        this.OrderServ.checkout(orders, this.user.id)
-        .then(order => {
-            this.orderId = parseInt(order.id, 10);
+        this.OrderServ.create(orders[0])
+        .subscribe((newOrder: Order) => {
+            this.orderId = newOrder.id;
             this.rx.dispatch({ type: CartActions.CLEAR_CART, payload: {} });
             this.modalServ.open(this.orderDetailModal);
-        })
-        .catch(err => {
-            console.error(err);
         });
     }
 
@@ -84,18 +85,23 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     createOrders(cart: any) {
+        console.log(this.user);
         const restaurantSet = new Set(cart.items.map(x => x.restaurant_id));
         const restaurantIds = [...restaurantSet];
         const orders = [];
 
         for (const id of restaurantIds) {
-            orders.push({ restaurant_id: id, items: [] });
+            orders.push({ restaurantId: id, items: [], userId: this.user.id});
         }
 
         for (const item of cart.items) {
             for (const order of orders) {
-                if (item.restaurant_id === order.restaurant_id) {
-                    order.items.push(item);
+                if (item.restaurant_id === order.restaurantId) {
+                    order.items.push({
+                        price: item.price,
+                        quantity: item.quantity,
+                        productId: item.pid,
+                    });
                 }
             }
         }

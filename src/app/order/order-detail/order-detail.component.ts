@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { OrderService } from '../order.service';
-import { Order } from '../order';
+import { Order } from '../../shared/lb-sdk';
 
 @Component({
     selector: 'app-order-detail',
@@ -17,10 +17,9 @@ export class OrderDetailComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.orderServ.getOrder(this.orderId)
+        this.orderServ.findById(this.orderId, {include: {items: 'product'}})
             .subscribe((data: Order) => {
                 this.order = data;
             });
     }
-
 }

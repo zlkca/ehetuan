@@ -41,16 +41,11 @@ export class InstitutionLoginComponent implements OnInit {
     const v = this.form.value;
     // if (this.form.valid) {
     this.accountServ.login(v.account, v.password)
-    .subscribe((user: Account) => {
-        if (user && user.id) {
-            this.accountServ.getCurrent()
-            .subscribe((account: Account) => {
-                if (account.restaurants.length) {
-                    this.router.navigate(['admin']);
-                } else {
-                    this.router.navigate(['restaurants']);
-                }
-            });
+    .subscribe((account: Account) => {
+        if (account.restaurants.length) {
+            this.router.navigate(['admin']);
+        } else {
+            this.router.navigate(['restaurants']);
         }
     },
     (error) => {
