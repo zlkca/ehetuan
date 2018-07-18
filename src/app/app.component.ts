@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgRedux } from '@angular-redux/store';
-import { AccountActions, IAccount } from './account/account.actions';
 
 import { AuthService } from './account/auth.service';
 import { SharedService } from './shared/shared.service';
@@ -22,7 +20,7 @@ export class AppComponent implements OnInit {
 
     isLogin: boolean = false;
     constructor(private router: Router, private sharedServ: SharedService, private authServ: AuthService,
-        private ngRedux: NgRedux<IAccount>) {
+        ) {
 
         window.addEventListener("orientationchange", function () {
             window.location.reload();

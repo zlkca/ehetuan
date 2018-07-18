@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgRedux } from '@angular-redux/store';
-import { IAccount, AccountActions } from '../account.actions';
+import { AccountActions } from '../account.actions';
 import { AuthService } from '../auth.service';
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
@@ -22,9 +22,8 @@ export class InstitutionSignupComponent implements OnInit {
   uploader:any;
 
   constructor(
-    private fb:FormBuilder, 
-    private authServ:AuthService, 
-    private rx:NgRedux<IAccount>, 
+    private fb:FormBuilder,
+    private authServ:AuthService,
     private router:Router,
     private sharedServ:SharedService) {
 
@@ -54,12 +53,12 @@ export class InstitutionSignupComponent implements OnInit {
     let pic = {image:''};
 
     if(self.uploader.pic){
-      pic = self.uploader.pic;  
+      pic = self.uploader.pic;
     }
-    
-        // institutionSignup(username: string, email: string, password: string, 
+
+        // institutionSignup(username: string, email: string, password: string,
         // addr:any=null, restaurant:string, phone:string, image:any){
- 
+
     this.authServ.institutionSignup(v.username, v.email, v.password,
       this.address, v.restaurant, v.phone, pic.image ).subscribe((r:any)=>{
         if(r.token){
@@ -69,13 +68,13 @@ export class InstitutionSignupComponent implements OnInit {
         }else{
           self.errMsg = 'Error:' + r.errors[0];
         }
-        
+
       }, function(err){
         self.errMsg = err;
       });
   }
 
-      
+
   save(){
     // let self = this;
     // let v = this.form.value;
@@ -89,7 +88,7 @@ export class InstitutionSignupComponent implements OnInit {
     //   addr = new Address({id:'', city:{id:5130}, province:{id:48}, street:v.address.street});
     // }
     // let m = new Restaurant(this.form.value);
-    
+
     // m.image = picture.image;
     // m.id = self.id;
 

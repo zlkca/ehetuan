@@ -1,8 +1,6 @@
 import { Component, Output, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgRedux } from '@angular-redux/store';
-import { IAccount } from '../account.actions';
 
 import { AuthService } from '../auth.service';
 import { SharedService } from '../../shared/shared.service';
@@ -33,7 +31,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private sharedServ: SharedService,
         private accountServ: AccountService,
-        private ngRedux: NgRedux<IAccount>) {
+        ) {
 
         this.form = this.fb.group({
             account: ['', Validators.required],

@@ -66,6 +66,15 @@ export class AccountService {
     //     }), );
     // }
 
+    signup(account: Account): Observable<any> {
+        return this.accountApi.create(account)
+        .pipe(
+            mergeMap(() => {
+                return this.login(account.username, account.password);
+            })
+        );
+    }
+
     login(username: string, password: string, rememberMe: boolean = true): Observable<any> {
         const credentials = {
             username: username,

@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
 import { AuthService } from '../auth.service';
-import { AccountActions, IAccount } from '../account.actions';
+import { AccountActions } from '../account.actions';
 
 import { SharedService } from '../../shared/shared.service';
 
@@ -18,11 +18,10 @@ export class SignupComponent implements OnInit {
   errMsg:string;
   form:FormGroup;
 
-  constructor(private fb:FormBuilder, 
+  constructor(private fb:FormBuilder,
     private authServ:AuthService,
     private router:Router,
-    private rx:NgRedux<IAccount>,
-    private sharedServ:SharedService) { 
+    private sharedServ:SharedService) {
 
     this.form = this.fb.group({
       username:['', Validators.required],
@@ -32,11 +31,11 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-  	
+
   }
-  
+
   ngOnDestroy(){
-  
+
   }
 
   onSignup(){

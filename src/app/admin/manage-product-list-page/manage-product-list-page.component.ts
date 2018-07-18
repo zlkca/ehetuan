@@ -6,8 +6,7 @@ import { environment } from '../../../environments/environment';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
 import { ICart, CartActions } from '../../commerce/commerce.actions';
-import { CommerceService } from '../../commerce/commerce.service';
-
+import { ProductService } from '../../product/product.service';
 
 @Component({
     selector: 'app-manage-product-list-page',
@@ -17,13 +16,13 @@ import { CommerceService } from '../../commerce/commerce.service';
 export class ManageProductListPageComponent implements OnInit {
     products: Product[];
     constructor(private route: ActivatedRoute,
-        private commerceSvc: CommerceService,
+        private productSvc: ProductService,
         private rx: NgRedux<IAppState>) {
         const self = this;
 
         this.route.queryParams.subscribe(params => {
             const restaurant_id = params['restaurant_id'];
-            self.commerceSvc.getProductList('?restaurant_id=' + restaurant_id).subscribe(
+            self.productSvc.getProductList('?restaurant_id=' + restaurant_id).subscribe(
                 (ps: Product[]) => {
                     self.products = ps;
                 });

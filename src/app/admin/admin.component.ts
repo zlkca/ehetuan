@@ -6,13 +6,13 @@ import { AccountService } from '../account/account.service';
 import { SharedService } from '../shared/shared.service';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { ProductService } from '../product/product.service';
 import { CommerceService } from '../commerce/commerce.service';
 import { Restaurant } from '../commerce/commerce';
 import { User } from '../account/account';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgRedux } from '@angular-redux/store';
-import { IAccount } from '../account/account.actions';
 import { Product } from '../commerce/commerce';
 
 @Component({
@@ -39,13 +39,14 @@ export class AdminComponent implements OnInit, OnDestroy {
     constructor(private router: Router,
         private sharedServ: SharedService,
         private accountSvc: AccountService,
+        private productSvc: ProductService,
         private commerceSvc: CommerceService,
         private authServ: AuthService,
-        private rx: NgRedux<IAccount>) {
+        ) {
 
         const self = this;
-        this.subscrAccount = this.rx.select<IAccount>('account').subscribe(account => {
-            
+        this.subscrAccount = this.accountSvc.getCurrent().subscribe(account => {
+
             self.account = account;
 
             if (account.type === 'business') {
@@ -56,7 +57,7 @@ export class AdminComponent implements OnInit, OnDestroy {
                         r => {
                             self.orders = r;
                         });
-                    self.commerceSvc.getProductList('?restaurant_id=' + restaurant_id).subscribe(
+                    self.productSvc.getProductList('?restaurant_id=' + restaurant_id).subscribe(
                         (ps: Product[]) => {
                             self.products = ps;
                         });

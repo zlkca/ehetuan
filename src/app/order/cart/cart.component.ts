@@ -3,7 +3,6 @@ import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../../store';
 import { ICart, CartActions, ICartItem } from '../order.actions';
 import { OrderService } from '../order.service';
-import { IAccount } from '../../account/account.actions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OrderDetailComponent } from '../order-detail/order-detail.component';
 import { AccountService } from '../../account/account.service';

@@ -2,7 +2,6 @@ import { Component, Output, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
-import { IAccount } from '../account.actions';
 
 import { User } from '../account';
 import { AuthService } from '../auth.service';
@@ -27,7 +26,7 @@ export class InstitutionLoginComponent implements OnInit {
     private accountServ: AccountService,
     private router:Router,
     private sharedServ:SharedService,
-    private ngRedux: NgRedux<IAccount>) {
+    ) {
 
     this.form = this.fb.group({
       account:['', Validators.required],

@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgRedux } from '@angular-redux/store';
-// import { AuthService } from '../auth.service';
-// import { AccountActions, IAccount } from '../account.actions';
 import { SharedService } from '../../shared/shared.service';
 
 @Component({
@@ -19,7 +16,6 @@ export class AdminBusinessUserFormComponent implements OnInit {
     constructor(private fb: FormBuilder,
         // private authServ:AuthService,
         private router: Router,
-        // private rx:NgRedux<IAccount>,
         private sharedServ: SharedService) {
 
         this.form = this.fb.group({
