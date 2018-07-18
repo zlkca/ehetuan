@@ -1,4 +1,4 @@
-import { Address } from '../account/account';
+import { Address, User } from '../account/account';
 
 const MAX_N_PICTURES = 1;
 
@@ -11,6 +11,7 @@ export class Restaurant {
     image: any = { 'data': '', 'file': '' };
     created: string;
     updated: string;
+    user: User;
 
     constructor(o?: any) {
         if (o) {
@@ -32,6 +33,12 @@ export class Restaurant {
                 this.categories = cs;
             } else {
                 this.categories = [];
+            }
+
+            if (o.user) {
+                this.user = new User(o.user);
+            } else {
+                this.user = new User();
             }
         }
     }

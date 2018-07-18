@@ -40,6 +40,13 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="label-sm">Owner</div>
+        <select name="user" formControlName="user_id">
+            <option *ngFor="let m of users" [value]="m.id">{{m.username}}</option>
+        </select>
+    </div>
+
     <app-image-uploader [picture]="picture" #uploader></app-image-uploader>
 
     <button (click)="save()">Save</button>
