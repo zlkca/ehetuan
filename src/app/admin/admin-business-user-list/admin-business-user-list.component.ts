@@ -21,6 +21,10 @@ export class AdminBusinessUserListComponent implements OnInit {
         });
     }
 
+    add() {
+        this.router.navigate(['admin/user']);
+    }
+
     change(user) {
         this.router.navigate(['admin/users/' + user.id]);
     }

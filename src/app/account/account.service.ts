@@ -27,9 +27,9 @@ export class AccountService {
             }
             return a;
         }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }), );
+            catchError((err) => {
+                return observableThrowError(err.message || err);
+            }), );
     }
 
     getUser(id: number): Observable<User> {
@@ -38,16 +38,19 @@ export class AccountService {
         return this.http.get(url, { 'headers': headers }).pipe(map((res: any) => {
             return new User(res.data);
         }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }), );
+            catchError((err) => {
+                return observableThrowError(err.message || err);
+            }), );
     }
 
     saveUser(d: User): Observable<User> {
-        const url = this.API_URL + 'user';
+        const url = this.API_URL + 'users';
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         const data = {
+            'id': d.id,
             'username': d.username,
+            'email': d.email,
+            'password': d.password,
             'first_name': d.first_name,
             'last_name': d.last_name,
             'portrait': d.portrait,
@@ -57,9 +60,9 @@ export class AccountService {
         return this.http.post(url, data, { 'headers': headers }).pipe(map((res: any) => {
             return new User(res.data);
         }),
-        catchError((err) => {
-            return observableThrowError(err.message || err);
-        }), );
+            catchError((err) => {
+                return observableThrowError(err.message || err);
+            }), );
     }
 
 }

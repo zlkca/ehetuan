@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgRedux } from '@angular-redux/store';
-// import { AuthService } from '../auth.service';
+import { User } from '../../account/account';
+import { AccountService } from '../../account/account.service';
 // import { AccountActions, IAccount } from '../account.actions';
 import { SharedService } from '../../shared/shared.service';
 
@@ -17,7 +18,7 @@ export class AdminBusinessUserFormComponent implements OnInit {
     form: FormGroup;
 
     constructor(private fb: FormBuilder,
-        // private authServ:AuthService,
+        private accountSvc: AccountService,
         private router: Router,
         // private rx:NgRedux<IAccount>,
         private sharedServ: SharedService) {
@@ -25,7 +26,8 @@ export class AdminBusinessUserFormComponent implements OnInit {
         this.form = this.fb.group({
             username: ['', Validators.required],
             email: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
+            type: ['', Validators.required]
         });
     }
 
@@ -33,29 +35,23 @@ export class AdminBusinessUserFormComponent implements OnInit {
         this.form.patchValue({
             username: this.user.username,
             email: this.user.email,
-            password: this.user.password
+            password: this.user.password,
+            type: this.user.type
         });
     }
 
-    onSubmit() {
+    save() {
         const self = this;
-        let v = this.form.value;
-        let type = (v.username.toLowerCase() === 'admin') ? 'super' : 'user';
-
-        // this.authServ.signup(v.username, v.email, v.password, type).subscribe(user=>{
-        //   self.sharedServ.emitMsg({name:'updateLogin'});
-        //   self.rx.dispatch({type:AccountActions.LOGIN, payload:user});
-        //     if(user.type ==='super'){
-        //       self.router.navigate(["admin"]);
-        //     }else{
-        //       self.router.navigate(['home']);
-        //     }
-        //   },
-        //   err=>{
-        // 		self.errMsg = 'Create Account Failed';
-        // 	})
+        const v = new User(this.form.value);
+        v.id = this.user.id;
+        this.accountSvc.saveUser(v).subscribe((r: any) => {
+            if (r.id) {
+                self.router.navigate(['admin']);
+            } else {
+                alert('Duplicated username or email');
+            }
+        });
     }
-
 }
 
 
