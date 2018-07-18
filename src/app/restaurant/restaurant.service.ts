@@ -8,6 +8,10 @@ export class RestaurantService {
         private restaurantApi: RestaurantApi
     ) {}
 
+    create(restaurant: Restaurant): Observable<Restaurant> {
+        return this.restaurantApi.create(restaurant);
+    }
+
     findById(id: number, filter: LoopBackFilter = {}): Observable<Restaurant> {
         return this.restaurantApi.findById(id, filter);
     }

@@ -7,6 +7,9 @@ import { AuthService } from '../auth.service';
 import { ImageUploaderComponent } from '../../shared/image-uploader/image-uploader.component';
 
 import { SharedService } from '../../shared/shared.service';
+import { Account, Restaurant } from '../../shared/lb-sdk';
+import { AccountService } from '../account.service';
+import { RestaurantService } from '../../restaurant/restaurant.service';
 
 @Component({
   selector: 'app-institution-signup',
@@ -24,6 +27,8 @@ export class InstitutionSignupComponent implements OnInit {
   constructor(
     private fb:FormBuilder,
     private authServ:AuthService,
+    private accountServ: AccountService,
+    private restaurantServ: RestaurantService,
     private router:Router,
     private sharedServ:SharedService) {
 
@@ -47,32 +52,29 @@ export class InstitutionSignupComponent implements OnInit {
 
   }
 
-  onSignup(){
-    let v = this.formGroup.value;
-    let self = this;
-    let pic = {image:''};
-
-    if(self.uploader.pic){
-      pic = self.uploader.pic;
+    onSignup() {
+        const v = this.formGroup.value;
+        const account = new Account({
+            username: v.username,
+            email: v.email,
+            password: v.password
+        });
+        this.accountServ.signup(account).subscribe((user: Account) => {
+            if (user.id) {
+                const restaurant = new Restaurant({
+                    name: v.restaurant,
+                    location: {lat: this.address.lat, lng: this.address.lng},
+                    ownerId: user.id,
+                });
+                this.restaurantServ.create(restaurant).subscribe((res: Restaurant) => {
+                    this.router.navigate(['admin']);
+                });
+            }
+        },
+            err => {
+                this.errMsg = err.message || 'Create Account Failed';
+            });
     }
-
-        // institutionSignup(username: string, email: string, password: string,
-        // addr:any=null, restaurant:string, phone:string, image:any){
-
-    this.authServ.institutionSignup(v.username, v.email, v.password,
-      this.address, v.restaurant, v.phone, pic.image ).subscribe((r:any)=>{
-        if(r.token){
-          self.sharedServ.emitMsg({name:'updateLogin'});
-          self.rx.dispatch({type:AccountActions.LOGIN, payload:r.user}); //r.error
-          self.router.navigate(["/admin"]);
-        }else{
-          self.errMsg = 'Error:' + r.errors[0];
-        }
-
-      }, function(err){
-        self.errMsg = err;
-      });
-  }
 
 
   save(){

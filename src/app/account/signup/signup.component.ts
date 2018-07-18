@@ -6,6 +6,8 @@ import { AuthService } from '../auth.service';
 import { AccountActions } from '../account.actions';
 
 import { SharedService } from '../../shared/shared.service';
+import { AccountService } from '../account.service';
+import { Account } from '../../shared/lb-sdk';
 
 @Component({
   providers: [AuthService],
@@ -20,6 +22,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private fb:FormBuilder,
     private authServ:AuthService,
+    private accountServ: AccountService,
     private router:Router,
     private sharedServ:SharedService) {
 
@@ -38,23 +41,21 @@ export class SignupComponent implements OnInit {
 
   }
 
-  onSignup(){
-    let self = this;
-    let v = this.form.value;
-    let type = (v.username.toLowerCase() === 'admin')? 'super':'user';
-
-  	this.authServ.signup(v.username, v.email, v.password, type).subscribe(user=>{
-      self.sharedServ.emitMsg({name:'updateLogin'});
-      self.rx.dispatch({type:AccountActions.LOGIN, payload:user});
-        if(user.type ==='super'){
-          self.router.navigate(["admin"]);
-        }else{
-          self.router.navigate(['home']);
-        }
-      },
-      err=>{
-    		self.errMsg = 'Create Account Failed';
-    	})
-  }
+    onSignup() {
+        const v = this.form.value;
+        const account = new Account({
+            username: v.username,
+            email: v.email,
+            password: v.password
+        });
+        this.accountServ.signup(account).subscribe((user: Account) => {
+            if (user.id) {
+                this.router.navigate(['home']);
+            }
+        },
+            err => {
+                this.errMsg = err.message || 'Create Account Failed';
+            });
+    }
 
 }
