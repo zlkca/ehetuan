@@ -1,6 +1,7 @@
 /* tslint:disable */
 import {
-  Restaurant
+  Restaurant,
+  Picture
 } from '../index';
 
 declare var Object: any;
@@ -13,6 +14,7 @@ export interface ProductInterface {
   "modified"?: Date;
   "id"?: number;
   owner?: Restaurant;
+  pictures?: Picture[];
 }
 
 export class Product implements ProductInterface {
@@ -24,6 +26,7 @@ export class Product implements ProductInterface {
   "modified": Date;
   "id": number;
   owner: Restaurant;
+  pictures: Picture[];
   constructor(data?: ProductInterface) {
     Object.assign(this, data);
   }
@@ -95,6 +98,14 @@ export class Product implements ProductInterface {
           relationType: 'belongsTo',
                   keyFrom: 'restaurantId',
           keyTo: 'id'
+        },
+        pictures: {
+          name: 'pictures',
+          type: 'Picture[]',
+          model: 'Picture',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'imageableId'
         },
       }
     }

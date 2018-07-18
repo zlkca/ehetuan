@@ -1,7 +1,8 @@
 /* tslint:disable */
 import {
   Restaurant,
-  OrderItem
+  OrderItem,
+  Address
 } from '../index';
 
 declare var Object: any;
@@ -14,6 +15,7 @@ export interface OrderInterface {
   "id"?: number;
   restaurant?: Restaurant;
   items?: OrderItem[];
+  deliveryAddress?: Address;
 }
 
 export class Order implements OrderInterface {
@@ -25,6 +27,7 @@ export class Order implements OrderInterface {
   "id": number;
   restaurant: Restaurant;
   items: OrderItem[];
+  deliveryAddress: Address;
   constructor(data?: OrderInterface) {
     Object.assign(this, data);
   }
@@ -100,6 +103,14 @@ export class Order implements OrderInterface {
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'orderId'
+        },
+        deliveryAddress: {
+          name: 'deliveryAddress',
+          type: 'Address',
+          model: 'Address',
+          relationType: 'hasOne',
+                  keyFrom: 'id',
+          keyTo: 'entityId'
         },
       }
     }

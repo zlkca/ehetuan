@@ -1,6 +1,8 @@
 /* tslint:disable */
 import {
   Product,
+  Picture,
+  Address,
   GeoPoint
 } from '../index';
 
@@ -14,6 +16,8 @@ export interface RestaurantInterface {
   "modified"?: Date;
   "id"?: number;
   products?: Product[];
+  pictures?: Picture[];
+  address?: Address;
 }
 
 export class Restaurant implements RestaurantInterface {
@@ -25,6 +29,8 @@ export class Restaurant implements RestaurantInterface {
   "modified": Date;
   "id": number;
   products: Product[];
+  pictures: Picture[];
+  address: Address;
   constructor(data?: RestaurantInterface) {
     Object.assign(this, data);
   }
@@ -95,6 +101,22 @@ export class Restaurant implements RestaurantInterface {
           relationType: 'hasMany',
                   keyFrom: 'id',
           keyTo: 'restaurantId'
+        },
+        pictures: {
+          name: 'pictures',
+          type: 'Picture[]',
+          model: 'Picture',
+          relationType: 'hasMany',
+                  keyFrom: 'id',
+          keyTo: 'imageableId'
+        },
+        address: {
+          name: 'address',
+          type: 'Address',
+          model: 'Address',
+          relationType: 'hasOne',
+                  keyFrom: 'id',
+          keyTo: 'entityId'
         },
       }
     }
