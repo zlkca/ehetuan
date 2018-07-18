@@ -16,7 +16,7 @@ export class AdminBusinessUserListComponent implements OnInit {
 
     ngOnInit() {
         const self = this;
-        self.accountSvc.getUserList('?type=business').subscribe(users => {
+        self.accountSvc.find({where: {type: 'business'}}).subscribe(users => {
             self.users = users;
         });
     }

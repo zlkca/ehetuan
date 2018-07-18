@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../../account/account.service';
-import { User } from '../../account/account';
+import { Account } from '../../shared/lb-sdk';
 
 @Component({
     selector: 'app-admin-business-user-form-page',
@@ -19,12 +19,12 @@ export class AdminBusinessUserFormPageComponent implements OnInit {
 
         self.route.params.subscribe((params: any) => {
             if (params.id) {
-                this.accountSvc.getUser(params.id).subscribe(
-                    (p: User) => {
+                this.accountSvc.findById(params.id).subscribe(
+                    (p: Account) => {
                         self.user = p;
                     });
             } else {
-                self.user = new User();
+                self.user = new Account();
             }
         });
     }

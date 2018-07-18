@@ -126,7 +126,7 @@ export class RestaurantFormComponent implements OnInit, OnDestroy {
         //     }
         // });
 
-        self.accountSvc.getUserList('?type=business').subscribe(users => {
+        self.accountSvc.find({where: {type: 'business'}}).subscribe(users => {
             self.users = users;
         });
 

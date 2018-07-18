@@ -42,8 +42,9 @@ export class AdminComponent implements OnInit, OnDestroy {
         private restaurantSvc: RestaurantService,
         private orderSvc: OrderService,
         private authServ: AuthService,
-        ) {
+        ) { }
 
+    ngOnInit() {
         const self = this;
         this.subscrAccount = this.accountSvc.getCurrent().subscribe(account => {
 
@@ -78,11 +79,6 @@ export class AdminComponent implements OnInit, OnDestroy {
                 });
             }
         });
-
-    }
-
-    ngOnInit() {
-        const self = this;
 
         // self.authServ.hasLoggedIn().subscribe(
         //   (r:boolean)=>{

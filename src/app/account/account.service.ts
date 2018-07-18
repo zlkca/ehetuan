@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
 import { environment } from '../../environments/environment';
-import { AccountApi, Account } from '../shared/lb-sdk/';
+import { AccountApi, Account, LoopBackFilter } from '../shared/lb-sdk/';
 import { NgRedux } from '@angular-redux/store';
 import { AccountActions } from './account.actions';
 
@@ -156,6 +156,18 @@ export class AccountService {
 
     isAuthenticated(): boolean {
         return this.accountApi.isAuthenticated();
+    }
+
+    find(filter: LoopBackFilter = {}): Observable<Account[]> {
+        return this.accountApi.find(filter);
+    }
+
+    findById(id: number, filter: LoopBackFilter = {}): Observable<Account> {
+        return this.accountApi.findById(id, filter);
+    }
+
+    create(account: Account): Observable<any> {
+        return this.accountApi.create(account);
     }
 
 }

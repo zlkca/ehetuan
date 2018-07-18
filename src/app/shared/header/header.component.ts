@@ -135,15 +135,18 @@ export class HeaderComponent implements OnInit {
         this.closeNavMenu();
 
         // check from token
-        this.authSvc.hasLoggedIn().subscribe(
+        this.accountServ.getCurrent().subscribe(
             (r: any) => {
                 self.isLogin = r ? true : false;
                 if (self.isLogin) {
                     if (r.type === 'business') {
                         self.router.navigate(['admin']);
                     } else {
-                        self.authSvc.logout();
-                        self.router.navigate(['institution-signup']);
+                        self.accountServ.logout()
+                        .subscribe(() => {
+                            self.router.navigate(['institution-signup']);
+                        });
+
                     }
                 } else {
                     self.router.navigate(['institution-login']);

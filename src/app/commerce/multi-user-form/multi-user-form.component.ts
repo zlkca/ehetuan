@@ -23,12 +23,12 @@ export class MultiUserFormComponent implements OnInit {
     changedPictures:any[]=[];
     @Input() users:any[];
 
-	constructor(private rx:NgRedux<IPicture>, private fb:FormBuilder, 
+	constructor(private rx:NgRedux<IPicture>, private fb:FormBuilder,
 		private accountSvc:AccountService, private commerceSvc:CommerceService) { }
 
 	ngOnInit() {
 		let self = this;
-		self.accountSvc.getUserList('?type=business').subscribe(users=> {
+		self.accountSvc.find({where: {type: 'business'}}).subscribe(users=> {
         	self.users = users;
         	if(self.users){
 				self.createForm(self.users);
@@ -52,7 +52,7 @@ export class MultiUserFormComponent implements OnInit {
 		// 		}
 		// 	}
 	 //    );
-		
+
 		// this.subscriptionPicture = this.rx.select<IPicture[]>('restaurant_pictures').subscribe(
 		// 	changedPictures=>{
 		// 		//self.user = account;
@@ -63,7 +63,7 @@ export class MultiUserFormComponent implements OnInit {
 	ngOnDestroy(){
 		// this.subscriptionPicture.unsubscribe();
 	}
-	
+
 	ngOnChange(){
 		if(this.users){
 			this.createForm(this.users);
@@ -80,7 +80,7 @@ export class MultiUserFormComponent implements OnInit {
 	}
 
 	createForm(items){
-		// items --- users 
+		// items --- users
 		let nRows = items.length;
 		let nRowExtras = 5;
 		let self = this;

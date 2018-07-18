@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AccountService } from '../../account/account.service';
 import { SharedService } from '../../shared/shared.service';
+import { Account } from '../../shared/lb-sdk';
 
 @Component({
     selector: 'app-admin-business-user-form',
@@ -38,9 +39,9 @@ export class AdminBusinessUserFormComponent implements OnInit {
 
     save() {
         const self = this;
-        const v = new User(this.form.value);
+        const v = new Account(this.form.value);
         v.id = this.user.id;
-        this.accountSvc.saveUser(v).subscribe((r: any) => {
+        this.accountSvc.create(v).subscribe((r: Account) => {
             if (r.id) {
                 self.router.navigate(['admin']);
             } else {
