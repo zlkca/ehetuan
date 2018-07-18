@@ -18,7 +18,7 @@ export class ManageOrderListComponent implements OnInit {
     getTotal(order) {
         let total = 0;
         for (const item of order.items) {
-            total += parseFloat(item.price) * parseInt(item.quantity, 10);
+            total += item.product.price * item.quantity;
         }
         return total.toFixed(2);
     }

@@ -6,6 +6,7 @@ import { SharedService } from './shared/shared.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { environment } from '../environments/environment';
+import { SocketConnection } from './shared/lb-sdk/sockets/socket.connections';
 
 const APP = environment.APP;
 
@@ -19,8 +20,12 @@ const APP = environment.APP;
 export class AppComponent implements OnInit {
 
     isLogin: boolean = false;
-    constructor(private router: Router, private sharedServ: SharedService, private authServ: AuthService,
-        ) {
+    constructor(
+        private router: Router,
+        private sharedServ: SharedService,
+        private authServ: AuthService,
+        private socket: SocketConnection,
+    ) {
 
         window.addEventListener("orientationchange", function () {
             window.location.reload();
@@ -28,6 +33,7 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.socket.connect(this.authServ.getToken());
         // const self = this;
 
         // const s = localStorage.getItem('location-' + APP);

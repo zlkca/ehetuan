@@ -7,13 +7,11 @@ import { SharedService } from '../shared/shared.service';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { ProductService } from '../product/product.service';
-import { CommerceService } from '../commerce/commerce.service';
-import { Restaurant } from '../commerce/commerce';
-import { User } from '../account/account';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { NgRedux } from '@angular-redux/store';
-import { Product } from '../commerce/commerce';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { Restaurant, Product, Order } from '../shared/lb-sdk';
+import { OrderService } from '../order/order.service';
 
 @Component({
     selector: 'app-admin',
@@ -24,23 +22,25 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     isAdminLogin = true;
     subscrAccount;
+    subscrList: any = [];
     account;
 
     // for business center
-    orders = null;
-    restaurant = null;
-    products: Product[] = null;
+    orders: Order[] = [];
+    restaurant: Restaurant = null;
+    products: Product[] = [];
 
     // for super admin
-    businessUsers: User[] = null;
-    restaurants: Restaurant[] = null;
+    businessUsers: Account[] = [];
+    restaurants: Restaurant[] = [];
 
 
     constructor(private router: Router,
         private sharedServ: SharedService,
         private accountSvc: AccountService,
         private productSvc: ProductService,
-        private commerceSvc: CommerceService,
+        private restaurantSvc: RestaurantService,
+        private orderSvc: OrderService,
         private authServ: AuthService,
         ) {
 
@@ -50,29 +50,31 @@ export class AdminComponent implements OnInit, OnDestroy {
             self.account = account;
 
             if (account.type === 'business') {
-                const restaurant_id = account ? account.restaurant_id : null;
+                const restaurant_id = account.restaurants[0] ? account.restaurants[0].id : null;
 
                 if (restaurant_id) {
-                    self.commerceSvc.getOrderList('?restaurant_id=' + restaurant_id).subscribe(
-                        r => {
-                            self.orders = r;
-                        });
-                    self.productSvc.getProductList('?restaurant_id=' + restaurant_id).subscribe(
-                        (ps: Product[]) => {
-                            self.products = ps;
-                        });
+                    this.unsubscribe();
+                    this.subscrList.push(self.restaurantSvc.findById(restaurant_id, {include: ['products']})
+                    .subscribe((rest: Restaurant) => {
+                        self.restaurant = rest;
+                        self.products = rest.products;
+                    }));
+
+                    this.subscrList.push(self.restaurantSvc.getOrders(restaurant_id, {include: ['account', {items: 'product'}]})
+                    .subscribe((orders: Order[]) => {
+                        self.orders = orders;
+                    }));
+
+                    this.subscrList.push(self.restaurantSvc.syncOrders(restaurant_id, {include: ['account', {items: 'product'}]})
+                    .subscribe((od: Order) => {
+                        self.orders.push(od);
+                    }));
+
                 }
 
-                self.commerceSvc.getRestaurantList('?admin_id=' + account.id).subscribe(r => {
-                    if (r) {
-                        self.restaurant = r[0];
-                    }
-                });
-
-
             } else if (account.type === 'super') {
-                self.commerceSvc.getRestaurantList().subscribe((ps: Restaurant[]) => {
-                    self.restaurants = ps;
+                self.restaurantSvc.find().subscribe((restaurants: Restaurant[]) => {
+                    self.restaurants = restaurants;
                 });
             }
         });
@@ -99,6 +101,14 @@ export class AdminComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscrAccount.unsubscribe();
+        this.unsubscribe();
+    }
+
+    unsubscribe() {
+        this.subscrList.forEach(unsub => {
+            unsub.unsubscribe();
+        });
+        this.subscrList = [];
     }
 
     toPage(url: string) {

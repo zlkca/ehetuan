@@ -1,5 +1,6 @@
 /* tslint:disable */
 import {
+  Account,
   Restaurant,
   OrderItem,
   Address
@@ -7,24 +8,26 @@ import {
 
 declare var Object: any;
 export interface OrderInterface {
-  "userId": number;
+  "accountId": number;
   "restaurantId": number;
   "status": string;
   "created"?: Date;
   "modified"?: Date;
   "id"?: number;
+  account?: Account;
   restaurant?: Restaurant;
   items?: OrderItem[];
   deliveryAddress?: Address;
 }
 
 export class Order implements OrderInterface {
-  "userId": number;
+  "accountId": number;
   "restaurantId": number;
   "status": string;
   "created": Date;
   "modified": Date;
   "id": number;
+  account: Account;
   restaurant: Restaurant;
   items: OrderItem[];
   deliveryAddress: Address;
@@ -61,8 +64,8 @@ export class Order implements OrderInterface {
       path: 'Orders',
       idName: 'id',
       properties: {
-        "userId": {
-          name: 'userId',
+        "accountId": {
+          name: 'accountId',
           type: 'number'
         },
         "restaurantId": {
@@ -88,6 +91,14 @@ export class Order implements OrderInterface {
         },
       },
       relations: {
+        account: {
+          name: 'account',
+          type: 'Account',
+          model: 'Account',
+          relationType: 'belongsTo',
+                  keyFrom: 'accountId',
+          keyTo: 'id'
+        },
         restaurant: {
           name: 'restaurant',
           type: 'Restaurant',

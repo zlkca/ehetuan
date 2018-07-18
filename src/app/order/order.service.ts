@@ -23,6 +23,10 @@ export class OrderService {
         return this.orderApi.findById(id, filter);
     }
 
+    find(filter: LoopBackFilter = {}): Observable<Order[]> {
+        return this.orderApi.find(filter);
+    }
+
     create(order: Order): Observable<Order> {
         console.log(order);
         return this.orderApi.create(order)

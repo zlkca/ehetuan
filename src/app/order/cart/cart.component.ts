@@ -90,7 +90,7 @@ export class CartComponent implements OnInit, OnDestroy {
         const orders = [];
 
         for (const id of restaurantIds) {
-            orders.push({ restaurantId: id, items: [], userId: this.user.id});
+            orders.push({ restaurantId: id, items: [], accountId: this.user.id});
         }
 
         for (const item of cart.items) {

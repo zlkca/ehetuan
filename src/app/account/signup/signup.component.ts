@@ -46,7 +46,8 @@ export class SignupComponent implements OnInit {
         const account = new Account({
             username: v.username,
             email: v.email,
-            password: v.password
+            password: v.password,
+            type: 'user'
         });
         this.accountServ.signup(account).subscribe((user: Account) => {
             if (user.id) {

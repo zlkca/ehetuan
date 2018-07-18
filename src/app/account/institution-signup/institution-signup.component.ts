@@ -57,7 +57,8 @@ export class InstitutionSignupComponent implements OnInit {
         const account = new Account({
             username: v.username,
             email: v.email,
-            password: v.password
+            password: v.password,
+            type: 'business'
         });
         this.accountServ.signup(account).subscribe((user: Account) => {
             if (user.id) {

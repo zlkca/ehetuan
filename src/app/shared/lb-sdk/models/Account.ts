@@ -7,6 +7,7 @@ import {
 
 declare var Object: any;
 export interface AccountInterface {
+  "type": string;
   "realm"?: string;
   "username"?: string;
   "email": string;
@@ -20,6 +21,7 @@ export interface AccountInterface {
 }
 
 export class Account implements AccountInterface {
+  "type": string;
   "realm": string;
   "username": string;
   "email": string;
@@ -63,6 +65,11 @@ export class Account implements AccountInterface {
       path: 'Accounts',
       idName: 'id',
       properties: {
+        "type": {
+          name: 'type',
+          type: 'string',
+          default: 'user'
+        },
         "realm": {
           name: 'realm',
           type: 'string'
@@ -111,7 +118,7 @@ export class Account implements AccountInterface {
           model: 'Order',
           relationType: 'hasMany',
                   keyFrom: 'id',
-          keyTo: 'userId'
+          keyTo: 'accountId'
         },
         address: {
           name: 'address',
