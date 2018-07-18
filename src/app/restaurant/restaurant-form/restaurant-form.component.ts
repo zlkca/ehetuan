@@ -8,6 +8,7 @@ import { MultiImageUploaderComponent } from '../../shared/multi-image-uploader/m
 import { environment } from '../../../environments/environment';
 import { NgRedux } from '@angular-redux/store';
 import { IPicture } from '../../commerce/commerce.actions';
+import { AccountService } from '../../account/account.service';
 
 const APP = environment.APP;
 
@@ -23,6 +24,7 @@ export class RestaurantFormComponent implements OnInit, OnDestroy {
     picture;
     subscriptionPicture;
     form: FormGroup;
+    users;
 
     @Input() restaurant: Restaurant;
     @ViewChild(MultiImageUploaderComponent) uploader: any;
@@ -37,12 +39,15 @@ export class RestaurantFormComponent implements OnInit, OnDestroy {
                 street: ['', [Validators.required]],
                 postal_code: ['', [Validators.required]]
             }),
+            user_id: new FormControl(),//['', Validators.required]
             // categories: this.fb.array([]),
             // delivery_fee: ''
         });
     }
 
-    constructor(private fb: FormBuilder, private commerceSvc: CommerceService,
+    constructor(private fb: FormBuilder,
+        private accountSvc: AccountService,
+        private commerceSvc: CommerceService,
         private router: Router, private route: ActivatedRoute,
         private rx: NgRedux<IPicture>) {
 
@@ -120,6 +125,11 @@ export class RestaurantFormComponent implements OnInit, OnDestroy {
         //         self.categories.push(new FormControl(false));
         //     }
         // });
+
+        self.accountSvc.getUserList('?type=business').subscribe(users => {
+            self.users = users;
+        });
+
         this.subscriptionPicture = this.rx.select<IPicture>('picture').subscribe(
             pic => {
                 self.picture = pic;

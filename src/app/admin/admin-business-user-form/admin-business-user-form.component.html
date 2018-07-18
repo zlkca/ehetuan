@@ -19,8 +19,13 @@
 			<input formControlName="password" type="password"/>
 		</div>
 
+		<div class="row">
+			<div class="label-sm">User Type</div>
+			<input formControlName="type" type="type"/>
+        </div>
+        
 		<div class="row btn-holder">
-			<button class="btn btn-primary" (click)="onSubmit()" type="submit" block>Submit</button>
+			<button class="btn btn-primary" (click)="save()" type="submit" block>Submit</button>
 		</div>
 	</form>
 </div>

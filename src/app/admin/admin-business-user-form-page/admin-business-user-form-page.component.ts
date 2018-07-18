@@ -18,10 +18,14 @@ export class AdminBusinessUserFormPageComponent implements OnInit {
         const self = this;
 
         self.route.params.subscribe((params: any) => {
-            this.accountSvc.getUser(params.id).subscribe(
-                (p: User) => {
-                    self.user = p;
-                });
+            if (params.id) {
+                this.accountSvc.getUser(params.id).subscribe(
+                    (p: User) => {
+                        self.user = p;
+                    });
+            } else {
+                self.user = new User();
+            }
         });
     }
 
